@@ -1,10 +1,13 @@
-﻿namespace Dun9eonAndFi9ht
+﻿using Dun9eonAndFi9ht.Scenes;
+
+namespace Dun9eonAndFi9ht
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            GameManager gameManager = new GameManager();
+            gameManager.LoadScene(ESceneType.StartScene);
         }
     }
 }
