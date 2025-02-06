@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dun9eonAndFi9ht.Scenes;
 
-namespace Dun9eonAndFi9ht
+namespace Dun9eonAndFi9ht.Manager
 {
 
     internal class GameManager

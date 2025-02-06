@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dun9eonAndFi9ht
+namespace Dun9eonAndFi9ht.StaticClass
 {
     static class Utility
     {
@@ -15,7 +15,7 @@ namespace Dun9eonAndFi9ht
 
         public static void PrintMenu(string str)
         {
-            
+
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Dun9eonAndFi9ht.Actors
 
         public virtual void Damaged(int damage)
         {
-
+            
         }
 
         public virtual void Dead()
