@@ -1,6 +1,7 @@
 ﻿using Dun9eonAndFi9ht.Characters;
 using Dun9eonAndFi9ht.Manager;
 using Dun9eonAndFi9ht.StaticClass;
+using DataDefinition;
 using System;
 using System.Collections.Generic;
 using System.Linq;
