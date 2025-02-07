@@ -1,4 +1,4 @@
-﻿using Dun9eonAndFi9ht.Actors;
+﻿using Dun9eonAndFi9ht.Characters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
