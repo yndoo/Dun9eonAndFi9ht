@@ -36,7 +36,6 @@ namespace Dun9eonAndFi9ht.Characters
 
             Random random = new Random();
             int finalAtk = Atk + random.Next(-error, error + 1);
-            target.Damaged(Atk);
         }
 
         public virtual void Damaged(int damage)
