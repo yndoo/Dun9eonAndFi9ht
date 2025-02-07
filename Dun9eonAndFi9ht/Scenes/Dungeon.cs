@@ -60,22 +60,36 @@ namespace Dun9eonAndFi9ht.Scenes
             Utility.PrintScene("Battle!!");
             EnterDungeon();
 
+            int hpBeforeDungeon = player.CurrentHp;
+
             // To Do : BattleTurn 호출
             Random random = new Random();
             //isPlayerWin = BattleSystem.BattleTurn(Player, MonsterList.OrderBy(x => random.Next(0, 3)).ToList());
 
             // 전투 결과 출력
-            ResultScreen();
-            GameManager.Instance.LoadScene(ESceneType.StartScene);
+            ResultScreen(hpBeforeDungeon);
         }
 
-        private void ResultScreen()
+        /// <summary>
+        /// 던전 결과 출력
+        /// </summary>
+        /// <param name="hpBeforeDungeon">던전 입장 전 플레이어 체력</param>
+        private void ResultScreen(int hpBeforeDungeon)
         {
             Utility.ClearScene();
             Utility.PrintScene("Battle!! - Result");
 
-            // To Do : 배틀 결과
-            
+            // To Do : 배틀 결과 (MonsterCount 생긴뒤에 주석 해제)
+            Utility.PrintScene("");
+            Utility.PrintScene(isPlayerWin ? "Victory" : "You Lose");
+            Utility.PrintScene("");
+            if (isPlayerWin)
+            {
+                // Utility.PrintScene($"던전에서 몬스터 {MonsterCount}마리를 잡았습니다.");
+                Utility.PrintScene("");
+            }
+            Utility.PrintScene($"Lv.{player.Level} {Player.Name}");
+            Utility.PrintScene($"HP {hpBeforeDungeon} -> {Player.CurrentHp}");
 
             Utility.ClearMenu();
             Utility.PrintMenu("0. 나가기");
