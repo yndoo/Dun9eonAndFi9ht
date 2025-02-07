@@ -16,7 +16,7 @@ namespace Dun9eonAndFi9ht.Scenes
     {
         public virtual void Start()
         {
-
+            Console.Clear();
         }
     }
 }
