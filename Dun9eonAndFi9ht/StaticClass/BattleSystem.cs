@@ -18,6 +18,7 @@ namespace Dun9eonAndFi9ht.StaticClass
         {
             this.player = player;
             this.monsterList = monsters;
+            isAllMonsterDead = false;
         }
 
         /// <summary>
@@ -49,19 +50,11 @@ namespace Dun9eonAndFi9ht.StaticClass
         /// </summary>
         private void PlayerPhase()
         {
-            bool isPlayerTurn = true;
-            while (isPlayerTurn)
-            {
-
-            }
-            int input = -1;
-            while (input < 0)
-            {
-                input = Utility.UserInput(1, 1);
-            }
+            int input = Utility.UserInput(1, 1);
             switch (input)
             {
                 case 1:
+                    // 1. 공격 선택
                     Attack();
                     break;
             }
@@ -82,17 +75,6 @@ namespace Dun9eonAndFi9ht.StaticClass
         }
 
         /// <summary>
-        /// 전투 진입 시 플레이어 행동 선택
-        /// </summary>
-        /// <returns>사용자의 입력 값</returns>
-        private int SelectAction()
-        {
-            Console.WriteLine("행동 선택");
-            Console.Write(">> ");
-            return Utility.UserInput(1, 1);
-        }
-
-        /// <summary>
         /// 몬스터 번호를 입력받아 해당 몬스터가 살아있으면 공격, 아니면 다시 선택
         /// </summary>
         private void Attack()
@@ -100,15 +82,21 @@ namespace Dun9eonAndFi9ht.StaticClass
             int input = Utility.UserInput(0, monsterList.Count);
             switch (input)
             {
+                case < 0:
+                    /* 일치하는 몬스터를 선택하지 않았다면
+                         * 잘못된 입력입니다 출력
+                         */
+                    break;
                 case 0:
-                    SelectAction();
+                    // 0. 취소 선택
                     break;
                 default:
                     int monsterIndex = input - 1;
                     if (monsterList[monsterIndex].IsDead)
                     {
-                        // 이미 죽은 몬스터
-                        // 다시 선택
+                        /* 이미 죽은 몬스터를 공격했다면
+                         * 잘못된 입력입니다 출력
+                         */
                     }
                     else
                     {
@@ -116,6 +104,8 @@ namespace Dun9eonAndFi9ht.StaticClass
                     }
                     break;
             }
+
+            // 몬스터 전멸 여부 검사
         }
 
         private void Battle(Character attacker, Character target)
