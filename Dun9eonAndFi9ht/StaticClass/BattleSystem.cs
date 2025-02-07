@@ -12,13 +12,11 @@ namespace Dun9eonAndFi9ht.StaticClass
     {
         private Player player;
         private List<Monster> monsterList;
-        private bool isAllMonsterDead;
 
         public BattleSystem(Player player, List<Monster> monsters)
         {
             this.player = player;
             this.monsterList = monsters;
-            isAllMonsterDead = false;
         }
 
         /// <summary>
@@ -31,6 +29,7 @@ namespace Dun9eonAndFi9ht.StaticClass
         {
             while (true)
             {
+                DisplayCharacterInfo();
                 PlayerPhase();
                 if (IsAllMonsterDead())
                 {
@@ -73,13 +72,16 @@ namespace Dun9eonAndFi9ht.StaticClass
 
         private bool PlayerAction()
         {
+            Utility.ClearMenu();
+            Utility.PrintMenu("1. 공격");
+            Utility.PrintMenu("");
+            Utility.PrintMenu("원하시는 행동을 입력해주세요.");
+            Utility.PrintMenu(">>");
             int input = Utility.UserInput(1, 1);
             switch (input)
             {
                 case 1:
-                    // 1. 공격 선택
-                    PlayerAttack();
-                    return true;
+                    return PlayerAttack();
                 default:
                     return false;
             }
@@ -88,61 +90,105 @@ namespace Dun9eonAndFi9ht.StaticClass
         /// <summary>
         /// 몬스터 번호를 입력받아 해당 몬스터가 살아있으면 공격, 아니면 다시 선택
         /// </summary>
-        private void PlayerAttack()
+        private bool PlayerAttack()
         {
+            Utility.ClearMenu();
+            Utility.PrintMenu("0. 취소");
+            Utility.PrintMenu("");
+            Utility.PrintMenu("원하시는 행동을 입력해주세요.");
+            Utility.PrintMenu(">>");
             int input = Utility.UserInput(0, monsterList.Count);
             switch (input)
             {
                 case < 0:
-                    /* 일치하는 몬스터를 선택하지 않았다면
-                         * 잘못된 입력입니다 출력
-                         */
-                    Console.WriteLine("잘못입력");
-                    PlayerAttack();
-                    break;
+                    Utility.ClearMenu();
+                    Utility.PrintMenu("잘못된 입력입니다.");
+                    Utility.PrintMenu("0. 다음");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu(">>");
+                    Utility.UserInput(0, 0);
+                    return false;
                 case 0:
-                    // 0. 취소 선택
-                    Console.WriteLine("취소 선택");
-                    PlayerAction();
-                    break;
+                    return false;
                 default:
                     int monsterIndex = input - 1;
                     if (monsterList[monsterIndex].IsDead)
                     {
-                        /* 이미 죽은 몬스터를 공격했다면
-                         * 잘못된 입력입니다 출력
-                         */
-                        Console.WriteLine("이미 죽은 대상");
-                        PlayerAttack();
+                        Utility.ClearMenu();
+                        Utility.PrintMenu("잘못된 입력입니다.");
+                        Utility.PrintMenu("0. 다음");
+                        Utility.PrintMenu("");
+                        Utility.PrintMenu(">>");
+                        Utility.UserInput(0, 0);
+                        return false;
                     }
                     else
                     {
-                        Console.WriteLine("전투 시작");
                         Battle(player, monsterList[monsterIndex]);
+                        return true;
                     }
-                    break;
             }
         }
 
         private void Battle(Character attacker, Character target)
         {
+            int targetHP = target.CurrentHp;
+            int finalAtk = attacker.Atk;    // 임시 구현
             attacker.Attack(target);
+            target.Damaged(finalAtk);
+            DisplayBattleInfo(attacker, target, finalAtk, targetHP);
         }
 
         /// <summary>
         /// 몬스터가 전부 사망했는지, 살아있는 몬스터가 있는지 확인하는 메서드
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True: 몬스터 전멸 False: 몬스터 존재</returns>
         private bool IsAllMonsterDead()
         {
-            for(int i = 0; i < monsterList.Count; i++)
+            for (int i = 0; i < monsterList.Count; i++)
             {
-                if (monsterList[i].IsDead)
+                if (!monsterList[i].IsDead)
                 {
                     return false;
                 }
             }
             return true;
+        }
+
+        /// <summary>
+        /// 전투 정보 표시 메서드
+        /// </summary>
+        private void DisplayCharacterInfo()
+        {
+            Utility.ClearAll();
+            Utility.PrintScene("Battle!!");
+            Utility.PrintScene("");
+            for (int i = 0; i < monsterList.Count; i++)
+            {
+                Utility.PrintScene($"Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp}");
+            }
+            Utility.PrintScene("");
+            Utility.PrintScene("[내 정보]");
+            Utility.PrintScene($"Lv.{player.Level} {player.Name} ({player.Job})");
+            Utility.PrintScene($"HP {player.CurrentHp}/{player.MaxHp}");
+        }
+
+        private void DisplayBattleInfo(Character attacker, Character target, int damage, int preHP)
+        {
+            Utility.ClearAll();
+            Utility.PrintScene("Battle!!");
+            Utility.PrintScene("");
+            Utility.PrintScene($"{attacker.Name}의 공격!");
+            Utility.PrintScene($"{target.Name}을(를) 맞췄습니다. [데미지: {damage}]");
+            Utility.PrintScene("");
+            Utility.PrintScene($"Lv.{target.Level} {target.Name}");
+            string resultHP = target.IsDead ? "Dead" : target.CurrentHp.ToString();
+            Utility.PrintScene($"HP {preHP.ToString()} -> {resultHP}");
+
+            Utility.PrintMenu("0. 다음");
+            Utility.PrintMenu("");
+            Utility.PrintMenu(">>");
+            Utility.UserInput(0, 0);
         }
     }
 }

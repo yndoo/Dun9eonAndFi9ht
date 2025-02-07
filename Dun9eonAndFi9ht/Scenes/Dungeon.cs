@@ -55,7 +55,6 @@ namespace Dun9eonAndFi9ht.Scenes
         public override void Start()
         {
             base.Start();
-            Utility.PrintScene("Battle!!");
             EnterDungeon();
 
             int hpBeforeDungeon = Player.CurrentHp;
