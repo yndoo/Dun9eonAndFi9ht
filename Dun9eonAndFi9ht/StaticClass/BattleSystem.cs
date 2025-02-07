@@ -50,13 +50,10 @@ namespace Dun9eonAndFi9ht.StaticClass
         /// </summary>
         private void PlayerPhase()
         {
-            int input = Utility.UserInput(1, 1);
-            switch (input)
+            bool isPlayerTurnEnd = false;
+            while (!isPlayerTurnEnd)
             {
-                case 1:
-                    // 1. 공격 선택
-                    Attack();
-                    break;
+                isPlayerTurnEnd = PlayerAction();
             }
         }
 
@@ -74,10 +71,24 @@ namespace Dun9eonAndFi9ht.StaticClass
             }
         }
 
+        private bool PlayerAction()
+        {
+            int input = Utility.UserInput(1, 1);
+            switch (input)
+            {
+                case 1:
+                    // 1. 공격 선택
+                    PlayerAttack();
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         /// <summary>
         /// 몬스터 번호를 입력받아 해당 몬스터가 살아있으면 공격, 아니면 다시 선택
         /// </summary>
-        private void Attack()
+        private void PlayerAttack()
         {
             int input = Utility.UserInput(0, monsterList.Count);
             switch (input)
@@ -86,9 +97,13 @@ namespace Dun9eonAndFi9ht.StaticClass
                     /* 일치하는 몬스터를 선택하지 않았다면
                          * 잘못된 입력입니다 출력
                          */
+                    Console.WriteLine("잘못입력");
+                    PlayerAttack();
                     break;
                 case 0:
                     // 0. 취소 선택
+                    Console.WriteLine("취소 선택");
+                    PlayerAction();
                     break;
                 default:
                     int monsterIndex = input - 1;
@@ -97,9 +112,12 @@ namespace Dun9eonAndFi9ht.StaticClass
                         /* 이미 죽은 몬스터를 공격했다면
                          * 잘못된 입력입니다 출력
                          */
+                        Console.WriteLine("이미 죽은 대상");
+                        PlayerAttack();
                     }
                     else
                     {
+                        Console.WriteLine("전투 시작");
                         Battle(player, monsterList[monsterIndex]);
                     }
                     break;
