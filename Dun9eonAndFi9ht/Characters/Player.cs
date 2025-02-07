@@ -16,6 +16,15 @@
         public EJobType Job { get; set; }
         public int MaxExp { get; set; }
         public int CurExp { get; set; }
+        public Player(string name, EJobType job, int maxHp, int atk, int def, int level, int gold) : base(name, maxHp, atk, def, level)
+        {
+            this.job = job;
+            this.gold = gold;
+            this.curExp = 0;
+            
+            // 예제 값 (레벨업 필요 경험치)
+            this.maxExp = 100; 
+        }
 
         /// <summary>
         /// 플레이어 스탯 살펴보기
