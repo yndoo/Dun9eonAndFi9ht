@@ -36,27 +36,18 @@ namespace Dun9eonAndFi9ht.Scenes
 
             //Monster 데이터 가져오기
             DataTableManager dtManager = DataTableManager.Instance;
-            for (int i = 1; i < MonsterTypeCount; i++)
+            for (int i = 0; i < MonsterTypeCount; i++)
             {
-                List<string> lst = dtManager.GetMonsterData("enemy", i);
-                if (lst == null)
+                try
                 {
-                    Console.WriteLine("fsfwsefrew");
-                    return;
+                    List<string> lst = dtManager.GetMonsterData("enemy", i);
+                    monsterList.Add(new Monster(lst[1], int.Parse(lst[2]), int.Parse(lst[3]), int.Parse(lst[4]), int.Parse(lst[5]), int.Parse(lst[6]), int.Parse(lst[7])));
                 }
-                //try
-                //{
-                    
-                //    monsterList.Add(new Monster(lst[0], int.Parse(lst[1]), int.Parse(lst[2]), int.Parse(lst[3]), int.Parse(lst[4]), int.Parse(lst[5]), int.Parse(lst[6])));
-                //}
-                //catch(Exception ex)
-                //{
-                //    Utility.PrintMenu($"\n{i} 인덱스 Monster 데이터 로드 오류 : {ex.Message}");
-                //}
+                catch (Exception ex)
+                {
+                    Utility.PrintMenu($"\n{i} 인덱스 Monster 데이터 로드 오류 : {ex.Message}");
+                }
             }
-            Console.WriteLine(monsterList[1].Reward.ToString());
-            //Utility.PrintScene(monsterList[0].Name);
-            int a = 0;
         }
 
         /// <summary>
@@ -74,6 +65,7 @@ namespace Dun9eonAndFi9ht.Scenes
 
             // 전투 결과 출력
             ResultScreen();
+            GameManager.Instance.LoadScene(ESceneType.StartScene);
         }
 
         private void ResultScreen()
