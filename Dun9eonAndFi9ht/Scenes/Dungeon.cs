@@ -12,7 +12,7 @@ namespace Dun9eonAndFi9ht.Scenes
 {
     internal class Dungeon : Scene
     {
-        private bool isPlayerWin;
+        private bool isPlayerLose;
         private int MonsterTypeCount;
         public Player Player { get; set; }
         public List<Monster> MonsterList { get; set; }
@@ -63,7 +63,7 @@ namespace Dun9eonAndFi9ht.Scenes
             int rMonsterCnt = random.Next(1, 4);
             BattleSystem battleSystem;
             battleSystem = new BattleSystem(Player, MonsterList.OrderBy(x => random.Next(0, rMonsterCnt)).ToList());
-            isPlayerWin = battleSystem.BattleProcess();
+            isPlayerLose = battleSystem.BattleProcess();
 
             // 전투 결과 출력
             ResultScreen(hpBeforeDungeon);
@@ -80,11 +80,11 @@ namespace Dun9eonAndFi9ht.Scenes
 
             // To Do : 배틀 결과 (MonsterCount 생긴뒤에 주석 해제)
             Utility.PrintScene("");
-            Utility.PrintScene(isPlayerWin ? "Victory" : "You Lose");
+            Utility.PrintScene(isPlayerLose ? "You Lose" : "Victory");
             Utility.PrintScene("");
-            if (isPlayerWin)
+            if (!isPlayerLose)
             {
-                 Utility.PrintScene($"던전에서 몬스터 {MonsterList.Count}마리를 잡았습니다.");
+                Utility.PrintScene($"던전에서 몬스터 {MonsterList.Count}마리를 잡았습니다.");
                 Utility.PrintScene("");
             }
             Utility.PrintScene($"Lv.{Player.Level} {Player.Name}");
