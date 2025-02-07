@@ -8,8 +8,10 @@ namespace Dun9eonAndFi9ht.Characters
 {
     public struct Reward
     {
-        public int exp;
-        public int gold;
+        struct Reward
+        {
+            public int exp;
+            public int gold;
 
         public Reward(int exp, int gold)
         {
