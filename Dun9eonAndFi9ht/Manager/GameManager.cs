@@ -12,7 +12,7 @@ namespace Dun9eonAndFi9ht.Manager
     {
         
         private static GameManager? instance;
-        public static Gamanager Instance => instance ?? = new GameManager();
+        public static GameManager Instance => instance ?? = new GameManager();
 
         private Player player;
         private List<Scene> sceneList;
