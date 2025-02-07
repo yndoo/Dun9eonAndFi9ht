@@ -8,8 +8,18 @@ namespace Dun9eonAndFi9ht.Manager
 {
     public class DataTableManager
     {
+        private static DataTableManager? instance;
+        public static DataTableManager Instance => instance ??= new DataTableManager();
+
         //Database에 적 정보 뿐만 아니라 추후 추가될 데이터들을 위해 Dictionary의 key 값으로 List 구분 시도.
-        private Dictionary<string, List<string[]>> database = new Dictionary<string, List<string[]>>();
+        private Dictionary<string, List<string[]>> database;
+
+
+        private DataTableManager()
+        {
+            database = new Dictionary<string, List<string[]>>();
+        }
+
 
         /// <summary>
         /// 실행 시 Dictionary<DB 종류, 데이터 리스트>
@@ -48,7 +58,7 @@ namespace Dun9eonAndFi9ht.Manager
         /// </summary>
         /// <param name="tableName">DB 테이블 이름</param>
         /// <param name="id">찾을 대상의 ID</param>
-        /// <returns>List<string></returns>
+        /// <returns>List<string?>(해당 ID의 데이터, 없으면 null)</returns>
         public List<string>? GetMonsterData(string tableName, int id)
         {
             if (database.ContainsKey(tableName))
