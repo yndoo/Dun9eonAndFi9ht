@@ -8,7 +8,7 @@ namespace Dun9eonAndFi9ht.Characters
 {
     enum EJobType
     {
-        None,
+        None
     }
     internal class Player : Character
     {
@@ -25,6 +25,21 @@ namespace Dun9eonAndFi9ht.Characters
         public void DisplayStatus()
         {
 
+        }
+
+        public override void Attack(Character target)
+        {
+            base.Attack(target);
+        }
+
+        public override void Damaged(int damage)
+        {
+            base.Damaged(damage);
+        }
+
+        public override void Dead()
+        {
+            base.Dead();
         }
     }
 }
