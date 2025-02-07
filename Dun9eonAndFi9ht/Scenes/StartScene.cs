@@ -30,8 +30,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 }
                 else if (userInput == 2) 
                 {
-                    // To Do : Dungeon씬으로 이동
-                    //GameManager.Instance.LoadScene(userInput);
+                    GameManager.Instance.LoadScene(ESceneType.Dungeon);
                     return;
                 }
                 else

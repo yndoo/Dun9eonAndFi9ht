@@ -14,25 +14,49 @@ namespace Dun9eonAndFi9ht.Scenes
         private Player player;
         private List<Monster> monsterList;
         private bool isPlayerWin;
+        private int MonsterTypeCount;
         public Player Player { get; set; }
         public List<Monster> MonsterList { get; set; }
         public bool IsPlayerWin { get; set; }
+
+        public Dungeon()
+        {
+            DataTableManager.Instance.Initialize("../../../DataBase");
+            MonsterTypeCount = 3; 
+
+            monsterList = new List<Monster>(MonsterTypeCount);
+        }
 
         /// <summary>
         /// 몬스터 랜덤 배치, 플레이어 데이터 가져오기
         /// </summary>
         private void EnterDungeon()
         {
-            //player = GameManager.Instance.Player;
+            player = GameManager.Instance.Player;
 
-            //Monster 데이터 가져오기 예시
-            // To Do : 기능 생긴 뒤에 수정해야 함
-            //for(int i = 0; i < MonsterCount; i++)
-            //{
-            //    monsterList.Add(new Monster());
-            //    monsterList[i].Name = GameManager.GetMonsterData[i][0];
-            //    monsterList[i].MaxHp = GameManager.GetMonsterData[i][1];
-            //}
+            //Monster 데이터 가져오기
+            DataTableManager dtManager = DataTableManager.Instance;
+            for (int i = 1; i < MonsterTypeCount; i++)
+            {
+                List<string> lst = dtManager.GetMonsterData("enemy", i);
+                if (lst == null)
+                {
+                    Console.WriteLine("fsfwsefrew");
+                    return;
+                }
+                //try
+                //{
+                    
+                //    monsterList.Add(new Monster(lst[0], int.Parse(lst[1]), int.Parse(lst[2]), int.Parse(lst[3]), int.Parse(lst[4]), int.Parse(lst[5]), int.Parse(lst[6])));
+                //}
+                //catch(Exception ex)
+                //{
+                //    Utility.PrintMenu($"\n{i} 인덱스 Monster 데이터 로드 오류 : {ex.Message}");
+                //}
+            }
+            Console.WriteLine(monsterList[1].Reward.ToString());
+            //Utility.PrintScene(monsterList[0].Name);
+            int a = 0;
         }
 
         /// <summary>
@@ -56,8 +80,9 @@ namespace Dun9eonAndFi9ht.Scenes
         {
             Utility.ClearScene();
             Utility.PrintScene("Battle!! - Result");
-            // To Do : 배틀 결과
 
+            // To Do : 배틀 결과
+            
 
             Utility.ClearMenu();
             Utility.PrintMenu("0. 나가기");

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dun9eonAndFi9ht.Characters;
 using Dun9eonAndFi9ht.Scenes;
+using Dun9eonAndFi9ht.StaticClass;
 
 namespace Dun9eonAndFi9ht.Manager
 {
@@ -12,7 +13,7 @@ namespace Dun9eonAndFi9ht.Manager
     {
         
         private static GameManager? instance;
-        public static GameManager Instance => instance ?? = new GameManager();
+        public static GameManager Instance => instance ??= new GameManager();
 
         private Player player;
         private List<Scene> sceneList;
@@ -21,9 +22,10 @@ namespace Dun9eonAndFi9ht.Manager
 
         private GameManager()
         {
-            player = new Player();
+            //player = new Player();
             sceneList = new List<Scene>();
             sceneList.Add(new StartScene());
+            sceneList.Add(new Dungeon());
         }
         /// <summary>
         /// 시작할 씬을 string 값으로 받아 해당 씬 Start() 실행
@@ -34,15 +36,16 @@ namespace Dun9eonAndFi9ht.Manager
             int sceneIndex = (int)type;
             if (sceneIndex >= 0 && sceneIndex <= sceneList.Count)
             {
-                try
-                {
-                    Console.Clear();
-                    sceneList[sceneIndex].Start();
-                }
-                catch (Exception ex)
-                {
-                    Utility.PrintScene($"씬 실행 실패: {ex.Message}");
-                }
+                Console.Clear();
+                sceneList[sceneIndex].Start();
+                //try
+                //{
+                    
+                //}
+                //catch (Exception ex)
+                //{
+                //    Utility.PrintScene($"씬 실행 실패: {ex.Message}");
+                //}
             }
             else
             {
