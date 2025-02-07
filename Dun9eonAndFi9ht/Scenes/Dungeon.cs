@@ -52,7 +52,7 @@ namespace Dun9eonAndFi9ht.Scenes
         /// <summary>
         /// Dungeon 시작 함수
         /// </summary>
-        public override void Start()
+        public override ESceneType Start()
         {
             base.Start();
             EnterDungeon();
@@ -66,14 +66,14 @@ namespace Dun9eonAndFi9ht.Scenes
             isPlayerLose = battleSystem.BattleProcess();
 
             // 전투 결과 출력
-            ResultScreen(hpBeforeDungeon);
+            return ResultScreen(hpBeforeDungeon);
         }
 
         /// <summary>
         /// 던전 결과 출력
         /// </summary>
         /// <param name="hpBeforeDungeon">던전 입장 전 플레이어 체력</param>
-        private void ResultScreen(int hpBeforeDungeon)
+        private ESceneType ResultScreen(int hpBeforeDungeon)
         {
             Utility.ClearScene();
             Utility.PrintScene("Battle!! - Result");
@@ -97,8 +97,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 int userInput = Utility.UserInput(0, 0);
                 if (userInput == 0)
                 {
-                    GameManager.Instance.LoadScene(ESceneType.StartScene);
-                    return;
+                    return ESceneType.StartScene;
                 }
                 Utility.PrintMenu("잘못된 입력입니다.");
             }

@@ -26,12 +26,13 @@ namespace Dun9eonAndFi9ht.Manager
             sceneList = new List<Scene>();
             sceneList.Add(new StartScene());
             sceneList.Add(new Dungeon());
+            sceneList.Add(new PlayerStat());
         }
         /// <summary>
         /// 시작할 씬을 string 값으로 받아 해당 씬 Start() 실행
         /// </summary>
         /// <param name="type">씬 이름</param>
-        public void LoadScene(ESceneType type)
+        public ESceneType LoadScene(ESceneType type)
         {
             int sceneIndex = (int)type;
             if (sceneIndex >= 0 && sceneIndex <= sceneList.Count)
@@ -39,40 +40,45 @@ namespace Dun9eonAndFi9ht.Manager
                 try
                 {
                     Console.Clear();
-                    sceneList[sceneIndex].Start();
+                    return sceneList[sceneIndex].Start();
                 }
                 catch (Exception ex)
                 {
                     Utility.PrintScene($"씬 실행 실패: {ex.Message}");
+                    return ESceneType.StartScene;
                 }
             }
             else
             {
                 Utility.PrintScene("잘못된 씬입니다.");
+                return ESceneType.StartScene;
             }
         }
         /// <summary>
         /// 시작할 씬을 int 값으로 해당 씬 Start() 실행
         /// </summary>
         /// <param name="type"></param>
-        public void LoadScene(int type)
+        public ESceneType LoadScene(int type)
         {
             if (type >= 0 && type < sceneList.Count)
             {
                 try
                 {
                     Console.Clear();
-                    sceneList[type].Start();
+                    return sceneList[type].Start();
+
                 }
                 catch (Exception ex)
                 {
                     Utility.PrintScene($"씬 실행 실패: {ex.Message}");
+                    return ESceneType.StartScene;
                 }
 
             }
             else
             {
                 Console.WriteLine("잘못된 씬입니다.");
+                return ESceneType.StartScene;
             }
         }
 

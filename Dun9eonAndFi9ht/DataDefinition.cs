@@ -30,6 +30,7 @@ namespace DataDefinition
     {
         StartScene,
         Dungeon,
+        PlayerStat,
     }
     #endregion
 

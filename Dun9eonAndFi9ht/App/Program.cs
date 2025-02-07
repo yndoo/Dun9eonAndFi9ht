@@ -10,7 +10,16 @@ namespace Dun9eonAndFi9ht.App
     {
         static void Main(string[] args)
         {
-            RunGame();            
+            bool isPlayerSet = SetPlayer(0);
+            if (isPlayerSet)
+            {
+                GameManager.Instance.Player.DisplayStatus();
+                RunGame();
+            }
+            else
+            {
+                Console.WriteLine("게임을 종료합니다.");
+            }
         }
 
         /// <summary>
@@ -18,15 +27,10 @@ namespace Dun9eonAndFi9ht.App
         /// </summary>
         static void RunGame()
         {
-            bool isPlayerSet = SetPlayer(0);
-            if(isPlayerSet)
+            ESceneType nextScene = GameManager.Instance.LoadScene(ESceneType.StartScene);
+            while(true)
             {
-                GameManager.Instance.Player.DisplayStatus();
-                GameManager.Instance.LoadScene(ESceneType.StartScene);
-            }
-            else
-            {
-                Console.WriteLine("게임을 종료합니다.");
+                nextScene = GameManager.Instance.LoadScene(nextScene);
             }
         }
         /// <summary>
