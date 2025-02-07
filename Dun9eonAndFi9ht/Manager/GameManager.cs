@@ -9,10 +9,14 @@ namespace Dun9eonAndFi9ht.Manager
 {
     internal class GameManager
     {
+        private static GameManager? instance;
+        public static Gamanager Instance => instance ?? = new GameManager();
+
+
         private List<Scene> sceneList;
         public List<Scene> SceneList { get; set; }
 
-        public GameManager()
+        private GameManager()
         {
             sceneList = new List<Scene>();
             sceneList.Add(new StartScene());
