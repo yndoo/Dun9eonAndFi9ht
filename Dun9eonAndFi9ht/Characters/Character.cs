@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataDefinition;
 
 namespace Dun9eonAndFi9ht.Characters
 {
     internal class Character
     {
-        const int ERROR_RATE = 10;
-
         protected string name;
         protected int maxHp;
         protected int atk;
@@ -40,8 +39,8 @@ namespace Dun9eonAndFi9ht.Characters
         public virtual void Attack(Character target)
         {
             // 오차 범위 소수점 올림 처리
-            int remain = (atk % ERROR_RATE) > 0 ? 1 : 0;
-            int error = atk / ERROR_RATE + remain;
+            int remain = (atk % Constants.ERROR_RATE) > 0 ? 1 : 0;
+            int error = atk / Constants.ERROR_RATE + remain;
 
             Random random = new Random();
             int finalAtk = atk + random.Next(-error, error + 1);
