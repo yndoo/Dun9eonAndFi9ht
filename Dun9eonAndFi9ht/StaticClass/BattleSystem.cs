@@ -135,7 +135,7 @@ namespace Dun9eonAndFi9ht.StaticClass
         /// <returns></returns>
         private bool IsAllMonsterDead()
         {
-            for(int i = 0; i < monsterList.Count, i++)
+            for(int i = 0; i < monsterList.Count; i++)
             {
                 if (monsterList[i].IsDead)
                 {
