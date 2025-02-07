@@ -83,6 +83,22 @@ namespace Dun9eonAndFi9ht.StaticClass
         }
 
         /// <summary>
+        /// string을 자유 위치에서 적을 수 있도록 만드는 코드, 단 중심줄은 안된다.
+        /// </summary>
+        /// <param name="message">적을 메시지</param>
+        /// <param name="line">적을 줄</param>
+        public static void PrintFree(string message, int line)
+        {
+            if(line != startMenuLine)
+            {
+                Console.SetCursorPosition(0, line);
+                Console.WriteLine(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, line);
+                Console.WriteLine(message);
+            }
+        }
+
+        /// <summary>
         /// 화면 분할 아래쪽을 지워버리는 역할
         /// </summary>
         public static void ClearMenu()
