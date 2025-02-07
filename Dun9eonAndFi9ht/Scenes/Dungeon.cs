@@ -12,7 +12,6 @@ namespace Dun9eonAndFi9ht.Scenes
 {
     internal class Dungeon : Scene
     {
-        private List<Monster> monsterList;
         private bool isPlayerWin;
         private int MonsterTypeCount;
         public Player Player { get; set; }
@@ -22,9 +21,9 @@ namespace Dun9eonAndFi9ht.Scenes
         public Dungeon()
         {
             DataTableManager.Instance.Initialize("../../../DataBase");
-            MonsterTypeCount = 3; 
+            MonsterTypeCount = 3;
 
-            monsterList = new List<Monster>(MonsterTypeCount);
+            MonsterList = new List<Monster>(MonsterTypeCount);
         }
 
         /// <summary>
@@ -41,7 +40,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 try
                 {
                     List<string> lst = dtManager.GetMonsterData("enemy", i);
-                    monsterList.Add(new Monster(lst[1], int.Parse(lst[2]), int.Parse(lst[3]), int.Parse(lst[4]), int.Parse(lst[5]), int.Parse(lst[6]), int.Parse(lst[7])));
+                    MonsterList.Add(new Monster(lst[1], int.Parse(lst[2]), int.Parse(lst[3]), int.Parse(lst[4]), int.Parse(lst[5]), int.Parse(lst[6]), int.Parse(lst[7])));
                 }
                 catch (Exception ex)
                 {
@@ -61,9 +60,11 @@ namespace Dun9eonAndFi9ht.Scenes
 
             int hpBeforeDungeon = Player.CurrentHp;
 
-            // To Do : BattleTurn 호출
             Random random = new Random();
-            //isPlayerWin = BattleSystem.BattleTurn(Player, MonsterList.OrderBy(x => random.Next(0, 3)).ToList());
+            int rMonsterCnt = random.Next(1, 4);
+            BattleSystem battleSystem;
+            battleSystem = new BattleSystem(Player, MonsterList.OrderBy(x => random.Next(0, rMonsterCnt)).ToList());
+            isPlayerWin = battleSystem.BattleProcess();
 
             // 전투 결과 출력
             ResultScreen(hpBeforeDungeon);
