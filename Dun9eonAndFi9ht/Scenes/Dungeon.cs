@@ -85,7 +85,7 @@ namespace Dun9eonAndFi9ht.Scenes
             Utility.PrintScene("");
             if (isPlayerWin)
             {
-                // Utility.PrintScene($"던전에서 몬스터 {MonsterCount}마리를 잡았습니다.");
+                 Utility.PrintScene($"던전에서 몬스터 {MonsterList.Count}마리를 잡았습니다.");
                 Utility.PrintScene("");
             }
             Utility.PrintScene($"Lv.{Player.Level} {Player.Name}");
