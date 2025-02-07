@@ -7,8 +7,7 @@ namespace Dun9eonAndFi9ht.App
     {
         static void Main(string[] args)
         {
-            GameManager gameManager = new GameManager();
-            gameManager.LoadScene(ESceneType.StartScene);
+            GameManager.Instance.LoadScene(ESceneType.StartScene);
         }
     }
 }
