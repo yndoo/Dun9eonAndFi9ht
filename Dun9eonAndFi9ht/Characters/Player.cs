@@ -1,10 +1,7 @@
-﻿namespace Dun9eonAndFi9ht.Characters
+﻿using DataDefinition;
+
+namespace Dun9eonAndFi9ht.Characters
 {
-    enum EJobType
-    {
-        None,
-        Warrior
-    }
     internal class Player : Character
     {
         private int gold;

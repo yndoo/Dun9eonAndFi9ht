@@ -3,21 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataDefinition;
 
 namespace Dun9eonAndFi9ht.Characters
 {
-    public struct Reward
-    {
-        public int exp;
-        public int gold;
-
-        public Reward(int exp, int gold)
-        {
-            this.exp = exp;
-            this.gold = gold;
-        }
-    }
-
     internal class Monster : Character
     {
         private Reward reward;
