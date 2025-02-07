@@ -1,4 +1,4 @@
-name,job,maxHp,atk,def,level,gold
-Alice,Warrior,100,15,5,1,500
-Bob,Mage,80,20,3,1,300
-Charlie,Rogue,90,18,4,1,400
+ID,name,job,maxHp,atk,def,level,gold
+0,Alice,Warrior,100,15,5,1,500
+1,Bob,Mage,80,20,3,1,300
+2,Charlie,Rogue,90,18,4,1,400
