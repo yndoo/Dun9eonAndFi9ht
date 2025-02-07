@@ -24,7 +24,6 @@ namespace Dun9eonAndFi9ht.Characters
         /// </summary>
         public void DisplayStatus()
         {
-            Utility.ClearScene();
             Utility.PrintScene($"Lv. {Level:D2}");
             Utility.PrintScene($"{Name} ( {GetJobName(Job)} )");
             Utility.PrintScene($"{"공격력"} : {Atk}");

@@ -25,6 +25,7 @@ namespace Dun9eonAndFi9ht.Manager
         {
             sceneList = new List<Scene>();
             sceneList.Add(new StartScene());
+            sceneList.Add(new Dungeon());
         }
         /// <summary>
         /// 시작할 씬을 string 값으로 받아 해당 씬 Start() 실행

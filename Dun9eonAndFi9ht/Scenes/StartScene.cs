@@ -48,10 +48,9 @@ namespace Dun9eonAndFi9ht.Scenes
         {
             Utility.ClearScene();
             Utility.PrintScene("상태 보기");
-            Utility.PrintScene("캐릭터의 정보가 표시됩니다.");
+            Utility.PrintScene("캐릭터의 정보가 표시됩니다.\n");
 
-            // To Do : Player의 DisplayStatus 실행
-            //GameManager.Instance.Player.DisplayStatus();
+            GameManager.Instance.Player.DisplayStatus();
 
             // 메뉴 출력
             Utility.ClearMenu();
@@ -59,7 +58,11 @@ namespace Dun9eonAndFi9ht.Scenes
             while (true)
             {
                 int userInput = Utility.UserInput(0, 0);
-                if (userInput == 0) return;
+                if (userInput == 0)
+                {
+                    GameManager.Instance.LoadScene(ESceneType.StartScene);
+                    return;
+                }
                 Utility.PrintMenu("잘못된 입력입니다.");
             }
         }

@@ -12,7 +12,6 @@ namespace Dun9eonAndFi9ht.Scenes
 {
     internal class Dungeon : Scene
     {
-        private Player player;
         private List<Monster> monsterList;
         private bool isPlayerWin;
         private int MonsterTypeCount;
@@ -33,7 +32,7 @@ namespace Dun9eonAndFi9ht.Scenes
         /// </summary>
         private void EnterDungeon()
         {
-            player = GameManager.Instance.Player;
+            Player = GameManager.Instance.Player;
 
             //Monster 데이터 가져오기
             DataTableManager dtManager = DataTableManager.Instance;
@@ -60,7 +59,7 @@ namespace Dun9eonAndFi9ht.Scenes
             Utility.PrintScene("Battle!!");
             EnterDungeon();
 
-            int hpBeforeDungeon = player.CurrentHp;
+            int hpBeforeDungeon = Player.CurrentHp;
 
             // To Do : BattleTurn 호출
             Random random = new Random();
@@ -88,7 +87,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 // Utility.PrintScene($"던전에서 몬스터 {MonsterCount}마리를 잡았습니다.");
                 Utility.PrintScene("");
             }
-            Utility.PrintScene($"Lv.{player.Level} {Player.Name}");
+            Utility.PrintScene($"Lv.{Player.Level} {Player.Name}");
             Utility.PrintScene($"HP {hpBeforeDungeon} -> {Player.CurrentHp}");
 
             Utility.ClearMenu();
@@ -96,7 +95,11 @@ namespace Dun9eonAndFi9ht.Scenes
             while (true)
             {
                 int userInput = Utility.UserInput(0, 0);
-                if (userInput == 0) return;
+                if (userInput == 0)
+                {
+                    GameManager.Instance.LoadScene(ESceneType.StartScene);
+                    return;
+                }
                 Utility.PrintMenu("잘못된 입력입니다.");
             }
         }
