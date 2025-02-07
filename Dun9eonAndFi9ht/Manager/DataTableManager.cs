@@ -73,5 +73,35 @@ namespace Dun9eonAndFi9ht.Manager
             }
             return null;
         }
+
+        public void PrintDatabase()
+        {
+            Console.WriteLine("===== 데이터베이스 전체 출력 =====");
+
+            if (database.Count == 0)
+            {
+                Console.WriteLine("데이터베이스가 비어 있습니다.");
+                return;
+            }
+
+            foreach (var table in database)
+            {
+                Console.WriteLine($"\n 테이블: {table.Key}");
+                Console.WriteLine(new string('-', 30)); // 구분선
+
+                if (table.Value.Count == 0)
+                {
+                    Console.WriteLine("데이터 없음");
+                    continue;
+                }
+
+                foreach (var row in table.Value)
+                {
+                    Console.WriteLine(string.Join(" | ", row));
+                }
+            }
+
+            Console.WriteLine("================================");
+        }
     }
 }
