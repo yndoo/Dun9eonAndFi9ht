@@ -32,7 +32,7 @@ namespace Dun9eonAndFi9ht.StaticClass
             while (true)
             {
                 PlayerPhase();
-                if (isAllMonsterDead)
+                if (ClearCheck())
                 {
                     return player.IsDead;
                 }
@@ -128,7 +128,23 @@ namespace Dun9eonAndFi9ht.StaticClass
 
         private void Battle(Character attacker, Character target)
         {
+            attacker.Attack(target);
+        }
 
+        /// <summary>
+        /// 몬스터가 전부 사망했는지, 살아있는 몬스터가 있는지 확인하는 메서드
+        /// </summary>
+        /// <returns></returns>
+        private bool ClearCheck()
+        {
+            for(int i = 0; i < monsterList.Count, i++)
+            {
+                if (monsterList[i].IsDead)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

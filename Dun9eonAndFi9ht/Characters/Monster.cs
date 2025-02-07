@@ -9,13 +9,11 @@ namespace Dun9eonAndFi9ht.Characters
 {
     internal class Monster : Character
     {
-        private Reward reward;
-
-        public Reward Reward => reward;
+        public Reward Reward { get; private set; }
 
         public Monster(string name, int maxHp, int atk, int def, int level, int exp, int gold) : base(name, maxHp, atk, def, level)
         {
-            reward = new Reward(exp, gold);
+            Reward = new Reward(exp, gold);
         }
 
         public override void Attack(Character target)
