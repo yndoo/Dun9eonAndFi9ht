@@ -26,6 +26,11 @@ namespace DataDefinition
         None,
         Warrior
     }
+    public enum ESceneType
+    {
+        StartScene,
+        Dungeon,
+    }
     #endregion
 
     #region 상수
