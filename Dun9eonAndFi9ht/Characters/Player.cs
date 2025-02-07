@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Dun9eonAndFi9ht.Characters
+﻿namespace Dun9eonAndFi9ht.Characters
 {
     enum EJobType
     {
@@ -39,7 +33,7 @@ namespace Dun9eonAndFi9ht.Characters
             Console.WriteLine($"{"공격력"} : {Atk}");
             Console.WriteLine($"{"방어력"} : {Def}");
             Console.WriteLine($"{"체  력"} : {CurrentHp}");
-            Console.WriteLine($"{"Gold"}   : {gold}");
+            Console.WriteLine($"{"Gold"}   : {Gold}");
         }
         /// <summary>
         /// EJobType에 따라 맞는 이름 반환
