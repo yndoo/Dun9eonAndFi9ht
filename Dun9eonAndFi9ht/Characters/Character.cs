@@ -20,19 +20,7 @@ namespace Dun9eonAndFi9ht.Characters
 
         public string Name  => name;
         public int MaxHp { get; set; }
-        public int Atk
-        {
-            get
-            {
-                // 오차 범위 소수점 올림 처리
-                int remain = (atk % ERROR_RATE) > 0 ? 1 : 0;
-                int error = atk / ERROR_RATE + remain;
-
-                Random random = new Random();
-                int finalAtk = atk + random.Next(-error, error + 1);
-                return finalAtk;
-            }
-        }
+        public int Atk { get; set; }
         public int Def { get; set; }
         public int Level { get; set; }
         public int CurrentHp { get; set; }
@@ -51,6 +39,12 @@ namespace Dun9eonAndFi9ht.Characters
 
         public virtual void Attack(Character target)
         {
+            // 오차 범위 소수점 올림 처리
+            int remain = (atk % ERROR_RATE) > 0 ? 1 : 0;
+            int error = atk / ERROR_RATE + remain;
+
+            Random random = new Random();
+            int finalAtk = atk + random.Next(-error, error + 1);
             target.Damaged(Atk);
         }
 
