@@ -21,10 +21,15 @@ namespace DataDefinition
     #endregion
 
     #region 열거형
-    enum EJobType
+    public enum EJobType
     {
         None,
         Warrior
+    }
+    public enum ESceneType
+    {
+        StartScene,
+        Dungeon,
     }
     #endregion
 

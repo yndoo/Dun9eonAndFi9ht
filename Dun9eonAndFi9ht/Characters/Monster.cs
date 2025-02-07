@@ -7,7 +7,7 @@ using DataDefinition;
 
 namespace Dun9eonAndFi9ht.Characters
 {
-    internal class Monster : Character
+    public class Monster : Character
     {
         public Reward Reward { get; private set; }
 

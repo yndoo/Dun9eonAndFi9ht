@@ -7,7 +7,7 @@ using DataDefinition;
 
 namespace Dun9eonAndFi9ht.Characters
 {
-    internal class Character
+    public class Character
     {
         public string Name { get; private set; }
         public int MaxHp { get; set; }
