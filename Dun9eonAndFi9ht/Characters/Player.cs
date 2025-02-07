@@ -3,7 +3,7 @@ using Dun9eonAndFi9ht.StaticClass;
 
 namespace Dun9eonAndFi9ht.Characters
 {
-    internal class Player : Character
+    public class Player : Character
     {
         public EJobType Job { get; private set; }
         public int Gold { get; set; }
