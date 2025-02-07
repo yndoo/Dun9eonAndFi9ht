@@ -11,7 +11,7 @@ namespace Dun9eonAndFi9ht.Scenes
     internal class StartScene : Scene 
     {
         /// <summary>
-        /// Scene을 시작하는 함수
+        /// StartScene을 시작하는 함수
         /// </summary>
         public override void Start() 
         {
@@ -19,17 +19,26 @@ namespace Dun9eonAndFi9ht.Scenes
             Console.WriteLine("Dun9eon & Fi9ht에 오신 여러분 환영합니다.");
             Console.WriteLine("이제 전투를 시작할 수 있습니다.");
 
-            // To Do : PrintMenu가 변경된 이후에 맞춰서 다시 작성할 예정.
-            //Utility.PrintMenu(new List<string> {"상태 보기", "전투 시작"});
-            int userInput = Utility.UserInput(1, 2);
-            if(userInput == 1)
+            Utility.PrintMenu(new string[] {"1. 상태보기", "2. 전투 시작", "\n원하시는 행동을 입력해주세요.\n>>"});
+            while(true)
             {
-                StatScreen();
-            }
-            else
-            {
-                //GameManager.Instance.LoadScene(userInput);
-            }
+                int userInput = Utility.UserInput(1, 2);
+                if (userInput == 1)
+                {
+                    StatScreen();
+                    return;
+                }
+                else if (userInput == 2) 
+                {
+                    // To Do : Dungeon씬으로 이동
+                    //GameManager.Instance.LoadScene(userInput);
+                    return;
+                }
+                else
+                {
+                    Utility.PrintMenu("잘못된 입력입니다.");
+                }
+            }            
         }
 
         /// <summary>
@@ -40,14 +49,18 @@ namespace Dun9eonAndFi9ht.Scenes
             Console.Clear();
             Console.WriteLine("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
+
+            // To Do : Player의 DisplayStatus 실행
             //GameManager.Instance.Player.DisplayStatus();
 
-            // To Do : PrintMenu가 변경된 이후에 맞춰서 다시 작성할 예정.
-            //Utility.PrintMenu(new List<string> {"나가기"});
-            int userInput = Utility.UserInput(1, 2);
-            if (userInput == 0)
+            // 메뉴 출력
+            Utility.ClearMenu();
+            Utility.PrintMenu("0. 나가기");
+            while (true)
             {
-                //GameManager.Instance.LoadScene(ESceneType.StartScene);
+                int userInput = Utility.UserInput(0, 0);
+                if (userInput == 0) return;
+                Utility.PrintMenu("잘못된 입력입니다.");
             }
         }
     }

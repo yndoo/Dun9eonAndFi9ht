@@ -10,7 +10,6 @@ namespace Dun9eonAndFi9ht.Scenes
     {
         StartScene,
         Dungeon,
-        ResultScene,
     }
     internal class Scene
     {

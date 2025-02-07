@@ -44,18 +44,28 @@ namespace Dun9eonAndFi9ht.Scenes
             Console.WriteLine("Battle!!");
             EnterDungeon();
 
+            // To Do : BattleTurn 호출
             Random random = new Random();
-            // To Do : BattleTurn 기능 생긴 뒤에 수정해야 함
             //isPlayerWin = BattleSystem.BattleTurn(Player, MonsterList.OrderBy(x => random.Next(0, 3)).ToList());
 
-            // To Do : Result 
-            if(isPlayerWin == true)
-            {
+            // 전투 결과 출력
+            ResultScreen();
+        }
 
-            }
-            else
-            {
+        private void ResultScreen()
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!! - Result");
+            // To Do : 배틀 결과
+            Console.WriteLine("");
 
+            Utility.ClearMenu();
+            Utility.PrintMenu("0. 나가기");
+            while (true)
+            {
+                int userInput = Utility.UserInput(0, 0);
+                if (userInput == 0) return;
+                Utility.PrintMenu("잘못된 입력입니다.");
             }
         }
     }
