@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dun9eonAndFi9ht.StaticClass;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,13 +11,12 @@ namespace Dun9eonAndFi9ht.Scenes
     {
         StartScene,
         Dungeon,
-        ResultScene,
     }
     internal class Scene
     {
         public virtual void Start()
         {
-
+            Utility.ClearScene();
         }
     }
 }
