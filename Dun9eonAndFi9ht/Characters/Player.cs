@@ -1,4 +1,5 @@
 ﻿using DataDefinition;
+using Dun9eonAndFi9ht.StaticClass;
 
 namespace Dun9eonAndFi9ht.Characters
 {
@@ -28,18 +29,13 @@ namespace Dun9eonAndFi9ht.Characters
         /// </summary>
         public void DisplayStatus()
         {
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("상태 보기");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("캐릭터의 정보가 표시됩니다.");
-            Console.WriteLine();
-            Console.WriteLine($"Lv. {Level:D2}");
-            Console.WriteLine($"{Name} ( {GetJobName(Job)} )");
-            Console.WriteLine($"{"공격력"} : {Atk}");
-            Console.WriteLine($"{"방어력"} : {Def}");
-            Console.WriteLine($"{"체  력"} : {CurrentHp}");
-            Console.WriteLine($"{"Gold"}   : {Gold}");
+            Utility.ClearScene();
+            Utility.PrintScene($"Lv. {level:D2}");
+            Utility.PrintScene($"{Name} ( {GetJobName(job)} )");
+            Utility.PrintScene($"{"공격력"} : {atk}");
+            Utility.PrintScene($"{"방어력"} : {def}");
+            Utility.PrintScene($"{"체  력"} : {currentHp}");
+            Utility.PrintScene($"{"Gold"}   : {gold}");
         }
         /// <summary>
         /// EJobType에 따라 맞는 이름 반환
