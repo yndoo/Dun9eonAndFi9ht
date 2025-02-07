@@ -41,7 +41,7 @@ namespace Dun9eonAndFi9ht.Scenes
         public override void Start()
         {
             base.Start();
-            Console.WriteLine("Battle!!");
+            Utility.PrintScene("Battle!!");
             EnterDungeon();
 
             // To Do : BattleTurn 호출
@@ -54,10 +54,10 @@ namespace Dun9eonAndFi9ht.Scenes
 
         private void ResultScreen()
         {
-            Console.Clear();
-            Console.WriteLine("Battle!! - Result");
+            Utility.ClearScene();
+            Utility.PrintScene("Battle!! - Result");
             // To Do : 배틀 결과
-            Console.WriteLine("");
+
 
             Utility.ClearMenu();
             Utility.PrintMenu("0. 나가기");
