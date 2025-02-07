@@ -45,8 +45,18 @@ namespace Dun9eonAndFi9ht.Scenes
             EnterDungeon();
 
             Random random = new Random();
-            // To Do : 기능 생긴 뒤에 수정해야 함
-            //BattleSystem.BattleTurn(Player, MonsterList.OrderBy(x => random.Next(0, 3)).ToList());
+            // To Do : BattleTurn 기능 생긴 뒤에 수정해야 함
+            //isPlayerWin = BattleSystem.BattleTurn(Player, MonsterList.OrderBy(x => random.Next(0, 3)).ToList());
+
+            // To Do : Result 
+            if(isPlayerWin == true)
+            {
+
+            }
+            else
+            {
+
+            }
         }
     }
 }
