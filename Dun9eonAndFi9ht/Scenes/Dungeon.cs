@@ -35,6 +35,8 @@ namespace Dun9eonAndFi9ht.Scenes
 
             //Monster 데이터 가져오기
             DataTableManager dtManager = DataTableManager.Instance;
+            if (MonsterList!=null&&MonsterList.Count != 0) MonsterList.Clear();
+
             for (int i = 0; i < MonsterTypeCount; i++)
             {
                 try
