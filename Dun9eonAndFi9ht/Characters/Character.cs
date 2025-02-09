@@ -14,8 +14,23 @@ namespace Dun9eonAndFi9ht.Characters
         public int Atk { get; set; }
         public int Def { get; set; }
         public int Level { get; set; }
-        public int CurrentHp { get; set; }
-        public bool IsDead { get; set; }
+        private int currentHp;
+        public int CurrentHp
+        {
+            get
+            {
+                if (currentHp <= 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return currentHp;
+                }
+            }
+        }
+        public bool IsDead { get; private set; }
+        public int FinalAtk { get; private set; }
 
         public Character(string name, int maxHp, int atk, int def, int level)
         {
@@ -24,7 +39,7 @@ namespace Dun9eonAndFi9ht.Characters
             this.Atk = atk;
             this.Def = def;
             this.Level = level;
-            this.CurrentHp = maxHp;
+            this.currentHp = maxHp;
             this.IsDead = false;
         }
 
@@ -35,13 +50,13 @@ namespace Dun9eonAndFi9ht.Characters
             int error = Atk / Constants.ERROR_RATE + remain;
 
             Random random = new Random();
-            int finalAtk = Atk + random.Next(-error, error + 1);
+            FinalAtk = Atk + random.Next(-error, error + 1);
         }
 
         public virtual void Damaged(int damage)
         {
-            CurrentHp -= damage;
-            if (CurrentHp <= 0)
+            currentHp -= damage;
+            if (currentHp <= 0)
             {
                 Dead();
             }

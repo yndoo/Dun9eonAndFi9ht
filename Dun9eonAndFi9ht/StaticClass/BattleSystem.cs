@@ -146,8 +146,8 @@ namespace Dun9eonAndFi9ht.StaticClass
         private void Battle(Character attacker, Character target)
         {
             int targetHP = target.CurrentHp;
-            int finalAtk = attacker.Atk;    // 임시 구현
             attacker.Attack(target);
+            int finalAtk = attacker.FinalAtk;
             target.Damaged(finalAtk);
             DisplayBattleInfo(attacker, target, finalAtk, targetHP);
         }
