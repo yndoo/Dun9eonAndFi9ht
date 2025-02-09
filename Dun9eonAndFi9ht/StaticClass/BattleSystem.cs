@@ -100,10 +100,14 @@ namespace Dun9eonAndFi9ht.StaticClass
         /// 잘못된 입력 시 False 반환</returns>
         private bool PlayerAttack()
         {
+            for (int i = 0; i < monsterList.Count; i++)
+            {
+                Utility.PrintFree($"{i + 1}번 Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp}", i + 2);
+            }
             Utility.ClearMenu();
             Utility.PrintMenu("0. 취소");
             Utility.PrintMenu("");
-            Utility.PrintMenu("원하시는 행동을 입력해주세요.");
+            Utility.PrintMenu("대상을 선택해주세요.");
             Utility.PrintMenu(">>");
             int input = Utility.UserInput(0, monsterList.Count);
             switch (input)
@@ -111,7 +115,7 @@ namespace Dun9eonAndFi9ht.StaticClass
                 case < 0:
                     Utility.ClearMenu();
                     Utility.PrintMenu("잘못된 입력입니다.");
-                    Utility.PrintMenu("0. 다음");
+                    Utility.PrintMenu("0. 확인");
                     Utility.PrintMenu("");
                     Utility.PrintMenu(">>");
                     Utility.UserInput(0, 0);
@@ -124,7 +128,7 @@ namespace Dun9eonAndFi9ht.StaticClass
                     {
                         Utility.ClearMenu();
                         Utility.PrintMenu("잘못된 입력입니다.");
-                        Utility.PrintMenu("0. 다음");
+                        Utility.PrintMenu("0. 확인");
                         Utility.PrintMenu("");
                         Utility.PrintMenu(">>");
                         Utility.UserInput(0, 0);
