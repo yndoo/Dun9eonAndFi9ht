@@ -23,7 +23,7 @@ namespace DataDefinition
     #region 열거형
     public enum EJobType
     {
-        None,
+        None = -1,
         Warrior,
         Mage,
         Rogue,
