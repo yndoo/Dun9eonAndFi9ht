@@ -42,7 +42,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 try
                 {
                     List<string> lst = dtManager.GetMonsterData("enemy", i);
-                    MonsterList.Add(new Monster(lst[1], int.Parse(lst[2]), int.Parse(lst[3]), int.Parse(lst[4]), int.Parse(lst[5]), int.Parse(lst[6]), int.Parse(lst[7])));
+                    MonsterList.Add(new Monster(lst[1], int.Parse(lst[2]), int.Parse(lst[3]), int.Parse(lst[4]), int.Parse(lst[5]), int.Parse(lst[6])));
                 }
                 catch (Exception ex)
                 {
@@ -59,7 +59,7 @@ namespace Dun9eonAndFi9ht.Scenes
             base.Start();
             EnterDungeon();
 
-            int hpBeforeDungeon = Player.CurrentHp;
+            int hpBeforeDungeon = (int)Player.CurrentHp;
 
             Random random = new Random();
             int rMonsterCnt = random.Next(1, 4);
