@@ -1,7 +1,7 @@
 {
   "enemy_stage5": {
     "12": {
-      "Name": "Voidgrub",
+      "name": "Voidgrub",
       "maxHp": 55,
       "atk": 8,
       "def": 20,
@@ -10,7 +10,7 @@
       "gold": 80
     },
     "13": {
-      "Name": "Rift Herald",
+      "name": "Rift Herald",
       "maxHp": 62,
       "atk": 10,
       "def": 23,
@@ -19,7 +19,7 @@
       "gold": 85
     },
     "14": {
-      "Name": "Elder Dragon",
+      "name": "Elder Dragon",
       "maxHp": 70,
       "atk": 20,
       "def": 18,

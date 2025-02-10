@@ -41,7 +41,6 @@ namespace Dun9eonAndFi9ht.App
         static bool SetPlayer(int ID)
         {
             DataTableManager.Instance.Initialize("../../../database");
-            DataTableManager.Instance.PrintDatabase();
             Dictionary<string, object>? Info = DataTableManager.Instance.GetDBData("player", ID);
 
             if (Info == null || Info.Count < 7)

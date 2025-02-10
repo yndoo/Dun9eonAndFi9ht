@@ -81,49 +81,11 @@ namespace Dun9eonAndFi9ht.Manager
             string key = ID.ToString();
             if (database.TryGetValue(tableName, out var tableData))
             {
-                if(tableData.TryGetValue(key, out var row))
-                {
-                    Console.WriteLine($"{row["name"]}");
-                    return row;
-                }
+                if(tableData.TryGetValue(key, out var row)) return row;
             }
             return null;
         }
 
-        public void PrintDatabase()
-{
-    Console.WriteLine("\n===== 데이터베이스 전체 출력 =====");
-
-    if (database.Count == 0)
-    {
-        Console.WriteLine("데이터베이스가 비어 있습니다.");
-        return;
-    }
-
-    foreach (var table in database)
-    {
-        Console.WriteLine($"\n 테이블: {table.Key}");
-        Console.WriteLine(new string('-', 40)); // 구분선
-
-        if (table.Value.Count == 0)
-        {
-            Console.WriteLine("데이터 없음");
-            continue;
-        }
-
-        foreach (var row in table.Value)
-        {
-            Console.WriteLine($" ID: {row.Key}");
-            foreach (var field in row.Value)
-            {
-                Console.WriteLine($"    - {field.Key}: {field.Value}");
-            }
-            Console.WriteLine(new string('-', 40)); // 구분선
-        }
-    }
-
-    Console.WriteLine("================================\n");
-}
 
         /// <summary>
         /// JsonElement를 Dictionary<string, object>로 변환하는 유틸리티 함수
@@ -192,7 +154,6 @@ namespace Dun9eonAndFi9ht.Manager
                         break;
                 }
             }
-
             return list;
         }
 

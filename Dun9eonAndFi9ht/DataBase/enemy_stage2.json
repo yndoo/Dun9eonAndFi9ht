@@ -1,7 +1,7 @@
 { 
   "enemy_stage2": {
     "3": {
-      "Name": "Siege Minion",
+      "name": "Siege Minion",
       "maxHp": 25,
       "atk": 8,
       "def": 5,
@@ -10,7 +10,7 @@
       "gold": 25
     },
     "4": {
-      "Name": "Murk Wolves",
+      "name": "Murk Wolves",
       "maxHp": 20,
       "atk": 9,
       "def": 3,
@@ -19,7 +19,7 @@
       "gold": 23
     },
     "5": {
-      "Name": "Rift Scuttler",
+      "name": "Rift Scuttler",
       "maxHp": 32,
       "atk": 4,
       "def": 10,
