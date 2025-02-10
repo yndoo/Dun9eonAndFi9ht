@@ -42,7 +42,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 try
                 {
                     List<string> lst = dtManager.GetMonsterData("enemy", i);
-                    MonsterList.Add(new Monster(lst[1], int.Parse(lst[2]), int.Parse(lst[3]), int.Parse(lst[4]), int.Parse(lst[5]), int.Parse(lst[6]), int.Parse(lst[7])));
+                    MonsterList.Add(new Monster(lst[1], int.Parse(lst[2]), int.Parse(lst[3]), int.Parse(lst[4]), int.Parse(lst[5]), int.Parse(lst[6])));
                 }
                 catch (Exception ex)
                 {
@@ -59,7 +59,7 @@ namespace Dun9eonAndFi9ht.Scenes
             base.Start();
             EnterDungeon();
 
-            int hpBeforeDungeon = Player.CurrentHp;
+            float hpBeforeDungeon = Player.CurrentHp;
 
             Random random = new Random();
             int rMonsterCnt = random.Next(1, 4);
@@ -75,12 +75,11 @@ namespace Dun9eonAndFi9ht.Scenes
         /// 던전 결과 출력
         /// </summary>
         /// <param name="hpBeforeDungeon">던전 입장 전 플레이어 체력</param>
-        private ESceneType ResultScreen(int hpBeforeDungeon)
+        private ESceneType ResultScreen(float hpBeforeDungeon)
         {
             Utility.ClearScene();
             Utility.PrintScene("Battle!! - Result");
 
-            // To Do : 배틀 결과 (MonsterCount 생긴뒤에 주석 해제)
             Utility.PrintScene("");
             Utility.PrintScene(isPlayerLose ? "You Lose" : "Victory");
             Utility.PrintScene("");
@@ -90,7 +89,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintScene("");
             }
             Utility.PrintScene($"Lv.{Player.Level} {Player.Name}");
-            Utility.PrintScene($"HP {hpBeforeDungeon} -> {Player.CurrentHp}");
+            Utility.PrintScene($"HP {hpBeforeDungeon:F2} -> {Player.CurrentHp:F2}");
 
             while (true)
             {

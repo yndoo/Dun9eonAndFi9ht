@@ -120,7 +120,7 @@ namespace Dun9eonAndFi9ht.StaticClass
             {
                 for (int i = 0; i < monsterList.Count; i++)
                 {
-                    Utility.PrintFree($"{i + 1}번 Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp}", i + 2);
+                    Utility.PrintFree($"{i + 1}번 Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp:F2}", i + 2);
                 }
                 Utility.ClearMenu();
                 Utility.PrintMenu("0. 취소");
@@ -159,9 +159,9 @@ namespace Dun9eonAndFi9ht.StaticClass
         /// <param name="target">공격받는 캐릭터</param>
         private void Battle(Character attacker, Character target)
         {
-            int targetHP = target.CurrentHp;
+            float targetHP = target.CurrentHp;
             attacker.Attack(target);
-            int finalAtk = attacker.FinalAtk;
+            float finalAtk = attacker.FinalAtk;
             target.Damaged(finalAtk);
             DisplayBattleInfo(attacker, target, finalAtk, targetHP);
         }
@@ -192,12 +192,12 @@ namespace Dun9eonAndFi9ht.StaticClass
             Utility.PrintScene("");
             for (int i = 0; i < monsterList.Count; i++)
             {
-                Utility.PrintScene($"Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp}");
+                Utility.PrintScene($"Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp:F2}");
             }
             Utility.PrintScene("");
             Utility.PrintScene("[내 정보]");
             Utility.PrintScene($"Lv.{player.Level} {player.Name} ({player.Job})");
-            Utility.PrintScene($"HP {player.CurrentHp}/{player.MaxHp}");
+            Utility.PrintScene($"HP {player.CurrentHp:F2}/{player.MaxHp:F2}");
         }
 
         /// <summary>
@@ -207,17 +207,17 @@ namespace Dun9eonAndFi9ht.StaticClass
         /// <param name="target">공격 받는 캐릭터</param>
         /// <param name="damage">최종 공격 데미지</param>
         /// <param name="targetPrevHP">공격 받는 캐릭터의 공격 받기 이전의 HP</param>
-        private void DisplayBattleInfo(Character attacker, Character target, int damage, int targetPrevHP)
+        private void DisplayBattleInfo(Character attacker, Character target, float damage, float targetPrevHP)
         {
             Utility.ClearAll();
             Utility.PrintScene("Battle!!");
             Utility.PrintScene("");
             Utility.PrintScene($"{attacker.Name}의 공격!");
-            Utility.PrintScene($"{target.Name}을(를) 맞췄습니다. [데미지: {damage}]");
+            Utility.PrintScene($"{target.Name}을(를) 맞췄습니다. [데미지: {damage:F2}]");
             Utility.PrintScene("");
             Utility.PrintScene($"Lv.{target.Level} {target.Name}");
-            string resultHP = target.IsDead ? "Dead" : target.CurrentHp.ToString();
-            Utility.PrintScene($"HP {targetPrevHP.ToString()} -> {resultHP}");
+            string resultHP = target.IsDead ? "Dead" : target.CurrentHp.ToString("F2");
+            Utility.PrintScene($"HP {targetPrevHP.ToString("F2")} -> {resultHP}");
 
             int input = -1;
             while (input != 0)

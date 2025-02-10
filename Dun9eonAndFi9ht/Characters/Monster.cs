@@ -11,9 +11,9 @@ namespace Dun9eonAndFi9ht.Characters
     {
         public Reward Reward { get; private set; }
 
-        public Monster(string name, int maxHp, int atk, int def, int level, int exp, int gold) : base(name, maxHp, atk, def, level)
+        public Monster(string name, float maxHp, float atk, float def, int level, int gold) : base(name, maxHp, atk, def, level)
         {
-            Reward = new Reward(exp, gold);
+            Reward = new Reward(level, gold);
         }
 
         public override void Attack(Character target)
@@ -21,7 +21,7 @@ namespace Dun9eonAndFi9ht.Characters
             base.Attack(target);
         }
 
-        public override void Damaged(int damage)
+        public override void Damaged(float damage)
         {
             base.Damaged(damage);
         }
