@@ -70,6 +70,11 @@ namespace Dun9eonAndFi9ht.StaticClass
             }
         }
 
+        /// <summary>
+        /// 플레이어 턴에 호출하는 플레이어 행동 메서드
+        /// </summary>
+        /// <returns>행동 입력 시 True 반환
+        /// 잘못된 입력 시 False 반환</returns>
         private bool PlayerAction()
         {
             Utility.ClearMenu();
@@ -88,14 +93,21 @@ namespace Dun9eonAndFi9ht.StaticClass
         }
 
         /// <summary>
+        /// 공격 선택 시 호출하는 메서드
         /// 몬스터 번호를 입력받아 해당 몬스터가 살아있으면 공격, 아니면 다시 선택
         /// </summary>
+        /// <returns>몬스터 선택 시 True 반환
+        /// 잘못된 입력 시 False 반환</returns>
         private bool PlayerAttack()
         {
+            for (int i = 0; i < monsterList.Count; i++)
+            {
+                Utility.PrintFree($"{i + 1}번 Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp}", i + 2);
+            }
             Utility.ClearMenu();
             Utility.PrintMenu("0. 취소");
             Utility.PrintMenu("");
-            Utility.PrintMenu("원하시는 행동을 입력해주세요.");
+            Utility.PrintMenu("대상을 선택해주세요.");
             Utility.PrintMenu(">>");
             int input = Utility.UserInput(0, monsterList.Count);
             switch (input)
@@ -103,7 +115,7 @@ namespace Dun9eonAndFi9ht.StaticClass
                 case < 0:
                     Utility.ClearMenu();
                     Utility.PrintMenu("잘못된 입력입니다.");
-                    Utility.PrintMenu("0. 다음");
+                    Utility.PrintMenu("0. 확인");
                     Utility.PrintMenu("");
                     Utility.PrintMenu(">>");
                     Utility.UserInput(0, 0);
@@ -116,7 +128,7 @@ namespace Dun9eonAndFi9ht.StaticClass
                     {
                         Utility.ClearMenu();
                         Utility.PrintMenu("잘못된 입력입니다.");
-                        Utility.PrintMenu("0. 다음");
+                        Utility.PrintMenu("0. 확인");
                         Utility.PrintMenu("");
                         Utility.PrintMenu(">>");
                         Utility.UserInput(0, 0);
@@ -130,11 +142,16 @@ namespace Dun9eonAndFi9ht.StaticClass
             }
         }
 
+        /// <summary>
+        /// 공격 대상에게 공격을 하는 메서드
+        /// </summary>
+        /// <param name="attacker">공격하는 캐릭터</param>
+        /// <param name="target">공격받는 캐릭터</param>
         private void Battle(Character attacker, Character target)
         {
             int targetHP = target.CurrentHp;
-            int finalAtk = attacker.Atk;    // 임시 구현
             attacker.Attack(target);
+            int finalAtk = attacker.FinalAtk;
             target.Damaged(finalAtk);
             DisplayBattleInfo(attacker, target, finalAtk, targetHP);
         }
@@ -173,7 +190,14 @@ namespace Dun9eonAndFi9ht.StaticClass
             Utility.PrintScene($"HP {player.CurrentHp}/{player.MaxHp}");
         }
 
-        private void DisplayBattleInfo(Character attacker, Character target, int damage, int preHP)
+        /// <summary>
+        /// 공격 시 전투 정보를 출력하는 메서드
+        /// </summary>
+        /// <param name="attacker">공격하는 캐릭터</param>
+        /// <param name="target">공격 받는 캐릭터</param>
+        /// <param name="damage">최종 공격 데미지</param>
+        /// <param name="targetPrevHP">공격 받는 캐릭터의 공격 받기 이전의 HP</param>
+        private void DisplayBattleInfo(Character attacker, Character target, int damage, int targetPrevHP)
         {
             Utility.ClearAll();
             Utility.PrintScene("Battle!!");
@@ -183,7 +207,7 @@ namespace Dun9eonAndFi9ht.StaticClass
             Utility.PrintScene("");
             Utility.PrintScene($"Lv.{target.Level} {target.Name}");
             string resultHP = target.IsDead ? "Dead" : target.CurrentHp.ToString();
-            Utility.PrintScene($"HP {preHP.ToString()} -> {resultHP}");
+            Utility.PrintScene($"HP {targetPrevHP.ToString()} -> {resultHP}");
 
             Utility.PrintMenu("0. 다음");
             Utility.PrintMenu("");
