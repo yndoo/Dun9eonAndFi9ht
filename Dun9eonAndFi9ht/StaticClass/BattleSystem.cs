@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Dun9eonAndFi9ht.StaticClass
 {
@@ -68,10 +69,19 @@ namespace Dun9eonAndFi9ht.StaticClass
             {
                 if (!monsterList[i].IsDead)
                 {
-                    Battle(monsterList[i], player);
-                    if (player.IsDead)
+                    Random random = new Random();
+                    if (random.Next(100) < 10)
                     {
-                        return;
+                        // 회피 출력
+                        DisplayMissAttackInfo(monsterList[i], player);
+                    }
+                    else
+                    {
+                        Battle(monsterList[i], player);
+                        if (player.IsDead)
+                        {
+                            return;
+                        }
                     }
                 }
             }
@@ -143,7 +153,16 @@ namespace Dun9eonAndFi9ht.StaticClass
                         }
                         else
                         {
-                            Battle(player, monsterList[monsterIndex]);
+                            Random random = new Random();
+                            if (random.Next(100) < 10)
+                            {
+                                // 회피 출력
+                                DisplayMissAttackInfo(player, monsterList[monsterIndex]);
+                            }
+                            else
+                            {
+                                Battle(player, monsterList[monsterIndex]);
+                            }
                             isPlayerAttackEnd = true;
                         }
                         break;
@@ -162,8 +181,15 @@ namespace Dun9eonAndFi9ht.StaticClass
             float targetHP = target.CurrentHp;
             attacker.Attack(target);
             float finalAtk = attacker.FinalAtk;
+            Random random = new Random();
+            bool isCritical = false;
+            if (random.Next(100) < 15)
+            {
+                finalAtk *= 1.6f;
+                isCritical = true;
+            }
             target.Damaged(finalAtk);
-            DisplayBattleInfo(attacker, target, finalAtk, targetHP);
+            DisplayBattleInfo(attacker, target, finalAtk, targetHP, isCritical);
         }
 
         /// <summary>
@@ -207,17 +233,42 @@ namespace Dun9eonAndFi9ht.StaticClass
         /// <param name="target">공격 받는 캐릭터</param>
         /// <param name="damage">최종 공격 데미지</param>
         /// <param name="targetPrevHP">공격 받는 캐릭터의 공격 받기 이전의 HP</param>
-        private void DisplayBattleInfo(Character attacker, Character target, float damage, float targetPrevHP)
+        private void DisplayBattleInfo(Character attacker, Character target, float damage, float targetPrevHP, bool isCritical)
         {
             Utility.ClearAll();
             Utility.PrintScene("Battle!!");
             Utility.PrintScene("");
             Utility.PrintScene($"{attacker.Name}의 공격!");
-            Utility.PrintScene($"{target.Name}을(를) 맞췄습니다. [데미지: {damage:F2}]");
+            string criticalTxt = isCritical ? " - 치명타 공격!!" : "";
+            Utility.PrintScene($"{target.Name}을(를) 맞췄습니다. [데미지: {damage:F2}]{criticalTxt}");
             Utility.PrintScene("");
             Utility.PrintScene($"Lv.{target.Level} {target.Name}");
             string resultHP = target.IsDead ? "Dead" : target.CurrentHp.ToString("F2");
             Utility.PrintScene($"HP {targetPrevHP.ToString("F2")} -> {resultHP}");
+
+            int input = -1;
+            while (input != 0)
+            {
+                Utility.ClearMenu();
+                Utility.PrintMenu("0. 다음");
+                Utility.PrintMenu("");
+                Utility.PrintMenu(">>");
+                input = Utility.UserInput(0, 0);
+            }
+        }
+
+        /// <summary>
+        /// 공격 회피 시 화면 상단에 전투 정보를 출력하는 메서드
+        /// </summary>
+        /// <param name="attacker">공격하는 캐릭터</param>
+        /// <param name="target">공격 받는 캐릭터</param>
+        private void DisplayMissAttackInfo(Character attacker, Character target)
+        {
+            Utility.ClearAll();
+            Utility.PrintScene("Battle!!");
+            Utility.PrintScene("");
+            Utility.PrintScene($"{attacker.Name}의 공격!");
+            Utility.PrintScene($"{target.Name}을(를) 공격했지만 아무일도 일어나지 않았습니다.");
 
             int input = -1;
             while (input != 0)
