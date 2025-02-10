@@ -2,7 +2,7 @@
   "playerExpTable": {
     "0": {
       "Level": 1,
-      "MaxEp": 10
+      "MaxExp": 10
     },
     "1": {
       "Level": 2,
