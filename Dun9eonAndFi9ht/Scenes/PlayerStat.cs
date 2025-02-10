@@ -23,16 +23,27 @@ namespace Dun9eonAndFi9ht.Scenes
             GameManager.Instance.Player.DisplayStatus();
 
             // 메뉴 출력
-            Utility.ClearMenu();
-            Utility.PrintMenu("0. 나가기");
             while (true)
             {
+                Utility.ClearMenu();
+                Utility.PrintMenu("0. 나가기");
+
                 int userInput = Utility.UserInput(0, 0);
                 if (userInput == 0)
                 {
                     return ESceneType.StartScene;
                 }
-                Utility.PrintMenu("잘못된 입력입니다.");
+
+                int nextInput = -1;
+                while (nextInput != 0)
+                {
+                    Utility.ClearMenu();
+                    Utility.PrintMenu("잘못된 입력입니다.");
+                    Utility.PrintMenu("0. 확인");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu(">>");
+                    nextInput = Utility.UserInput(0, 0);
+                }
             }
         }
     }

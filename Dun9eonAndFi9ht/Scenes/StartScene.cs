@@ -19,10 +19,11 @@ namespace Dun9eonAndFi9ht.Scenes
             base.Start();
             Utility.PrintScene("Dun9eon & Fi9ht에 오신 여러분 환영합니다.");
             Utility.PrintScene("이제 전투를 시작할 수 있습니다.");
-
-            Utility.PrintMenu(new string[] {"1. 상태보기", "2. 전투 시작", "\n원하시는 행동을 입력해주세요.\n>>"});
+            
             while(true)
             {
+                Utility.ClearMenu();
+                Utility.PrintMenu(new string[] { "1. 상태보기", "2. 전투 시작", "\n원하시는 행동을 입력해주세요.\n>>" });
                 int userInput = Utility.UserInput(1, 2);
                 if (userInput == 1)
                 {
@@ -34,7 +35,16 @@ namespace Dun9eonAndFi9ht.Scenes
                 }
                 else
                 {
-                    Utility.PrintMenu("잘못된 입력입니다.");
+                    int nextInput = -1;
+                    while (nextInput != 0)
+                    {
+                        Utility.ClearMenu();
+                        Utility.PrintMenu("잘못된 입력입니다.");
+                        Utility.PrintMenu("0. 확인");
+                        Utility.PrintMenu("");
+                        Utility.PrintMenu(">>");
+                        nextInput = Utility.UserInput(0, 0);
+                    }
                 }
             }            
         }
