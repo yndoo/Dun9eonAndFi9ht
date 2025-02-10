@@ -60,10 +60,9 @@ namespace Dun9eonAndFi9ht.Scenes
         /// </summary>
         private void NewGame()
         {
-            App.Program.SetPlayer(0);
-
             Utility.ClearScene();
-
+            string nameInput;
+            EJobType jobType;
             // 이름 설정
             while (true)
             {
@@ -71,7 +70,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintScene("[ Dun9eon & Fi9ht - 새로 시작 ]");
                 Utility.PrintScene("원하시는 이름을 설정해주세요.");
                 Utility.PrintMenu("이름을 입력하세요.\n>>");
-                string nameInput = Console.ReadLine();
+                nameInput = Console.ReadLine();
                 Utility.PrintScene($"입력하신 이름은 '{nameInput}'입니다. 저장하시겠습니까?");
 
 
@@ -84,7 +83,6 @@ namespace Dun9eonAndFi9ht.Scenes
                     int command = Utility.UserInput(1, 2);
                     if (command == 1)
                     {
-                        GameManager.Instance.Player.Name = nameInput;
                         isSaved = true;
                         break;
                     }
@@ -108,7 +106,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintScene("원하시는 직업을 선택해주세요.");
                 Utility.PrintScene("1. Warrior\n2. Mage\n3. Rogue");
                 Utility.PrintMenu("직업을 선택하세요.\n>>");
-                int jobInput = Utility.UserInput(1, 3);
+                int jobInput = Utility.UserInput(1, 3) - 1;
                 if (jobInput < 0)
                 {
                     Utility.ClearMenu();
@@ -117,7 +115,7 @@ namespace Dun9eonAndFi9ht.Scenes
                     Console.ReadLine();
                     continue;
                 }
-                EJobType jobType = (EJobType)jobInput;
+                jobType = (EJobType)jobInput;
                 Utility.PrintScene($"선택하신 직업은 '{jobType.ToString()}'입니다. 저장하시겠습니까?");
 
                 bool isSaved = false;
@@ -129,7 +127,7 @@ namespace Dun9eonAndFi9ht.Scenes
                     int command = Utility.UserInput(1, 2);
                     if (command == 1)
                     {
-                        GameManager.Instance.Player.Job = jobType;
+                        App.Program.SetPlayer(jobInput);
                         isSaved = true;
                         break;
                     }
@@ -145,6 +143,10 @@ namespace Dun9eonAndFi9ht.Scenes
                 if (isSaved) break;
                 else continue;
             }
+
+            GameManager.Instance.Player.Name = nameInput;
+            GameManager.Instance.Player.Job = jobType;
+
             Utility.ClearScene();
             Utility.ClearMenu();
         }
