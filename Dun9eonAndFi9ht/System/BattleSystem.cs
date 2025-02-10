@@ -132,7 +132,7 @@ namespace Dun9eonAndFi9ht.System
             {
                 for (int i = 0; i < monsterList.Count; i++)
                 {
-                    Utility.PrintFree($"{i + 1}번 Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp:F2}", i + 2);
+                    Utility.PrintFree($"{i + 1}번 Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp:F2}/{monsterList[i].MaxHp:F2}", i + 2);
                 }
                 Utility.ClearMenu();
                 Utility.PrintMenu("0. 취소");
@@ -238,7 +238,8 @@ namespace Dun9eonAndFi9ht.System
             Utility.PrintScene("");
             for (int i = 0; i < monsterList.Count; i++)
             {
-                Utility.PrintScene($"Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp:F2}");
+                string dead = monsterList[i].CurrentHp == 0 ? "Dead" : "";
+                Utility.PrintScene($"Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp:F2}/{monsterList[i].MaxHp:F2} {dead}");
             }
             Utility.PrintScene("");
             Utility.PrintScene("[내 정보]");
