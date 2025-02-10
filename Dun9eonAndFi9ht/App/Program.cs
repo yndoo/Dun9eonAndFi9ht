@@ -49,6 +49,20 @@ namespace Dun9eonAndFi9ht.App
                 return false;
             }
 
+            int[] expTable = new int[10];
+            for (int i = 0; i < 10; i++)
+            {
+                Dictionary<string, object>? Info_ExpTable = DataTableManager.Instance.GetDBData("playerExpTable", i);
+
+                if (Info_ExpTable == null)
+                {
+                    Console.WriteLine($"플레이어 경험치 데이터를 찾을 수 없습니다. ID: {ID}");
+                    return false;
+                }
+                expTable[i] = Convert.ToInt32(Info_ExpTable["MaxExp"]);
+            }
+
+
             // EJobType 변환 예외 처리
             if (!Info.TryGetValue("job", out var jobValue) || jobValue == null || !Enum.TryParse<EJobType>(jobValue.ToString(), out var jobType))
             {
@@ -69,7 +83,8 @@ namespace Dun9eonAndFi9ht.App
                 atk,
                 def,
                 level,
-                gold
+                gold,
+                expTable
                 );
                 return true;
             }

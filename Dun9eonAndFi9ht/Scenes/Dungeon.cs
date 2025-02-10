@@ -82,16 +82,15 @@ namespace Dun9eonAndFi9ht.Scenes
             Utility.ClearScene();
             Utility.PrintScene("Battle!! - Result");
 
-            Utility.PrintScene("");
-            Utility.PrintScene(isPlayerLose ? "You Lose" : "Victory");
-            Utility.PrintScene("");
-            if (!isPlayerLose)
+            // 몬스터 보상 합산
+            Reward sumReward = new Reward
             {
-                Utility.PrintScene($"던전에서 몬스터 {MonsterList.Count}마리를 잡았습니다.");
-                Utility.PrintScene("");
-            }
-            Utility.PrintScene($"Lv.{Player.Level} {Player.Name}");
-            Utility.PrintScene($"HP {hpBeforeDungeon:F2} -> {Player.CurrentHp:F2}");
+                exp = MonsterList.Sum(m => m.Reward.exp),
+                gold = MonsterList.Sum(m => m.Reward.gold)
+            };
+
+            GainItem(sumReward);
+            DisplayDungeonResult(hpBeforeDungeon, sumReward);
 
             while (true)
             {
@@ -114,5 +113,62 @@ namespace Dun9eonAndFi9ht.Scenes
                 }
             }
         }
+
+        /// <summary>
+        /// 던전 결과 출력 핵심 기능
+        /// </summary>
+        /// <param name="hpBeforeDungeon">던전 입장 전 플레이어 체력</param>
+        private void DisplayDungeonResult(float hpBeforeDungeon, Reward sumReward)
+        {
+            Utility.PrintScene("");
+            Utility.PrintScene(isPlayerLose ? "You Lose" : "Victory");
+            Utility.PrintScene("");
+
+            if (!isPlayerLose)
+            {
+                Utility.PrintScene($"던전에서 몬스터 {MonsterList.Count}마리를 잡았습니다.");
+                Utility.PrintScene("");
+            }
+
+            // 캐릭터 정보 출력
+            Utility.PrintScene("[캐릭터 정보]");
+            int prevLevel = Player.Level;
+            int prevExp = Player.CurExp;
+
+            // 경험치 획득
+            bool isLevelUp = Player.GainExp(sumReward.exp);
+
+            if (isLevelUp)
+            {
+                Utility.PrintScene($"Lv.{prevLevel} {Player.Name} -> Lv.{Player.Level} {Player.Name}");
+            }
+            else
+            {
+                Utility.PrintScene($"Lv.{Player.Level} {Player.Name}");
+            }
+            Utility.PrintScene($"HP {hpBeforeDungeon:F2} -> {Player.CurrentHp:F2}");
+            Utility.PrintScene($"EXP {prevExp} -> {sumReward.exp + prevExp}");
+
+            // 획득한 보상 출력
+            if (!isPlayerLose)
+            {
+                Utility.PrintScene("");
+                Utility.PrintScene("[획득 아이템]");
+                Utility.PrintScene($"{sumReward.gold} Gold");
+            }
+            Utility.PrintScene("");
+
+        }
+
+        /// <summary>
+        /// 던전 결과 아이템 획득
+        /// </summary>
+        /// <param name="sumReward">던전 보상</param>
+        private void GainItem(Reward sumReward)
+        {
+            Player.GainGold(sumReward.gold);
+        }
+
+
     }
 }
