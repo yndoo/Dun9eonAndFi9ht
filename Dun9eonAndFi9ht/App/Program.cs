@@ -38,7 +38,7 @@ namespace Dun9eonAndFi9ht.App
         /// </summary>
         /// <param name="ID">플레이어 ID에 따라 데이터 읽어 옴</param>
         /// <returns>플레이어 정보 로드에 성공 하였는지</returns>
-        static bool SetPlayer(int ID)
+        public static bool SetPlayer(int ID)
         {
             DataTableManager.Instance.Initialize("../../../database");
             Dictionary<string, object>? Info = DataTableManager.Instance.GetDBData("player", ID);
