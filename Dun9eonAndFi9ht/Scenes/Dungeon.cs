@@ -37,13 +37,14 @@ namespace Dun9eonAndFi9ht.Scenes
             DataTableManager dtManager = DataTableManager.Instance;
             if (MonsterList!=null&&MonsterList.Count != 0) MonsterList.Clear();
 
+            int j = 1;
             for (int i = 0; i < MonsterTypeCount; i++)
             {
                 try
                 {
-                    List<string> lst = dtManager.GetMonsterData("enemy", i);
-                    MonsterList.Add(new Monster(lst[1], int.Parse(lst[2]), int.Parse(lst[3]), int.Parse(lst[4]), int.Parse(lst[5]), int.Parse(lst[6]), int.Parse(lst[7])));
-                }
+                    Dictionary<string, object> lst = dtManager.GetDBData($"enemy_stage{j}", i);
+                    MonsterList.Add(new Monster(lst["name"].ToString(), Convert.ToInt32(lst["maxHp"]), Convert.ToInt32(lst["atk"]), Convert.ToInt32(lst["def"]), Convert.ToInt32(lst["level"]), Convert.ToInt32(lst["exp"]), Convert.ToInt32(lst["gold"])));
+                }   
                 catch (Exception ex)
                 {
                     Utility.PrintMenu($"\n{i} 인덱스 Monster 데이터 로드 오류 : {ex.Message}");

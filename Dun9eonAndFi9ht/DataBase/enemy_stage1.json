@@ -1,0 +1,31 @@
+{
+  "enemy_stage1": {
+    "0": {
+      "Name": "Melee Minion",
+      "maxHp": 15,
+      "atk": 3,
+      "def": 3,
+      "level": 4,
+      "currentHp": 15,
+      "gold": 15
+    },
+    "1": {
+      "Name": "Caster Minion",
+      "maxHp": 12,
+      "atk": 4,
+      "def": 2,
+      "level": 6,
+      "currentHp": 12,
+      "gold": 13
+    },
+    "2": {
+      "Name": "Raptors",
+      "maxHp": 18,
+      "atk": 5,
+      "def": 1,
+      "level": 5,
+      "currentHp": 18,
+      "gold": 18
+    }
+  }
+}

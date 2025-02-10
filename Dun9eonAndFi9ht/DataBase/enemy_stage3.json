@@ -1,0 +1,31 @@
+{
+  "enemy_stage3": {
+    "6": {
+      "Name": "Crimson Raptor",
+      "maxHp": 34,
+      "atk": 10,
+      "def": 8,
+      "level": 12,
+      "currentHp": 34,
+      "gold": 45
+    },
+    "7": {
+      "Name": "Greater Murk Wolf",
+      "maxHp": 32,
+      "atk": 11,
+      "def": 9,
+      "level": 13,
+      "currentHp": 32,
+      "gold": 40
+    },
+    "8": {
+      "Name": "Krug",
+      "maxHp": 37,
+      "atk": 15,
+      "def": 13,
+      "level": 15,
+      "currentHp": 37,
+      "gold": 50
+    }
+  }
+}
