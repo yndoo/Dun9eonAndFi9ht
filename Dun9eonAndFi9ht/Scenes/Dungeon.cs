@@ -59,7 +59,7 @@ namespace Dun9eonAndFi9ht.Scenes
             base.Start();
             EnterDungeon();
 
-            int hpBeforeDungeon = (int)Player.CurrentHp;
+            float hpBeforeDungeon = Player.CurrentHp;
 
             Random random = new Random();
             int rMonsterCnt = random.Next(1, 4);
@@ -75,7 +75,7 @@ namespace Dun9eonAndFi9ht.Scenes
         /// 던전 결과 출력
         /// </summary>
         /// <param name="hpBeforeDungeon">던전 입장 전 플레이어 체력</param>
-        private ESceneType ResultScreen(int hpBeforeDungeon)
+        private ESceneType ResultScreen(float hpBeforeDungeon)
         {
             Utility.ClearScene();
             Utility.PrintScene("Battle!! - Result");
@@ -89,7 +89,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintScene("");
             }
             Utility.PrintScene($"Lv.{Player.Level} {Player.Name}");
-            Utility.PrintScene($"HP {hpBeforeDungeon} -> {Player.CurrentHp}");
+            Utility.PrintScene($"HP {hpBeforeDungeon:F2} -> {Player.CurrentHp:F2}");
 
             while (true)
             {

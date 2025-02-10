@@ -45,15 +45,6 @@ namespace Dun9eonAndFi9ht.Characters
 
         public virtual void Attack(Character target)
         {
-            /*
-            // 오차 범위 소수점 올림 처리
-            int remain = (Atk % Constants.ERROR_RATE) > 0 ? 1 : 0;
-            int error = Atk / Constants.ERROR_RATE + remain;
-
-            Random random = new Random();
-            FinalAtk = Atk + random.Next(-error, error + 1);
-            */
-
             Random random = new Random();
             float error = Atk * (Constants.ERROR_RATE / 100f); // 10% 오차 계산
             FinalAtk = Atk + (float)(random.NextDouble() * 2 - 1) * error;
