@@ -257,6 +257,11 @@ namespace Dun9eonAndFi9ht.StaticClass
             }
         }
 
+        /// <summary>
+        /// 공격 회피 시 화면 상단에 전투 정보를 출력하는 메서드
+        /// </summary>
+        /// <param name="attacker">공격하는 캐릭터</param>
+        /// <param name="target">공격 받는 캐릭터</param>
         private void DisplayMissAttackInfo(Character attacker, Character target)
         {
             Utility.ClearAll();
