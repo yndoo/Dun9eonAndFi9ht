@@ -1,4 +1,6 @@
-﻿using Dun9eonAndFi9ht.Characters;
+﻿using DataDefinition;
+using Dun9eonAndFi9ht.Characters;
+using Dun9eonAndFi9ht.StaticClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace Dun9eonAndFi9ht.StaticClass
+namespace Dun9eonAndFi9ht.System
 {
     public class BattleSystem
     {
@@ -17,7 +19,7 @@ namespace Dun9eonAndFi9ht.StaticClass
         public BattleSystem(Player player, List<Monster> monsters)
         {
             this.player = player;
-            this.monsterList = monsters;
+            monsterList = monsters;
         }
 
         /// <summary>
@@ -154,7 +156,8 @@ namespace Dun9eonAndFi9ht.StaticClass
                         else
                         {
                             Random random = new Random();
-                            if (random.Next(100) < 10)
+                            // 10% 확률로 미스
+                            if (random.Next(100) < Constants.MISS_RATE)
                             {
                                 // 회피 출력
                                 DisplayMissAttackInfo(player, monsterList[monsterIndex]);
@@ -172,6 +175,22 @@ namespace Dun9eonAndFi9ht.StaticClass
         }
 
         /// <summary>
+        /// 스킬 선택 시 호출하는 메서드
+        /// 몬스터 번호를 입력받아 해당 몬스터가 살아있으면 공격, 아니면 다시 선택
+        /// </summary>
+        /// <returns>몬스터 선택 시 True 반환
+        /// 취소 입력 시 False 반환</returns>
+        private bool PlayerSkillSelect()
+        {
+            bool isPlayerSkillSelectEnd = false;
+            while (!isPlayerSkillSelectEnd)
+            {
+
+            }
+            return isPlayerSkillSelectEnd;
+        }
+
+        /// <summary>
         /// 공격 대상에게 공격을 하는 메서드
         /// </summary>
         /// <param name="attacker">공격하는 캐릭터</param>
@@ -183,9 +202,10 @@ namespace Dun9eonAndFi9ht.StaticClass
             float finalAtk = attacker.FinalAtk;
             Random random = new Random();
             bool isCritical = false;
-            if (random.Next(100) < 15)
+            // 15% 확률로 크리티컬
+            if (random.Next(100) < Constants.CRITICAL_RATE)
             {
-                finalAtk *= 1.6f;
+                finalAtk *= Constants.CRITICAL_DAMAGE_RATE;
                 isCritical = true;
             }
             target.Damaged(finalAtk);
