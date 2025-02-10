@@ -29,14 +29,16 @@ namespace Dun9eonAndFi9ht.StaticClass
         {
             while (true)
             {
-                DisplayCharacterInfo();
+                // 플레이어 턴
                 PlayerPhase();
+                // 몬스터 전멸 검사
                 if (IsAllMonsterDead())
                 {
                     return player.IsDead;
                 }
-
+                // 몬스터 턴
                 MonsterPhase();
+                // 플레이어 생존 검사
                 if (player.IsDead)
                 {
                     return player.IsDead;
@@ -58,6 +60,7 @@ namespace Dun9eonAndFi9ht.StaticClass
 
         /// <summary>
         /// 몬스터 턴에 실행되는 메서드
+        /// 한 번 전투 한 후 바로 플레이어 생존 검사
         /// </summary>
         private void MonsterPhase()
         {
@@ -66,6 +69,10 @@ namespace Dun9eonAndFi9ht.StaticClass
                 if (!monsterList[i].IsDead)
                 {
                     Battle(monsterList[i], player);
+                    if (player.IsDead)
+                    {
+                        return;
+                    }
                 }
             }
         }
@@ -77,19 +84,27 @@ namespace Dun9eonAndFi9ht.StaticClass
         /// 잘못된 입력 시 False 반환</returns>
         private bool PlayerAction()
         {
-            Utility.ClearMenu();
-            Utility.PrintMenu("1. 공격");
-            Utility.PrintMenu("");
-            Utility.PrintMenu("원하시는 행동을 입력해주세요.");
-            Utility.PrintMenu(">>");
-            int input = Utility.UserInput(1, 1);
-            switch (input)
+            bool isPlayerActionEnd = false;
+            while (!isPlayerActionEnd)
             {
-                case 1:
-                    return PlayerAttack();
-                default:
-                    return false;
+                DisplayCharacterInfo();
+                Utility.ClearMenu();
+                Utility.PrintMenu("1. 공격");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("원하시는 행동을 입력해주세요.");
+                Utility.PrintMenu(">>");
+                int input = Utility.UserInput(1, 1);
+                switch (input)
+                {
+                    case 1:
+                        isPlayerActionEnd = PlayerAttack();
+                        break;
+                    default:
+                        isPlayerActionEnd = DisplayWrongInput();
+                        break;
+                }
             }
+            return isPlayerActionEnd;
         }
 
         /// <summary>
@@ -97,49 +112,44 @@ namespace Dun9eonAndFi9ht.StaticClass
         /// 몬스터 번호를 입력받아 해당 몬스터가 살아있으면 공격, 아니면 다시 선택
         /// </summary>
         /// <returns>몬스터 선택 시 True 반환
-        /// 잘못된 입력 시 False 반환</returns>
+        /// 취소 입력 시 False 반환</returns>
         private bool PlayerAttack()
         {
-            for (int i = 0; i < monsterList.Count; i++)
+            bool isPlayerAttackEnd = false;
+            while (!isPlayerAttackEnd)
             {
-                Utility.PrintFree($"{i + 1}번 Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp}", i + 2);
-            }
-            Utility.ClearMenu();
-            Utility.PrintMenu("0. 취소");
-            Utility.PrintMenu("");
-            Utility.PrintMenu("대상을 선택해주세요.");
-            Utility.PrintMenu(">>");
-            int input = Utility.UserInput(0, monsterList.Count);
-            switch (input)
-            {
-                case < 0:
-                    Utility.ClearMenu();
-                    Utility.PrintMenu("잘못된 입력입니다.");
-                    Utility.PrintMenu("0. 확인");
-                    Utility.PrintMenu("");
-                    Utility.PrintMenu(">>");
-                    Utility.UserInput(0, 0);
-                    return false;
-                case 0:
-                    return false;
-                default:
-                    int monsterIndex = input - 1;
-                    if (monsterList[monsterIndex].IsDead)
-                    {
-                        Utility.ClearMenu();
-                        Utility.PrintMenu("잘못된 입력입니다.");
-                        Utility.PrintMenu("0. 확인");
-                        Utility.PrintMenu("");
-                        Utility.PrintMenu(">>");
-                        Utility.UserInput(0, 0);
+                for (int i = 0; i < monsterList.Count; i++)
+                {
+                    Utility.PrintFree($"{i + 1}번 Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp}", i + 2);
+                }
+                Utility.ClearMenu();
+                Utility.PrintMenu("0. 취소");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("대상을 선택해주세요.");
+                Utility.PrintMenu(">>");
+                int input = Utility.UserInput(0, monsterList.Count);
+                switch (input)
+                {
+                    case < 0:
+                        isPlayerAttackEnd = DisplayWrongInput();
+                        break;
+                    case 0:
                         return false;
-                    }
-                    else
-                    {
-                        Battle(player, monsterList[monsterIndex]);
-                        return true;
-                    }
+                    default:
+                        int monsterIndex = input - 1;
+                        if (monsterList[monsterIndex].IsDead)
+                        {
+                            isPlayerAttackEnd = DisplayWrongInput();
+                        }
+                        else
+                        {
+                            Battle(player, monsterList[monsterIndex]);
+                            isPlayerAttackEnd = true;
+                        }
+                        break;
+                }
             }
+            return isPlayerAttackEnd;
         }
 
         /// <summary>
@@ -173,7 +183,7 @@ namespace Dun9eonAndFi9ht.StaticClass
         }
 
         /// <summary>
-        /// 전투 정보 표시 메서드
+        /// 화면 상단 전투 정보 표시 메서드
         /// </summary>
         private void DisplayCharacterInfo()
         {
@@ -191,7 +201,7 @@ namespace Dun9eonAndFi9ht.StaticClass
         }
 
         /// <summary>
-        /// 공격 시 전투 정보를 출력하는 메서드
+        /// 화면 상단 공격 시 전투 정보를 출력하는 메서드
         /// </summary>
         /// <param name="attacker">공격하는 캐릭터</param>
         /// <param name="target">공격 받는 캐릭터</param>
@@ -209,10 +219,36 @@ namespace Dun9eonAndFi9ht.StaticClass
             string resultHP = target.IsDead ? "Dead" : target.CurrentHp.ToString();
             Utility.PrintScene($"HP {targetPrevHP.ToString()} -> {resultHP}");
 
-            Utility.PrintMenu("0. 다음");
-            Utility.PrintMenu("");
-            Utility.PrintMenu(">>");
-            Utility.UserInput(0, 0);
+            int input = -1;
+            while (input != 0)
+            {
+                Utility.ClearMenu();
+                Utility.PrintMenu("0. 다음");
+                Utility.PrintMenu("");
+                Utility.PrintMenu(">>");
+                input = Utility.UserInput(0, 0);
+            }
+        }
+
+        /// <summary>
+        /// 잘못된 입력 시 화면 하단에 출력하는 메서드
+        /// </summary>
+        /// <returns>0번 선택 시 True
+        /// 잘못 입력 시 False</returns>
+        private bool DisplayWrongInput()
+        {
+            bool isCorrectInput = false;
+            while (!isCorrectInput)
+            {
+                Utility.ClearMenu();
+                Utility.PrintMenu("잘못된 입력입니다.");
+                Utility.PrintMenu("0. 확인");
+                Utility.PrintMenu("");
+                Utility.PrintMenu(">>");
+                int nextInput = Utility.UserInput(0, 0);
+                isCorrectInput = nextInput == 0 ? true : false;
+            }
+            return !isCorrectInput;
         }
     }
 }
