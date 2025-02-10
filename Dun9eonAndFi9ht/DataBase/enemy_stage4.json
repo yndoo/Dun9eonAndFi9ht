@@ -1,6 +1,6 @@
 {
   "enemy_stage4": {
-    "9": {
+    "0": {
       "name": "Blue Sentinel",
       "maxHp": 48,
       "atk": 12,
@@ -9,7 +9,7 @@
       "currentHp": 48,
       "gold": 75
     },
-    "10": {
+    "1": {
       "name": "Red Brambleback",
       "maxHp": 40,
       "atk": 15,
@@ -18,7 +18,7 @@
       "currentHp": 40,
       "gold": 68
     },
-    "11": {
+    "2": {
       "name": "Gromp",
       "maxHp": 45,
       "atk": 13,

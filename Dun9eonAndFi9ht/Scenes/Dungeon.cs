@@ -18,11 +18,15 @@ namespace Dun9eonAndFi9ht.Scenes
         public Player Player { get; set; }
         public List<Monster> MonsterList { get; set; }
         public bool IsPlayerWin { get; set; }
+        
+        public static int stage { get; set; }
 
+        
         public Dungeon()
         {
             DataTableManager.Instance.Initialize("../../../DataBase");
             MonsterTypeCount = 3;
+            stage = 1;
 
             MonsterList = new List<Monster>(MonsterTypeCount);
         }
@@ -38,12 +42,11 @@ namespace Dun9eonAndFi9ht.Scenes
             DataTableManager dtManager = DataTableManager.Instance;
             if (MonsterList!=null&&MonsterList.Count != 0) MonsterList.Clear();
 
-            int j = 1;
             for (int i = 0; i < MonsterTypeCount; i++)
             {
                 try
                 {
-                    Dictionary<string, object> lst = dtManager.GetDBData($"enemy_stage{j}", i);
+                    Dictionary<string, object> lst = dtManager.GetDBData($"enemy_stage{stage}", i);
                     MonsterList.Add(new Monster(lst["name"].ToString(), Convert.ToInt32(lst["maxHp"]), Convert.ToInt32(lst["atk"]), Convert.ToInt32(lst["def"]), Convert.ToInt32(lst["level"]), Convert.ToInt32(lst["gold"])));
                 }   
                 catch (Exception ex)
@@ -61,6 +64,7 @@ namespace Dun9eonAndFi9ht.Scenes
             base.Start();
             EnterDungeon();
 
+            Utility.PrintScene($"현재 스테이지: {Dungeon.stage}");
             float hpBeforeDungeon = Player.CurrentHp;
 
             Random random = new Random();
@@ -92,6 +96,7 @@ namespace Dun9eonAndFi9ht.Scenes
             }
             Utility.PrintScene($"Lv.{Player.Level} {Player.Name}");
             Utility.PrintScene($"HP {hpBeforeDungeon:F2} -> {Player.CurrentHp:F2}");
+            StageClear();
 
             while (true)
             {
@@ -112,6 +117,14 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.PrintMenu(">>");
                     nextInput = Utility.UserInput(0, 0);
                 }
+            }
+        }
+
+        private void StageClear()
+        {
+            if(stage<5)
+            {
+                stage++;
             }
         }
     }
