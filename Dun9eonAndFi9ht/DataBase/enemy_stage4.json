@@ -1,0 +1,31 @@
+{
+  "enemy_stage4": {
+    "9": {
+      "name": "Blue Sentinel",
+      "maxHp": 48,
+      "atk": 12,
+      "def": 14,
+      "level": 17,
+      "currentHp": 48,
+      "gold": 75
+    },
+    "10": {
+      "name": "Red Brambleback",
+      "maxHp": 40,
+      "atk": 15,
+      "def": 10,
+      "level": 18,
+      "currentHp": 40,
+      "gold": 68
+    },
+    "11": {
+      "name": "Gromp",
+      "maxHp": 45,
+      "atk": 13,
+      "def": 11,
+      "level": 16,
+      "currentHp": 45,
+      "gold": 65
+    }
+  }
+}

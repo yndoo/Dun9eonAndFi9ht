@@ -23,8 +23,10 @@ namespace DataDefinition
     #region 열거형
     public enum EJobType
     {
-        None,
-        Warrior
+        None = -1,
+        Warrior,
+        Mage,
+        Rogue,
     }
     public enum ESceneType
     {
@@ -38,6 +40,9 @@ namespace DataDefinition
     static class Constants
     {
         public const int ERROR_RATE = 10;
+        public const float CRITICAL_DAMAGE_RATE = 1.6f;
+        public const int CRITICAL_RATE = 15;
+        public const int MISS_RATE = 10;
     }
     #endregion
 }

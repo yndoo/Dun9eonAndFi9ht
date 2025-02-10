@@ -9,7 +9,7 @@ namespace Dun9eonAndFi9ht.Characters
 {
     public class Character
     {
-        public string Name { get; private set; }
+        public string Name { get; set; }
         public float MaxHp { get; set; }
         public float Atk { get; set; }
         public float Def { get; set; }

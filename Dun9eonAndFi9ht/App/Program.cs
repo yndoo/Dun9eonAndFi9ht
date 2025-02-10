@@ -38,10 +38,10 @@ namespace Dun9eonAndFi9ht.App
         /// </summary>
         /// <param name="ID">플레이어 ID에 따라 데이터 읽어 옴</param>
         /// <returns>플레이어 정보 로드에 성공 하였는지</returns>
-        static bool SetPlayer(int ID)
+        public static bool SetPlayer(int ID)
         {
             DataTableManager.Instance.Initialize("../../../database");
-            List<string>? Info = DataTableManager.Instance.GetMonsterData("player", ID);
+            Dictionary<string, object>? Info = DataTableManager.Instance.GetDBData("player", ID);
 
             if (Info == null || Info.Count < 7)
             {
@@ -50,27 +50,32 @@ namespace Dun9eonAndFi9ht.App
             }
 
             // EJobType 변환 예외 처리
-            if (!Enum.TryParse<EJobType>(Info[2], out var jobType))
+            if (!Info.TryGetValue("job", out var jobValue) || jobValue == null || !Enum.TryParse<EJobType>(jobValue.ToString(), out var jobType))
             {
-                Console.WriteLine($"잘못된 직업 값: {Info[1]} → 기본 직업(Warrior)으로 설정");
-                jobType = EJobType.Warrior; // 기본값 설정
+                Console.WriteLine($"잘못된 직업 값: {jobValue} → 기본 직업(Warrior)으로 설정");
+                jobType = EJobType.Warrior;
             }
             try
             {
+                int maxHp = Convert.ToInt32(Info["maxHp"]);
+                int atk = Convert.ToInt32(Info["atk"]);
+                int def = Convert.ToInt32(Info["def"]);
+                int level = Convert.ToInt32(Info["level"]);
+                int gold = Convert.ToInt32(Info["gold"]);
                 GameManager.Instance.GetPlayerInfo(
-                Info[1],     // string (이름)
-                jobType,           // 변환된 EJobType
-                int.Parse(Info[3]),
-                int.Parse(Info[4]),
-                int.Parse(Info[5]),
-                int.Parse(Info[6]),
-                int.Parse(Info[7])
+                Info["name"].ToString(),    // string (이름)
+                jobType,// 변환된 EJobType
+                maxHp,
+                atk,
+                def,
+                level,
+                gold
                 );
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("플레이어 데이터 형식 오류!");
+                Console.WriteLine("플레이어 데이터 형식 오류!"+ ex);
                 return false;
             }
         }
