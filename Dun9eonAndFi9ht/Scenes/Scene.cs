@@ -1,4 +1,5 @@
-﻿using Dun9eonAndFi9ht.StaticClass;
+﻿using DataDefinition;
+using Dun9eonAndFi9ht.StaticClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,11 @@ namespace Dun9eonAndFi9ht.Scenes
 {
     internal class Scene
     {
-        public virtual void Start()
+        public virtual ESceneType Start()
         {
             Utility.ClearScene();
             Utility.ClearMenu();
+            return ESceneType.StartScene;
         }
     }
 }
