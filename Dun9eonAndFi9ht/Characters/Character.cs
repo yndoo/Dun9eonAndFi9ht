@@ -10,12 +10,12 @@ namespace Dun9eonAndFi9ht.Characters
     public class Character
     {
         public string Name { get; private set; }
-        public int MaxHp { get; set; }
-        public int Atk { get; set; }
-        public int Def { get; set; }
+        public float MaxHp { get; set; }
+        public float Atk { get; set; }
+        public float Def { get; set; }
         public int Level { get; set; }
-        private int currentHp;
-        public int CurrentHp
+        private float currentHp;
+        public float CurrentHp
         {
             get
             {
@@ -30,9 +30,9 @@ namespace Dun9eonAndFi9ht.Characters
             }
         }
         public bool IsDead { get; private set; }
-        public int FinalAtk { get; private set; }
+        public float FinalAtk { get; private set; }
 
-        public Character(string name, int maxHp, int atk, int def, int level)
+        public Character(string name, float maxHp, float atk, float def, int level)
         {
             this.Name = name;
             this.MaxHp = maxHp;
@@ -45,15 +45,12 @@ namespace Dun9eonAndFi9ht.Characters
 
         public virtual void Attack(Character target)
         {
-            // 오차 범위 소수점 올림 처리
-            int remain = (Atk % Constants.ERROR_RATE) > 0 ? 1 : 0;
-            int error = Atk / Constants.ERROR_RATE + remain;
-
             Random random = new Random();
-            FinalAtk = Atk + random.Next(-error, error + 1);
+            float error = Atk * (Constants.ERROR_RATE / 100f); // 10% 오차 계산
+            FinalAtk = Atk + (float)(random.NextDouble() * 2 - 1) * error;
         }
 
-        public virtual void Damaged(int damage)
+        public virtual void Damaged(float damage)
         {
             currentHp -= damage;
             if (currentHp <= 0)
