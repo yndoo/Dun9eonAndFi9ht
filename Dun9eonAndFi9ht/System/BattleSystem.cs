@@ -238,7 +238,8 @@ namespace Dun9eonAndFi9ht.System
             Utility.PrintScene("");
             for (int i = 0; i < monsterList.Count; i++)
             {
-                Utility.PrintScene($"Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp:F2}");
+                string curHP = monsterList[i].IsDead ? "Dead" : $"HP {monsterList[i].CurrentHp:F2}";
+                Utility.PrintScene($"Lv.{monsterList[i].Level} {monsterList[i].Name} {curHP}");
             }
             Utility.PrintScene("");
             Utility.PrintScene("[내 정보]");
