@@ -5,7 +5,7 @@ namespace Dun9eonAndFi9ht.Characters
 {
     public class Player : Character
     {
-        public EJobType Job { get; private set; }
+        public EJobType Job { get; set; }
         public int Gold { get; set; }
         public int MaxExp { get; set; }
         public int CurExp { get; set; }
@@ -43,6 +43,10 @@ namespace Dun9eonAndFi9ht.Characters
             {
                 case EJobType.Warrior:
                     return "전사";
+                case EJobType.Mage:
+                    return "마법사";
+                case EJobType.Rogue:
+                    return "도적";
                 default:
                     return "";
             }

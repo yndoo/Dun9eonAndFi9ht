@@ -24,7 +24,9 @@ namespace DataDefinition
     public enum EJobType
     {
         None,
-        Warrior
+        Warrior,
+        Mage,
+        Rogue,
     }
     public enum ESceneType
     {
