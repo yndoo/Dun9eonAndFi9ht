@@ -80,7 +80,6 @@ namespace Dun9eonAndFi9ht.Scenes
             Utility.ClearScene();
             Utility.PrintScene("Battle!! - Result");
 
-            // To Do : 배틀 결과 (MonsterCount 생긴뒤에 주석 해제)
             Utility.PrintScene("");
             Utility.PrintScene(isPlayerLose ? "You Lose" : "Victory");
             Utility.PrintScene("");
