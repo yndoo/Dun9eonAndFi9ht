@@ -53,9 +53,20 @@ namespace Dun9eonAndFi9ht.Item
             }
             else 
             {
-                if(duration == 0)
+                float hp = CalResult(character.CurrentHp, changeHp);
+                float mp = CalResult(character.CurrentMp, changeMp);
+                float atk = CalResult(character.Atk, changeAtk);
+                float def = CalResult(character.Def, changeDef);
+                float Crt = CalResult(character.Crt, changeCrt);
+                float Miss = CalResult(character.Miss, changeMiss);
+                if (duration == 0)
                 {
-
+                    character.CurrentHp += hp;
+                    character.CurrentMp += mp;
+                    character.Atk += atk;
+                    character.Def += def;
+                    character.Crt += def;
+                    character.Miss += def;
                 }
                 else
                 {
@@ -70,6 +81,9 @@ namespace Dun9eonAndFi9ht.Item
             return chStat * percent;
         }
 
-        private void 
+        private void PrintResult(float hp, float mp, float atk, float def, float crt, float miss)
+        {
+
+        }
     }
 }

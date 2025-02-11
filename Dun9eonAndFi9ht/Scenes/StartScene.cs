@@ -30,8 +30,8 @@ namespace Dun9eonAndFi9ht.Scenes
             while(true)
             {
                 Utility.ClearMenu();
-                Utility.PrintMenu(new string[] { "1. 상태보기", $"2. 전투 시작 (현재 : {Dungeon.stage}층)", "\n원하시는 행동을 입력해주세요.\n>>" });
-                int userInput = Utility.UserInput(1, 2);
+                Utility.PrintMenu(new string[] { "1. 상태보기", $"2. 전투 시작 (현재 : {Dungeon.stage}층)", "3. 층 이동하기", "\n원하시는 행동을 입력해주세요.\n>>" });
+                int userInput = Utility.UserInput(1, 3);
                 if (userInput == 1)
                 {
                     return ESceneType.PlayerStat;
@@ -39,6 +39,10 @@ namespace Dun9eonAndFi9ht.Scenes
                 else if (userInput == 2) 
                 {
                     return ESceneType.Dungeon;
+                }
+                else if(userInput == 3)
+                {
+                    Dungeon.MovingStage();
                 }
                 else
                 {
