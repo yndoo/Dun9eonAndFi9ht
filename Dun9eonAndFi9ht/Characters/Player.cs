@@ -33,20 +33,45 @@ namespace Dun9eonAndFi9ht.Characters
         /// </summary>
         public void DisplayStatus()
         {
-            Utility.PrintScene($"Lv. {Level:D2}");
+            Utility.PrintSceneW("Lv. ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintScene($"{Level:D2}");
+            Console.ResetColor();
             Utility.PrintScene($"{Name} ( {GetJobName(Job)} )");
-            Utility.PrintScene($"{"공격력"} : {Atk:F2}");
-            Utility.PrintScene($"{"방어력"} : {Def:F2}");
-            Utility.PrintScene($"{"체  력"} : {CurrentHp:F2}");
-            Utility.PrintScene($"{"마  나"} : {CurrentMp}");
-            Utility.PrintScene($"{"Gold"}   : {Gold}");
+            Utility.PrintSceneW("공격력  :  ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintScene($"{Atk:F2}");
+            Console.ResetColor();
+            Utility.PrintSceneW("방어력  :  ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintScene($"{Def:F2}");
+            Console.ResetColor();
+            Utility.PrintSceneW("체  력  :  ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintScene($"{CurrentHp:F2}");
+            Console.ResetColor();
+            Utility.PrintSceneW("마  나  :  ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintScene($"{CurrentMp}");
+            Console.ResetColor();
+            Utility.PrintSceneW("Gold   :  ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintScene($"{Gold}");
+            Console.ResetColor();
             if (MaxExp < 0)
             {
                 Utility.PrintScene($"{"EXP"}    : 최고레벨입니다.");
             }
             else
             {
-                Utility.PrintScene($"{"EXP"}    : {CurExp} / {MaxExp}");
+                Utility.PrintSceneW("EXP  :  ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintSceneW($"{CurExp}");
+                Console.ResetColor();
+                Utility.PrintSceneW(" / ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintScene($"{MaxExp}");
+                Console.ResetColor();
             }
         }
         /// <summary>
