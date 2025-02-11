@@ -15,7 +15,7 @@ namespace Dun9eonAndFi9ht.Skill
         /// </summary>
         /// <param name="user">스킬을 사용하는 유저</param>
         /// <param name="targets">모든 적 리스트</param>
-        public override void UseSkill(Character user, List<Character> targets)
+        public override List<Character> UseSkill(Character user, List<Character> targets)
         {
             List<Character> aliveTargets = new List<Character>();
             foreach (Character target in targets)
@@ -30,12 +30,10 @@ namespace Dun9eonAndFi9ht.Skill
             // 랜덤하게 2명 선택
             List<Character> selectedTargets = aliveTargets.OrderBy(x => random.Next()).Take(2).ToList();
 
-            // 선택된 대상 공격
-            foreach (Character target in selectedTargets)
-            {
-                float damage = user.Atk * 1.5f;
-                target.Damaged(damage);
-            }
+            // 선택된 대상 반환 및 최종 공격력 결정
+            user.SetFinalAtk(user.Atk * 1.5f);
+
+            return selectedTargets;
         }
     }
 }

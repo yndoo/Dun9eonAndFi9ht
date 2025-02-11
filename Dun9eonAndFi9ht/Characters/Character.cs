@@ -109,6 +109,11 @@ namespace Dun9eonAndFi9ht.Characters
             FinalAtk = Atk + (float)(random.NextDouble() * 2 - 1) * error;
         }
 
+        public virtual void SetFinalAtk(float value)
+        {
+            FinalAtk = value;
+        }
+
         public virtual void Damaged(float damage)
         {
             currentHp -= damage;

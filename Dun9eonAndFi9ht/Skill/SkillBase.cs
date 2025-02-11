@@ -24,6 +24,6 @@ namespace Dun9eonAndFi9ht.Skill
             this.Type = type;
         }
 
-        public abstract void UseSkill(Character user, List<Character> targets);
+        public abstract List<Character> UseSkill(Character user, List<Character> targets);
     }
 }

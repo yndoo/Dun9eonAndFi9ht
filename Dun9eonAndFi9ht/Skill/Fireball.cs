@@ -14,10 +14,11 @@ namespace Dun9eonAndFi9ht.Skill
         /// </summary>
         /// <param name="user">스킬을 사용하는 유저</param>
         /// <param name="targets">스킬 대상 1명</param>
-        public override void UseSkill(Character user, List<Character> targets)
+        public override List<Character> UseSkill(Character user, List<Character> targets)
         {
-            float damage = user.Atk * 1.2f;
-            targets[0].Damaged(damage);
+            user.SetFinalAtk(user.Atk * 1.2f);
+
+            return targets;
         }
     }
 }
