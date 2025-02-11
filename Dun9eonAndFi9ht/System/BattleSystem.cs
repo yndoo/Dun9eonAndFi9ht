@@ -14,6 +14,7 @@ namespace Dun9eonAndFi9ht.System
 {
     public class BattleSystem
     {
+        #region Variables
         private Player player;
         private List<Monster> monsterList;
 
@@ -24,7 +25,9 @@ namespace Dun9eonAndFi9ht.System
         private bool isPlayerRun;
 
         private Random random;
+        #endregion
 
+        #region Method
         public BattleSystem(Player player, List<Monster> monsters)
         {
             this.player = player;
@@ -540,6 +543,7 @@ namespace Dun9eonAndFi9ht.System
                 input = Utility.UserInput(0, 0);
             }
         }
+        #endregion
         #endregion
     }
 }
