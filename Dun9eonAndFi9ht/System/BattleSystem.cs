@@ -16,6 +16,7 @@ namespace Dun9eonAndFi9ht.System
         private delegate void playerTurn();
         private playerTurn playerAction;
         private bool isPlayerTurnEnd;
+        private bool isPlayerRun;
 
         private Player player;
         private List<Monster> monsterList;
@@ -27,10 +28,11 @@ namespace Dun9eonAndFi9ht.System
             this.player = player;
             monsterList = monsters;
             isPlayerTurnEnd = false;
+            isPlayerRun = false;
             random = new Random();
         }
 
-        public bool Battle()
+        public EDungeonResultType BattleProcess()
         {
             while (true)
             {
@@ -38,12 +40,16 @@ namespace Dun9eonAndFi9ht.System
                 PlayerTurn();
                 if (IsAllMonsterDead())
                 {
-                    return player.IsDead;
+                    return EDungeonResultType.Victory;
+                }
+                else if (isPlayerRun)
+                {
+                    return EDungeonResultType.Escaped;
                 }
                 MonsterTurn();
                 if (player.IsDead)
                 {
-                    return player.IsDead;
+                    return EDungeonResultType.Lose;
                 }
             }
         }
@@ -140,7 +146,8 @@ namespace Dun9eonAndFi9ht.System
 
         private void PlayerRunPhase()
         {
-
+            isPlayerTurnEnd = true;
+            isPlayerRun = true;
         }
 
         private void MonsterTurn()
