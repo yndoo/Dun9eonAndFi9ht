@@ -1,0 +1,45 @@
+{
+  "playerExpTable": {
+    "0": {
+      "Level": 1,
+      "MaxExp": 10
+    },
+    "1": {
+      "Level": 2,
+      "MaxExp": 35
+    },
+    "2": {
+      "Level": 3,
+      "MaxExp": 65
+    },
+    "3": {
+      "Level": 4,
+      "MaxExp": 100
+    },
+    "4": {
+      "Level": 5,
+      "MaxExp": 140
+    },
+    "5": {
+      "Level": 6,
+      "MaxExp": 185
+    },
+    "6": {
+      "Level": 7,
+      "MaxExp": 235
+    },
+    "7": {
+      "Level": 8,
+      "MaxExp": 290
+    },
+    "8": {
+      "Level": 9,
+      "MaxExp": 350
+    },
+    "9": {
+      "Level": 10,
+      "MaxExp": -1
+    }
+
+  }
+}

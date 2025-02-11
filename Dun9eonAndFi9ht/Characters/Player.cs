@@ -1,22 +1,27 @@
 ﻿using DataDefinition;
+using Dun9eonAndFi9ht.Manager;
 using Dun9eonAndFi9ht.StaticClass;
 
 namespace Dun9eonAndFi9ht.Characters
 {
     public class Player : Character
     {
-        public EJobType Job { get; private set; }
+        public EJobType Job { get; set; }
         public int Gold { get; set; }
         public int MaxExp { get; set; }
         public int CurExp { get; set; }
-        public Player(string name, EJobType job, int maxHp, int atk, int def, int level, int gold) : base(name, maxHp, atk, def, level)
+
+        private int[] MaxExpArray;
+
+
+        public Player(string name, EJobType job, float maxHp, float atk, float def, int level, int gold, int[] maxExpArray) : base(name, maxHp, atk, def, level)
         {
             this.Job = job;
             this.Gold = gold;
             this.CurExp = 0;
-            
-            // 예제 값 (레벨업 필요 경험치)
-            this.MaxExp = 100; 
+
+            MaxExpArray = maxExpArray;
+            this.MaxExp = MaxExpArray[0];
         }
 
         /// <summary>
@@ -26,10 +31,18 @@ namespace Dun9eonAndFi9ht.Characters
         {
             Utility.PrintScene($"Lv. {Level:D2}");
             Utility.PrintScene($"{Name} ( {GetJobName(Job)} )");
-            Utility.PrintScene($"{"공격력"} : {Atk}");
-            Utility.PrintScene($"{"방어력"} : {Def}");
-            Utility.PrintScene($"{"체  력"} : {CurrentHp}");
+            Utility.PrintScene($"{"공격력"} : {Atk:F2}");
+            Utility.PrintScene($"{"방어력"} : {Def:F2}");
+            Utility.PrintScene($"{"체  력"} : {CurrentHp:F2}");
             Utility.PrintScene($"{"Gold"}   : {Gold}");
+            if(MaxExp < 0)
+            {
+                Utility.PrintScene($"{"EXP"}    : 최고레벨입니다.");
+            }
+            else
+            {
+                Utility.PrintScene($"{"EXP"}    : {CurExp} / {MaxExp}");
+            }
         }
         /// <summary>
         /// EJobType에 따라 맞는 이름 반환
@@ -47,12 +60,53 @@ namespace Dun9eonAndFi9ht.Characters
             }
         }
 
+        /// <summary>
+        /// 골드 획득
+        /// </summary>
+        /// <param name="amount">골드 획득량</param>
+        public void GainGold(int amount)
+        {
+            Gold += amount;
+        }
+
+        /// <summary>
+        /// 경험치 획득
+        /// </summary>
+        /// <param name="amount">경험치 획득량</param>
+        public bool GainExp(int amount)
+        {
+            bool isLevelUP = false;
+            CurExp += amount;
+
+            // 한번에 대량 경험치 획득 대비
+            while (CurExp >= MaxExp)
+            {
+                LevelUP();
+                isLevelUP = true;
+            }
+            return isLevelUP;
+        }
+
+        /// <summary>
+        /// Player 레벨업
+        /// </summary>
+        private void LevelUP()
+        {
+            Level++;
+            CurExp -= MaxExp;
+
+            Atk += 0.5f;
+            Def++;
+
+            MaxExp = MaxExpArray[Level - 1];
+        }
+
         public override void Attack(Character target)
         {
             base.Attack(target);
         }
 
-        public override void Damaged(int damage)
+        public override void Damaged(float damage)
         {
             base.Damaged(damage);
         }

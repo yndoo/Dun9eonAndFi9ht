@@ -1,0 +1,31 @@
+{
+  "enemy_stage5": {
+    "0": {
+      "name": "Voidgrub",
+      "maxHp": 55,
+      "atk": 8,
+      "def": 20,
+      "level": 20,
+      "currentHp": 55,
+      "gold": 80
+    },
+    "1": {
+      "name": "Rift Herald",
+      "maxHp": 62,
+      "atk": 10,
+      "def": 23,
+      "level": 22,
+      "currentHp": 62,
+      "gold": 85
+    },
+    "2": {
+      "name": "Elder Dragon",
+      "maxHp": 70,
+      "atk": 20,
+      "def": 18,
+      "level": 24,
+      "currentHp": 70,
+      "gold": 100
+    }
+  }
+}

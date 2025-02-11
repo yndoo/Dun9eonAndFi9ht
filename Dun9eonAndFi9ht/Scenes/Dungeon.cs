@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dun9eonAndFi9ht.System;
 
 namespace Dun9eonAndFi9ht.Scenes
 {
@@ -17,11 +18,15 @@ namespace Dun9eonAndFi9ht.Scenes
         public Player Player { get; set; }
         public List<Monster> MonsterList { get; set; }
         public bool IsPlayerWin { get; set; }
+        
+        public static int stage { get; set; }
 
+        
         public Dungeon()
         {
             DataTableManager.Instance.Initialize("../../../DataBase");
             MonsterTypeCount = 3;
+            stage = 1;
 
             MonsterList = new List<Monster>(MonsterTypeCount);
         }
@@ -41,9 +46,9 @@ namespace Dun9eonAndFi9ht.Scenes
             {
                 try
                 {
-                    List<string> lst = dtManager.GetMonsterData("enemy", i);
-                    MonsterList.Add(new Monster(lst[1], int.Parse(lst[2]), int.Parse(lst[3]), int.Parse(lst[4]), int.Parse(lst[5]), int.Parse(lst[6]), int.Parse(lst[7])));
-                }
+                    Dictionary<string, object> lst = dtManager.GetDBData($"enemy_stage{stage}", i);
+                    MonsterList.Add(new Monster(lst["name"].ToString(), Convert.ToInt32(lst["maxHp"]), Convert.ToInt32(lst["atk"]), Convert.ToInt32(lst["def"]), Convert.ToInt32(lst["level"]), Convert.ToInt32(lst["gold"])));
+                }   
                 catch (Exception ex)
                 {
                     Utility.PrintMenu($"\n{i} 인덱스 Monster 데이터 로드 오류 : {ex.Message}");
@@ -59,7 +64,8 @@ namespace Dun9eonAndFi9ht.Scenes
             base.Start();
             EnterDungeon();
 
-            int hpBeforeDungeon = Player.CurrentHp;
+            Utility.PrintScene($"현재 스테이지: {Dungeon.stage}");
+            float hpBeforeDungeon = Player.CurrentHp;
 
             Random random = new Random();
             int rMonsterCnt = random.Next(1, 4);
@@ -75,34 +81,109 @@ namespace Dun9eonAndFi9ht.Scenes
         /// 던전 결과 출력
         /// </summary>
         /// <param name="hpBeforeDungeon">던전 입장 전 플레이어 체력</param>
-        private ESceneType ResultScreen(int hpBeforeDungeon)
+        private ESceneType ResultScreen(float hpBeforeDungeon)
         {
             Utility.ClearScene();
             Utility.PrintScene("Battle!! - Result");
 
-            // To Do : 배틀 결과 (MonsterCount 생긴뒤에 주석 해제)
-            Utility.PrintScene("");
-            Utility.PrintScene(isPlayerLose ? "You Lose" : "Victory");
-            Utility.PrintScene("");
-            if (!isPlayerLose)
+            // 몬스터 보상 합산
+            Reward sumReward = new Reward
             {
-                Utility.PrintScene($"던전에서 몬스터 {MonsterList.Count}마리를 잡았습니다.");
-                Utility.PrintScene("");
-            }
-            Utility.PrintScene($"Lv.{Player.Level} {Player.Name}");
-            Utility.PrintScene($"HP {hpBeforeDungeon} -> {Player.CurrentHp}");
+                exp = MonsterList.Sum(m => m.Reward.exp),
+                gold = MonsterList.Sum(m => m.Reward.gold)
+            };
 
-            Utility.ClearMenu();
-            Utility.PrintMenu("0. 나가기");
+            GainItem(sumReward);
+            DisplayDungeonResult(hpBeforeDungeon, sumReward);
+
             while (true)
             {
+                Utility.ClearMenu();
+                Utility.PrintMenu("0. 나가기");
                 int userInput = Utility.UserInput(0, 0);
                 if (userInput == 0)
                 {
                     return ESceneType.StartScene;
                 }
-                Utility.PrintMenu("잘못된 입력입니다.");
+                int nextInput = -1;
+                while (nextInput != 0)
+                {
+                    Utility.ClearMenu();
+                    Utility.PrintMenu("잘못된 입력입니다.");
+                    Utility.PrintMenu("0. 확인");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu(">>");
+                    nextInput = Utility.UserInput(0, 0);
+                }
             }
         }
+
+        /// <summary>
+        /// 던전 결과 출력 핵심 기능
+        /// </summary>
+        /// <param name="hpBeforeDungeon">던전 입장 전 플레이어 체력</param>
+        private void DisplayDungeonResult(float hpBeforeDungeon, Reward sumReward)
+        {
+            Utility.PrintScene("");
+            Utility.PrintScene(isPlayerLose ? "You Lose" : "Victory");
+            Utility.PrintScene("");
+
+            if (!isPlayerLose)
+            {
+                Utility.PrintScene($"던전에서 몬스터 {MonsterList.Count}마리를 잡았습니다.");
+                StageClear();
+                Utility.PrintScene("");
+            }
+
+            // 캐릭터 정보 출력
+            Utility.PrintScene("[캐릭터 정보]");
+            int prevLevel = Player.Level;
+            int prevExp = Player.CurExp;
+
+            // 경험치 획득
+            bool isLevelUp = Player.GainExp(sumReward.exp);
+
+            if (isLevelUp)
+            {
+                Utility.PrintScene($"Lv.{prevLevel} {Player.Name} -> Lv.{Player.Level} {Player.Name}");
+            }
+            else
+            {
+                Utility.PrintScene($"Lv.{Player.Level} {Player.Name}");
+            }
+            Utility.PrintScene($"HP {hpBeforeDungeon:F2} -> {Player.CurrentHp:F2}");
+            Utility.PrintScene($"EXP {prevExp} -> {sumReward.exp + prevExp}");
+
+            // 획득한 보상 출력
+            if (!isPlayerLose)
+            {
+                Utility.PrintScene("");
+                Utility.PrintScene("[획득 아이템]");
+                Utility.PrintScene($"{sumReward.gold} Gold");
+            }
+            Utility.PrintScene("");
+
+        }
+
+        /// <summary>
+        /// 던전 결과 아이템 획득
+        /// </summary>
+        /// <param name="sumReward">던전 보상</param>
+        private void GainItem(Reward sumReward)
+        {
+            Player.GainGold(sumReward.gold);
+        }
+        /// <summary>
+        /// 스테이지 클리어 처리 메시지 출력
+        /// </summary>
+        private void StageClear()
+        {
+            Utility.PrintScene($"{stage}층 클리어!");
+            if(stage<5)
+            {
+                stage++;
+            }
+        }
+
     }
 }
