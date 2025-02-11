@@ -84,7 +84,10 @@ namespace Dun9eonAndFi9ht.Scenes
         private ESceneType ResultScreen(float hpBeforeDungeon)
         {
             Utility.ClearScene();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Utility.PrintScene("Battle!! - Result");
+            Console.ResetColor();
+
 
             // 몬스터 보상 합산
             Reward sumReward = new Reward
@@ -125,7 +128,9 @@ namespace Dun9eonAndFi9ht.Scenes
         private void DisplayDungeonResult(float hpBeforeDungeon, Reward sumReward)
         {
             Utility.PrintScene("");
+            Console.ForegroundColor = ConsoleColor.Green;
             Utility.PrintScene(isPlayerLose ? "You Lose" : "Victory");
+            Console.ResetColor();
             Utility.PrintScene("");
 
             if (!isPlayerLose)
