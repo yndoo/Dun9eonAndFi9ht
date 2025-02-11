@@ -143,7 +143,7 @@ namespace Dun9eonAndFi9ht.System
                     else
                     {
                         // 10% 확률로 미스
-                        if (random.Next(100) < Constants.MISS_RATE/*monsterList[monsterIndex].Miss*/)
+                        if (random.NextDouble() < player.Miss)
                         {
                             // 회피 출력
                             DisplayMissScene(player, monsterList[monsterIndex]);
@@ -281,7 +281,7 @@ namespace Dun9eonAndFi9ht.System
             {
                 if (!monsterList[i].IsDead)
                 {
-                    if (random.Next(100) < 10/*player.Miss*/)
+                    if (random.NextDouble() < monsterList[i].Miss)
                     {
                         // 회피 출력
                         DisplayMissScene(monsterList[i], player);
@@ -311,9 +311,9 @@ namespace Dun9eonAndFi9ht.System
             float finalAtk = attacker.FinalAtk;
             bool isCritical = false;
             // 15% 확률로 크리티컬
-            if (random.Next(100) < Constants.CRITICAL_RATE/*attacker.Critical*/)
+            if (random.NextDouble() < attacker.Crt)
             {
-                finalAtk *= Constants.CRITICAL_DAMAGE_RATE;
+                finalAtk *= attacker.CrtDmg;
                 isCritical = true;
             }
             target.Damaged(finalAtk);
