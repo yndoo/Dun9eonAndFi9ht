@@ -14,7 +14,7 @@ namespace Dun9eonAndFi9ht
         public string TargetMonster { get; set; } // 목표 몬스터 이름
         public int NeedKills { get; set; } // 잡아야 할 몬스터 수
         public int CurrentKills { get; set; } // 현재 잡은 몬스터 수
-        public string RewardItem { get; set; } // 보상 아이템
+        public int RewardItem { get; set; } // 보상 아이템
         public int RewardMoney { get; set; } // 보상 금액
         public bool HasAccepted; //퀘스트를 수주한 상태인지 판단
         public bool IsCleared; //퀘스트 클리어 여부 판단
@@ -22,7 +22,7 @@ namespace Dun9eonAndFi9ht
 
 
         //퀘스트 생성자
-        public Quest(string quesTtitle, string[] questDescription, string targetMonster, int needKills, string rewardItem, int rewardMoney)
+        public Quest(string quesTtitle, string[] questDescription, string targetMonster, int needKills, int rewardItem, int rewardMoney)
         {
             QuestTitle = quesTtitle;
             QuestDescription = questDescription;

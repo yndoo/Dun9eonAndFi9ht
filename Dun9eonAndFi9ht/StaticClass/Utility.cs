@@ -30,6 +30,11 @@ namespace Dun9eonAndFi9ht.StaticClass
             return input;
         }
 
+        public static string[] ConvertObjToStrArr(List<object> list)
+        {
+            return list.Select(item => item.ToString()).ToArray();
+        }
+
         /// <summary>
         /// string 출력 시 (0,15) 위치에서 계속해서 출력
         /// </summary>
