@@ -52,6 +52,15 @@ namespace DataDefinition
         Single,
         Multi,
     }
+    public enum EMonsterType
+    {
+        Minion,          
+        SmallJungle,     
+        MediumJungle,    
+        LargeJungle,     
+        NeutralObjective,
+        BossMonster      
+    }
     #endregion
 
     #region 상수
