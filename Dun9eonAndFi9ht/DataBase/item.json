@@ -1,0 +1,125 @@
+{
+  "item": {
+    "0": {
+      "Name": "찢어진 면 셔츠",
+      "EquipType": 0,
+      "MaxHp": 0,
+      "MaxMp": 0,
+      "Atk": 0,
+      "Def": 8,
+      "CriticalRate": 0,
+      "CriticalDamage": 0,
+      "MissRate": 0
+    },
+    "1": {
+      "Name": "군자의 로브",
+      "EquipType": 0,
+      "MaxHp": 0,
+      "MaxMp": 5,
+      "Atk": 5,
+      "Def": 10,
+      "CriticalRate": 0,
+      "CriticalDamage": 0,
+      "MissRate": 0
+    },
+    "2": {
+      "Name": "비명초 조끼",
+      "EquipType": 0,
+      "MaxHp": 10,
+      "MaxMp": 0,
+      "Atk": 0,
+      "Def": 15,
+      "CriticalRate": 0,
+      "CriticalDamage": 0,
+      "MissRate": 3
+    },
+    "3": {
+      "Name": "양모 로브",
+      "EquipType": 0,
+      "MaxHp": 10,
+      "MaxMp": 10,
+      "Atk": 0,
+      "Def": 25,
+      "CriticalRate": 0,
+      "CriticalDamage": 0,
+      "MissRate": 0
+    },
+    "4": {
+      "Name": "영원의 화염 드레스",
+      "EquipType": 0,
+      "MaxHp": 20,
+      "MaxMp": 20,
+      "Atk": 10,
+      "Def": 25,
+      "CriticalRate": 0,
+      "CriticalDamage": 0,
+      "MissRate": 5
+    },
+    "5": {
+      "Name": "견습용 단검",
+      "EquipType": 1,
+      "MaxHp": 0,
+      "MaxMp": 0,
+      "Atk": 12,
+      "Def": 0,
+      "CriticalRate": 10,
+      "CriticalDamage": 20,
+      "MissRate": 0
+    },
+    "6": {
+      "Name": "무한의 대검",
+      "EquipType": 1,
+      "MaxHp": 0,
+      "MaxMp": 0,
+      "Atk": 35,
+      "Def": 0,
+      "CriticalRate": 25,
+      "CriticalDamage": 40,
+      "MissRate": 0
+    },
+    "7": {
+      "Name": "자비의 키드니 대거",
+      "EquipType": 1,
+      "MaxHp": 0,
+      "MaxMp": 0,
+      "Atk": 63,
+      "Def": 0,
+      "CriticalRate": 60,
+      "CriticalDamage": 40,
+      "MissRate": 0
+    },
+    "8": {
+      "Name": "견습용 완드",
+      "EquipType": 1,
+      "MaxHp": 0,
+      "MaxMp": 0,
+      "Atk": 15,
+      "Def": 0,
+      "CriticalRate": 5,
+      "CriticalDamage": 20,
+      "MissRate": 0
+    },
+    "9": {
+      "Name": "맹독 뿌리 완드",
+      "EquipType": 1,
+      "MaxHp": 0,
+      "MaxMp": 0,
+      "Atk": 28,
+      "Def": 0,
+      "CriticalRate": 5,
+      "CriticalDamage": 40,
+      "MissRate": 0
+    },
+    "10": {
+      "Name": "좀비 파우더 완드",
+      "EquipType": 1,
+      "MaxHp": 0,
+      "MaxMp": 0,
+      "Atk": 46,
+      "Def": 0,
+      "CriticalRate": 5,
+      "CriticalDamage": 60,
+      "MissRate": 0
+    }
+  }
+}

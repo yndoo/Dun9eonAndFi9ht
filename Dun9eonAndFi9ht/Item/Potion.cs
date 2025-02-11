@@ -101,7 +101,7 @@ namespace Dun9eonAndFi9ht.Items
         /// <summary>
         /// 퍼센트 회복, 수치 회복에 따라 결과를 다르게 내놓는 함수
         /// </summary>
-        public void DisplayPotion()
+        public string DisplayPotion()
         {
             List<string> changes = new List<string>();
             if (duration != 0) changes.Add($" {duration}턴 지속");
@@ -114,7 +114,7 @@ namespace Dun9eonAndFi9ht.Items
             if (changeMiss != 0) changes.Add($" 회피 {(changeMiss >= 0 ? "+" : "-")}{(isPercent ? changeMiss * 100 : changeMiss)}{(isPercent ? "%" : "")}");
 
             string message = $"{name} | {description} |" + string.Join(" | ", changes);
-            Utility.PrintScene(message);
+            return message;
         }
 
         public void PrintResult(float hp, float mp, float atk, float def, float crt, float crtDmg, float miss, int duration)

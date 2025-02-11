@@ -40,7 +40,7 @@ namespace Dun9eonAndFi9ht.Scenes
         private void EnterDungeon()
         {
             Player = GameManager.Instance.Player;
-
+            //CheckPotionUse();
             //Monster 데이터 가져오기
             DataTableManager dtManager = DataTableManager.Instance;
             if (MonsterList!=null&&MonsterList.Count != 0) MonsterList.Clear();
@@ -50,7 +50,9 @@ namespace Dun9eonAndFi9ht.Scenes
                 try
                 {
                     Dictionary<string, object> lst = dtManager.GetDBData($"enemy_stage{stage}", i);
-                    MonsterList.Add(new Monster(lst["name"].ToString(), Convert.ToInt32(lst["maxHp"]), Convert.ToInt32(lst["maxMp"]), Convert.ToInt32(lst["atk"]), Convert.ToInt32(lst["def"]), Convert.ToInt32(lst["level"]), Convert.ToInt32(lst["gold"])));
+                    string monsterTypeStr = lst["type"].ToString();
+                    EMonsterType monsterType = (EMonsterType)Enum.Parse(typeof(EMonsterType), monsterTypeStr);
+                    MonsterList.Add(new Monster(lst["name"].ToString(), Convert.ToInt32(lst["maxHp"]), Convert.ToInt32(lst["maxMp"]), Convert.ToInt32(lst["atk"]), Convert.ToInt32(lst["def"]), Convert.ToInt32(lst["level"]), Convert.ToInt32(lst["gold"]), monsterType));
                 }   
                 catch (Exception ex)
                 {
@@ -65,6 +67,9 @@ namespace Dun9eonAndFi9ht.Scenes
         public override ESceneType Start()
         {
             base.Start();
+
+           
+
             EnterDungeon();
 
             Utility.PrintSceneW("현재 스테이지: ");
@@ -117,10 +122,20 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintMenuW("0");
                 Console.ResetColor();
                 Utility.PrintMenu(". 나가기");
-                int userInput = Utility.UserInput(0, 0);
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("1");
+                Console.ResetColor();
+                Utility.PrintMenu(". 다시 던전으로...");
+
+                int userInput = Utility.UserInput(0, 1);
                 if (userInput == 0)
                 {
                     return ESceneType.StartScene;
+                }
+                if(userInput == 1)
+                {
+                    return ESceneType.Dungeon;
                 }
                 int nextInput = -1;
                 while (nextInput != 0)
@@ -133,7 +148,7 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.PrintMenu(". 확인");
                     Utility.PrintMenu("");
                     Utility.PrintMenu(">>");
-                    nextInput = Utility.UserInput(0, 0);
+                    nextInput = Utility.UserInput(0, 1);
                 }
             }
         }
@@ -262,5 +277,35 @@ namespace Dun9eonAndFi9ht.Scenes
                 stage++;
             }
         }
+
+        /*private void CheckPotionUse()
+        {
+            bool isFirst = true;
+            int input = -1;
+            while (input != 0)
+            {
+                Utility.ClearAll();
+                Utility.PrintScene(isFirst ? "던전 입장 전, 포션을 사용하시겠습니까?" : "추가로 포션을 사용하시겠습니까?");
+                InventoryManager.Instance.DisplayPotions();
+                Utility.PrintMenu("원하시는 포션을 선택 해주세요 (0. 나가기)");
+                Utility.PrintMenuW(">>> ");
+                Dictionary<int, int> map = InventoryManager.Instance.PotionSlot;
+                input = Utility.UserInput(0, map.Count);
+                if (input > 0 || input < map.Count)
+                {
+                    InventoryManager.Instance.UsePotion(map.ElementAt(input-1).Key, Player);
+                }
+                if(input == 0)
+                {
+                    Utility.PrintScene("전투를 시작합니다.");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Utility.PrintScene("올바르지 않은 입력입니다.");
+                    Console.ReadKey();
+                }
+            }
+        }*/
     }
 }
