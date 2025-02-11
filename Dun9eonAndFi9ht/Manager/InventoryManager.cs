@@ -21,8 +21,10 @@ namespace Dun9eonAndFi9ht.Manager
         public List<Item> Inventory { get; } // 현재 갖고 있는 아이템
         public Dictionary<EItemEquipType, Item> EquipSlot { get; } // 현재 장착 아이템   
 
-        public Dictionary<int, int> PotionSlot { get; }
+        public Dictionary<int, int> PotionSlot { get; }     //현재 갖고 있는 포션
 
+
+        private int itemCount; // 아이템 전체 개수
 
         /// <summary>
         /// InventoryManager 생성자 - 전체 아이템 리스트 불러오기 
@@ -33,9 +35,10 @@ namespace Dun9eonAndFi9ht.Manager
             Inventory = new List<Item>();
             EquipSlot = new Dictionary<EItemEquipType, Item>();
             PotionSlot = new Dictionary<int, int>();
-
+            itemCount = 11;
             // 아이템 정보 불러오기
-            for (int i = 0; i < 6; i++)
+            
+            for (int i = 0; i < itemCount; i++)
             {
                 Dictionary<string, object> itemInfo = DataTableManager.Instance.GetDBData("item", i);
                 string name = itemInfo["Name"].ToString();
@@ -51,18 +54,14 @@ namespace Dun9eonAndFi9ht.Manager
             }
 
             // 인벤토리&아이템 테스트용 코드
-            GrantItem(0);
-            GrantItem(1);
-            GrantItem(2);
-            GrantItem(3);
-            GrantItem(4);
-            GrantItem(5);
+            for(int i = 0; i < itemCount; i++)
+            {
+                GrantItem(i);
+            }
 
             GrantPotion(0);
             GrantPotion(1);
             GrantPotion(2);
-
-
         }
 
 
@@ -110,6 +109,7 @@ namespace Dun9eonAndFi9ht.Manager
         {
             player = GameManager.Instance.Player;
             selectedItem.IsEquipped = false;
+            EquipSlot[selectedItem.EquipType] = null;
 
             player.MaxHp -= selectedItem.MaxHp;
             player.MaxMp -= selectedItem.MaxMp;
