@@ -10,7 +10,7 @@ namespace Dun9eonAndFi9ht
     public class Quest
     {
         public string QuestTitle { get; set; } // 퀘스트 제목
-        public string QuestDescription { get; set; } // 퀘스트 내용 설명
+        public string[] QuestDescription { get; set; } // 퀘스트 내용 설명
         public string TargetMonster { get; set; } // 목표 몬스터 이름
         public int NeedKills { get; set; } // 잡아야 할 몬스터 수
         public int CurrentKills { get; set; } // 현재 잡은 몬스터 수
@@ -22,10 +22,10 @@ namespace Dun9eonAndFi9ht
 
 
         //퀘스트 생성자
-        public Quest(string questtitle, string questdescription, string targetMonster, int needKills, string rewardItem, int rewardMoney)
+        public Quest(string quesTtitle, string[] questDescription, string targetMonster, int needKills, string rewardItem, int rewardMoney)
         {
-            QuestTitle = questtitle;
-            QuestDescription = questdescription;
+            QuestTitle = quesTtitle;
+            QuestDescription = questDescription;
             TargetMonster = targetMonster;
             NeedKills = needKills;
             CurrentKills = 0; // 퀘스트 시작 시 잡은 몬스터 수 0으로 초기화
