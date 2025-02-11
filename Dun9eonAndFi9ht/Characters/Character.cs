@@ -84,6 +84,10 @@ namespace Dun9eonAndFi9ht.Characters
         public bool IsDead { get; private set; }
         public float FinalAtk { get; private set; }
 
+        private int buffDuration = 0;
+        private float buffHp = 0, buffMp = 0, buffAtk = 0, buffDef = 0, buffCrt = 0, buffMiss = 0;
+
+
         public Character(string name, float maxHp, float atk, float def, int level)
         {
             this.Name = name;
@@ -115,5 +119,61 @@ namespace Dun9eonAndFi9ht.Characters
         {
             IsDead = true;
         }
+
+
+        // 버프 적용
+        public void ApplyBuff(float hp, float mp, float atk, float def, float crt, float miss, int duration)
+        {
+            buffHp = hp;
+            buffMp = mp;
+            buffAtk = atk;
+            buffDef = def;
+            buffCrt = crt;
+            buffMiss = miss;
+            buffDuration = duration;
+
+            // 능력치에 즉시 반영
+            MaxHp += buffHp;
+            MaxMp += buffMp;
+            Atk += buffAtk;
+            Def += buffDef;
+            Crt += buffCrt;
+            Miss += buffMiss;
+        }
+
+        public void DurationReduce()
+        {
+            buffDuration--;
+        }
+
+        // 턴이 지나면 버프 해제
+        public void UpdateTurn()
+        {
+            if (buffDuration > 0)
+            {
+                buffDuration--;
+
+                if (buffDuration == 0)
+                {
+                    RemoveBuff();
+                }
+            }
+        }
+
+        // 버프 해제
+        private void RemoveBuff()
+        {
+            MaxHp -= buffHp;
+            MaxMp -= buffMp;
+            Atk -= buffAtk;
+            Def -= buffDef;
+            Crt -= buffCrt;
+            Miss -= buffMiss;
+
+            // 초기화
+            buffHp = buffMp = buffAtk = buffDef = buffCrt = buffMiss = 0;
+        }
+
+        
     }
 }
