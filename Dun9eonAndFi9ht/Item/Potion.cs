@@ -52,6 +52,7 @@ namespace Dun9eonAndFi9ht.Item
                 {
                     character.ApplyBuff(changeHp, changeMp, changeAtk, changeDef, changeCrt, changeMiss, duration);
                 }
+                PrintResult(changeHp, changeMp, changeAtk, changeDef, changeCrt, changeMiss, duration);
             }
             else 
             {
@@ -74,8 +75,8 @@ namespace Dun9eonAndFi9ht.Item
                 {
                     character.ApplyBuff(hp, mp, atk, def, crt, miss, duration);
                 }
+                PrintResult(hp, mp, atk, def, crt, miss, duration);
             }
-
         }
 
         private float CalResult(float chStat, float percent)
