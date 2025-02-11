@@ -84,7 +84,6 @@ namespace Dun9eonAndFi9ht.Item
             if (chStat == 0 || percent == 0) return 0;
             return chStat * percent;
         }
-        
         public void DisplayPotion()
         {
             List<string> changes = new List<string>();
@@ -96,7 +95,7 @@ namespace Dun9eonAndFi9ht.Item
             if (changeCrt != 0) changes.Add($" 치명타 확률 {(changeCrt > 0 ? "+" : "")}{changeCrt}{(isPercent ? "%" : "")}");
             if (changeMiss != 0) changes.Add($" 회피 {(changeMiss > 0 ? "+" : "")}{changeMiss}{(isPercent ? "%" : "")}");
 
-            string message = $"{name} : 📜 {description} → " + string.Join(" | ", changes);
+            string message = $"{name} | {description} |" + string.Join(" | ", changes);
             Utility.PrintScene(message);
         }
 
