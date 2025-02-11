@@ -177,7 +177,7 @@ namespace Dun9eonAndFi9ht.System
                 default:
                     // 스킬 선택
                     int skillIndex = input - 1;
-                    if (player.Skills[skillIndex].MpCost < player.CurrentMp)
+                    if (player.Skills[skillIndex].MpCost <= player.CurrentMp)
                     {
                         if (player.Skills[skillIndex].Type.Equals(ESkillTargetType.Single))
                         {
