@@ -3,6 +3,7 @@
     "0": {
       "name": "Siege Minion",
       "maxHp": 25,
+      "maxMp": 20,
       "atk": 8,
       "def": 5,
       "level": 7,
@@ -12,6 +13,7 @@
     "1": {
       "name": "Murk Wolves",
       "maxHp": 20,
+      "maxMp": 10,
       "atk": 9,
       "def": 3,
       "level": 9,
@@ -21,6 +23,7 @@
     "2": {
       "name": "Rift Scuttler",
       "maxHp": 32,
+      "maxMp": 15,
       "atk": 4,
       "def": 10,
       "level": 10,

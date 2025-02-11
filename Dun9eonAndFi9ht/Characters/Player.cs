@@ -1,5 +1,6 @@
 ﻿using DataDefinition;
 using Dun9eonAndFi9ht.Manager;
+using Dun9eonAndFi9ht.Skill;
 using Dun9eonAndFi9ht.StaticClass;
 
 namespace Dun9eonAndFi9ht.Characters
@@ -12,9 +13,9 @@ namespace Dun9eonAndFi9ht.Characters
         public int CurExp { get; set; }
 
         private int[] MaxExpArray;
+        public List<SkillBase> Skills { get; private set; }
 
-
-        public Player(string name, EJobType job, float maxHp, float atk, float def, int level, int gold, int[] maxExpArray) : base(name, maxHp, atk, def, level)
+        public Player(string name, EJobType job, float maxHp, int maxMp, float atk, float def, int level, int gold, int[] maxExpArray) : base(name, maxHp, maxMp, atk, def, level)
         {
             this.Job = job;
             this.Gold = gold;
@@ -22,6 +23,9 @@ namespace Dun9eonAndFi9ht.Characters
 
             MaxExpArray = maxExpArray;
             this.MaxExp = MaxExpArray[0];
+
+            // 직업별 스킬 자동 세팅
+            Skills = SkillManager.GetPlayerSkills(Job); 
         }
 
         /// <summary>
@@ -34,8 +38,9 @@ namespace Dun9eonAndFi9ht.Characters
             Utility.PrintScene($"{"공격력"} : {Atk:F2}");
             Utility.PrintScene($"{"방어력"} : {Def:F2}");
             Utility.PrintScene($"{"체  력"} : {CurrentHp:F2}");
+            Utility.PrintScene($"{"마  나"} : {CurrentMp}");
             Utility.PrintScene($"{"Gold"}   : {Gold}");
-            if(MaxExp < 0)
+            if (MaxExp < 0)
             {
                 Utility.PrintScene($"{"EXP"}    : 최고레벨입니다.");
             }

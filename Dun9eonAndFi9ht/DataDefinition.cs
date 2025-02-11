@@ -33,6 +33,7 @@ namespace DataDefinition
         StartScene,
         Dungeon,
         PlayerStat,
+        MoveStage
         InventoryScene,
     }
     public enum EItemEquipType
@@ -45,6 +46,11 @@ namespace DataDefinition
         Victory,
         Lose,
         Escaped,
+    }
+    public enum ESkillTargetType
+    {
+        Single,
+        Multi,
     }
     #endregion
 

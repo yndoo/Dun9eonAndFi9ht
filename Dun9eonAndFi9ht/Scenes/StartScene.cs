@@ -35,6 +35,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 Console.ResetColor();
                 Utility.PrintMenu(". 상태보기");
                 Console.ForegroundColor = ConsoleColor.Magenta;
+
                 Utility.PrintMenuW("2");
                 Console.ResetColor();
                 Utility.PrintMenuW(". 전투 시작 ");
@@ -42,8 +43,20 @@ namespace Dun9eonAndFi9ht.Scenes
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintMenuW($"{Dungeon.stage}");
                 Console.ResetColor();
-                Utility.PrintMenu("층)\n\n원하시는 행동을 입력해주세요.\n>>");
-            int userInput = Utility.UserInput(1, 2);
+                Utility.PrintMenu("층)");
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("3");
+                Console.ResetColor();
+                Utility.PrintMenuW(". 층 이동하기");
+                
+
+
+                Utility.PrintMenu("\n\n원하시는 행동을 입력해주세요.\n>>");
+
+                
+
+            int userInput = Utility.UserInput(1, 3);
                 if (userInput == 1)
                 {
                     return ESceneType.PlayerStat;
@@ -51,6 +64,10 @@ namespace Dun9eonAndFi9ht.Scenes
                 else if (userInput == 2) 
                 {
                     return ESceneType.Dungeon;
+                }
+                else if(userInput == 3)
+                {
+                    return ESceneType.MoveStage;
                 }
                 else
                 {

@@ -21,12 +21,15 @@ namespace Dun9eonAndFi9ht.Scenes
         
         public static int stage { get; set; }
 
+        public static int maxStageCleared { get; set; }
+
         
         public Dungeon()
         {
             DataTableManager.Instance.Initialize("../../../DataBase");
             MonsterTypeCount = 3;
             stage = 1;
+            maxStageCleared = 0;
 
             MonsterList = new List<Monster>(MonsterTypeCount);
         }
@@ -47,7 +50,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 try
                 {
                     Dictionary<string, object> lst = dtManager.GetDBData($"enemy_stage{stage}", i);
-                    MonsterList.Add(new Monster(lst["name"].ToString(), Convert.ToInt32(lst["maxHp"]), Convert.ToInt32(lst["atk"]), Convert.ToInt32(lst["def"]), Convert.ToInt32(lst["level"]), Convert.ToInt32(lst["gold"])));
+                    MonsterList.Add(new Monster(lst["name"].ToString(), Convert.ToInt32(lst["maxHp"]), Convert.ToInt32(lst["maxMp"]), Convert.ToInt32(lst["atk"]), Convert.ToInt32(lst["def"]), Convert.ToInt32(lst["level"]), Convert.ToInt32(lst["gold"])));
                 }   
                 catch (Exception ex)
                 {
@@ -64,7 +67,10 @@ namespace Dun9eonAndFi9ht.Scenes
             base.Start();
             EnterDungeon();
 
-            Utility.PrintScene($"현재 스테이지: {Dungeon.stage}");
+            Utility.PrintSceneW("현재 스테이지: ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintScene($"{Dungeon.stage}");
+            Console.ResetColor();
             float hpBeforeDungeon = Player.CurrentHp;
 
             Random random = new Random();
@@ -107,7 +113,10 @@ namespace Dun9eonAndFi9ht.Scenes
             while (true)
             {
                 Utility.ClearMenu();
-                Utility.PrintMenu("0. 나가기");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("0");
+                Console.ResetColor();
+                Utility.PrintMenu(". 나가기");
                 int userInput = Utility.UserInput(0, 0);
                 if (userInput == 0)
                 {
@@ -118,7 +127,10 @@ namespace Dun9eonAndFi9ht.Scenes
                 {
                     Utility.ClearMenu();
                     Utility.PrintMenu("잘못된 입력입니다.");
-                    Utility.PrintMenu("0. 확인");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintMenuW("0");
+                    Console.ResetColor();
+                    Utility.PrintMenu(". 확인");
                     Utility.PrintMenu("");
                     Utility.PrintMenu(">>");
                     nextInput = Utility.UserInput(0, 0);
@@ -139,7 +151,11 @@ namespace Dun9eonAndFi9ht.Scenes
                 case EDungeonResultType.Victory:
                     Utility.PrintScene("Victory");
                     Utility.PrintScene("");
-                    Utility.PrintScene($"던전에서 몬스터 {MonsterList.Count}마리를 잡았습니다.");
+                    Utility.PrintSceneW("던전에서 몬스터 ");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintSceneW($"{MonsterList.Count}");
+                    Console.ResetColor();
+                    Utility.PrintScene("마리를 잡았습니다.");
                     StageClear();
                     break;
 
@@ -164,14 +180,46 @@ namespace Dun9eonAndFi9ht.Scenes
             if (resultType == EDungeonResultType.Victory)
             {
                 bool isLevelUp = Player.GainExp(sumReward.exp);
-                Utility.PrintScene(isLevelUp ? $"Lv.{prevLevel} {Player.Name} -> Lv.{Player.Level} {Player.Name}" :
-                    $"Lv.{Player.Level} {Player.Name}");
+                if (isLevelUp)
+                {
+                    Utility.PrintSceneW("Lv.");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintSceneW($"{prevLevel} ");
+                    Console.ResetColor();
+                    Utility.PrintSceneW($"{Player.Name} -> Lv. ");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintSceneW($"{Player.Level}");
+                    Console.ResetColor();
+                    Utility.PrintScene($" {Player.Name}");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintSceneW($"{Player.Level}");
+                    Console.ResetColor();
+                    Utility.PrintScene($" {Player.Name}");
+                }
             }
             
-            Utility.PrintScene($"HP {hpBeforeDungeon:F2} -> {Player.CurrentHp:F2}");
+            Utility.PrintSceneW("HP ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW($"{hpBeforeDungeon:F2}");
+            Console.ResetColor();
+            Utility.PrintSceneW(" -> ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintScene($"{Player.CurrentHp:F2}");
+            Console.ResetColor();
+
             if (resultType == EDungeonResultType.Victory)
             {
-                Utility.PrintScene($"EXP {prevExp} -> {sumReward.exp + prevExp}");
+                Utility.PrintSceneW("EXP");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintSceneW($"{prevExp}");
+                Console.ResetColor();
+                Utility.PrintSceneW(" -> ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintScene($"{sumReward.exp + prevExp}");
+                Console.ResetColor();
             }
 
             // 획득한 보상 출력
@@ -179,7 +227,10 @@ namespace Dun9eonAndFi9ht.Scenes
             {
                 Utility.PrintScene("");
                 Utility.PrintScene("[획득 아이템]");
-                Utility.PrintScene($"{sumReward.gold} Gold");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintSceneW($"{sumReward.gold}");
+                Console.ResetColor();
+                Utility.PrintScene(" Gold");
             }
             Utility.PrintScene("");
 
@@ -198,12 +249,18 @@ namespace Dun9eonAndFi9ht.Scenes
         /// </summary>
         private void StageClear()
         {
-            Utility.PrintScene($"{stage}층 클리어!");
-            if(stage<5)
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW($"{stage}");
+            Console.ResetColor();
+            Utility.PrintScene("층 클리어!");
+            if (stage<5)
             {
+                if (maxStageCleared <= stage)
+                {
+                    maxStageCleared = stage;
+                }
                 stage++;
             }
         }
-
     }
 }

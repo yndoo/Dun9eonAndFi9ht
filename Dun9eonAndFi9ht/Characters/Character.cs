@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataDefinition;
+using Dun9eonAndFi9ht.Skill;
 
 namespace Dun9eonAndFi9ht.Characters
 {
@@ -11,8 +12,14 @@ namespace Dun9eonAndFi9ht.Characters
     {
         public string Name { get; set; }
         public float MaxHp { get; set; }
+        public float MaxMp { get; set; }
         public float Atk { get; set; }
         public float Def { get; set; }
+
+        public float Crt { get; set; }
+        public float CrtDmg { get; set; }
+        public float Miss {  get; set; }
+
         public int Level { get; set; }
         private float currentHp;
         public float CurrentHp
@@ -28,18 +35,70 @@ namespace Dun9eonAndFi9ht.Characters
                     return currentHp;
                 }
             }
+            set
+            {
+                if (currentHp <= 0)
+                {
+                    currentHp = 0;
+                }
+                else if (currentHp > MaxHp)
+                {
+                    currentHp = MaxHp;
+                }
+                else
+                {
+                    currentHp = value;
+                }
+            }
+        }
+        private float currentMp;
+        public float CurrentMp
+        {
+            get
+            {
+                if (currentMp <= 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return currentMp;
+                }
+            }
+
+            set
+            {
+                if (currentMp <= 0)
+                {
+                    currentMp = 0;
+                }
+                else if (currentMp > MaxMp)
+                {
+                    currentMp = MaxMp;
+                }
+                else
+                {
+                    currentMp = value;
+                }
+            }
         }
         public bool IsDead { get; private set; }
         public float FinalAtk { get; private set; }
 
-        public Character(string name, float maxHp, float atk, float def, int level)
+
+        private int buffDuration = 0;
+        private float buffHp = 0, buffMp = 0, buffAtk = 0, buffDef = 0, buffCrt = 0, buffMiss = 0;
+
+        public Character(string name, float maxHp, float maxMp, float atk, float def, int level)
         {
             this.Name = name;
             this.MaxHp = maxHp;
+            this.MaxMp = maxMp;
             this.Atk = atk;
             this.Def = def;
             this.Level = level;
             this.currentHp = maxHp;
+            this.currentMp = maxMp;
             this.IsDead = false;
         }
 
@@ -63,5 +122,61 @@ namespace Dun9eonAndFi9ht.Characters
         {
             IsDead = true;
         }
+
+
+        // 버프 적용
+        public void ApplyBuff(float hp, float mp, float atk, float def, float crt, float miss, int duration)
+        {
+            buffHp = hp;
+            buffMp = mp;
+            buffAtk = atk;
+            buffDef = def;
+            buffCrt = crt;
+            buffMiss = miss;
+            buffDuration = duration;
+
+            // 능력치에 즉시 반영
+            MaxHp += buffHp;
+            MaxMp += buffMp;
+            Atk += buffAtk;
+            Def += buffDef;
+            Crt += buffCrt;
+            Miss += buffMiss;
+        }
+
+        public void DurationReduce()
+        {
+            buffDuration--;
+        }
+
+        // 턴이 지나면 버프 해제
+        public void UpdateTurn()
+        {
+            if (buffDuration > 0)
+            {
+                buffDuration--;
+
+                if (buffDuration == 0)
+                {
+                    RemoveBuff();
+                }
+            }
+        }
+
+        // 버프 해제
+        private void RemoveBuff()
+        {
+            MaxHp -= buffHp;
+            MaxMp -= buffMp;
+            Atk -= buffAtk;
+            Def -= buffDef;
+            Crt -= buffCrt;
+            Miss -= buffMiss;
+
+            // 초기화
+            buffHp = buffMp = buffAtk = buffDef = buffCrt = buffMiss = 0;
+        }
+
+        
     }
 }

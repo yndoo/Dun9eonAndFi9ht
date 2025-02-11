@@ -72,6 +72,7 @@ namespace Dun9eonAndFi9ht.App
             try
             {
                 int maxHp = Convert.ToInt32(Info["maxHp"]);
+                int maxMp = Convert.ToInt32(Info["maxMp"]);
                 int atk = Convert.ToInt32(Info["atk"]);
                 int def = Convert.ToInt32(Info["def"]);
                 int level = Convert.ToInt32(Info["level"]);
@@ -80,6 +81,7 @@ namespace Dun9eonAndFi9ht.App
                 Info["name"].ToString(),    // string (이름)
                 jobType,// 변환된 EJobType
                 maxHp,
+                maxMp,
                 atk,
                 def,
                 level,
