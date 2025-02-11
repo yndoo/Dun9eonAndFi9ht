@@ -75,6 +75,7 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.PrintMenu("아무 키나 입력하세요");
                     Console.Write(">> ");
                     Console.ReadLine();
+                    Dungeon.stage = stage;
                     return ESceneType.StartScene;
                 }
             }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataDefinition;
+using Dun9eonAndFi9ht.StaticClass;
 
 namespace Dun9eonAndFi9ht.Manager
 {
@@ -156,7 +157,7 @@ namespace Dun9eonAndFi9ht.Manager
             }
             else
             {
-                Console.WriteLine("❌ 해당 포션이 없습니다.");
+                Console.WriteLine("해당 포션이 없습니다.");
                 return false;
             }
         }
@@ -182,6 +183,27 @@ namespace Dun9eonAndFi9ht.Manager
         public int GetPotionCount(int potionID)
         {
             return PotionSlot.ContainsKey(potionID) ? PotionSlot[potionID] : 0;
+        }
+
+        public void DisplayPotions()
+        {
+            if (PotionSlot.Count == 0)
+            {
+                Utility.PrintScene("보유 포션 없음");
+                return;
+            }
+            Utility.PrintScene("보유 포션 목록:");
+            int potionNum = 0;
+            foreach (var dict in PotionSlot)
+            {
+                potionNum++;
+                int potionID = dict.Key;  // 포션 ID
+                int quantity = dict.Value; // 보유 개수
+                Potion potion = InventoryManager.Instance.GetPotionById(potionID); // 포션 객체 가져오기
+                Utility.PrintSceneW($"{potionNum}: ");
+                potion.DisplayPotion();
+                Utility.PrintScene($" x{quantity}");
+            }
         }
 
         /// <summary>

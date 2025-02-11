@@ -87,25 +87,6 @@ namespace Dun9eonAndFi9ht.Scenes
             }
         }
 
-        void DisplayPotions()
-        {
-            if (PotionInventory.Count == 0)
-            {
-                Utility.PrintScene("보유 포션 없음");
-                return;
-            }
-            Utility.PrintScene("보유 포션 목록:");
-            foreach (var dict in PotionInventory)
-            {
-                int potionID = dict.Key;  // 포션 ID
-                int quantity = dict.Value; // 보유 개수
-                Potion potion = InventoryManager.Instance.GetPotionById(potionID); // 포션 객체 가져오기
-                
-                potion.DisplayPotion();
-                Utility.PrintScene($" x{quantity}");
-            }
-        }
-
         /// <summary>
         /// 아이템 장착관리
         /// </summary>
