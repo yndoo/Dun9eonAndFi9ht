@@ -114,7 +114,7 @@ namespace Dun9eonAndFi9ht.Items
             if (changeMiss != 0) changes.Add($" 회피 {(changeMiss >= 0 ? "+" : "-")}{(isPercent ? changeMiss * 100 : changeMiss)}{(isPercent ? "%" : "")}");
 
             string message = $"{name} | {description} |" + string.Join(" | ", changes);
-            Utility.PrintScene(message);
+            Utility.PrintSceneW(message);
         }
 
         public void PrintResult(float hp, float mp, float atk, float def, float crt, float crtDmg, float miss, int duration)

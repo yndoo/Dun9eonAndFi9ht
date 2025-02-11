@@ -19,7 +19,12 @@ namespace Dun9eonAndFi9ht.Manager
 
         public List<Item> AllItem { get; } // 모든 아이템 리스트
         public List<Item> Inventory { get; } // 현재 갖고 있는 아이템
-        public Dictionary<EItemEquipType, Item> EquipSlot { get; } // 현재 장착 아이템 
+        public Dictionary<EItemEquipType, Item> EquipSlot { get; } // 현재 장착 아이템   
+
+        public Dictionary<int, int> PotionSlot { get; }     //현재 갖고 있는 포션
+
+
+        private int itemCount; // 아이템 전체 개수
 
         /// <summary>
         /// InventoryManager 생성자 - 전체 아이템 리스트 불러오기 
@@ -29,31 +34,36 @@ namespace Dun9eonAndFi9ht.Manager
             AllItem = new List<Item>();
             Inventory = new List<Item>();
             EquipSlot = new Dictionary<EItemEquipType, Item>();
-
+            PotionSlot = new Dictionary<int, int>();
+            itemCount = 11;
             // 아이템 정보 불러오기
-            for (int i = 0; i < 6; i ++)
+            
+            for (int i = 0; i < itemCount; i++)
             {
                 Dictionary<string, object> itemInfo = DataTableManager.Instance.GetDBData("item", i);
                 string name = itemInfo["Name"].ToString();
                 EItemEquipType type = (EItemEquipType)(Convert.ToInt32(itemInfo["EquipType"]));
-                float maxHp     = Convert.ToSingle(itemInfo["MaxHp"]);
-                float maxMp     = Convert.ToSingle(itemInfo["MaxMp"]);
-                float atk       = Convert.ToSingle(itemInfo["Atk"]);
-                float def       = Convert.ToSingle(itemInfo["Def"]);
-                float critRate  = Convert.ToSingle(itemInfo["CriticalRate"]);
-                float critDmg   = Convert.ToSingle(itemInfo["CriticalDamage"]);
-                float missRate  = Convert.ToSingle(itemInfo["MissRate"]);
+                float maxHp = Convert.ToSingle(itemInfo["MaxHp"]);
+                float maxMp = Convert.ToSingle(itemInfo["MaxMp"]);
+                float atk = Convert.ToSingle(itemInfo["Atk"]);
+                float def = Convert.ToSingle(itemInfo["Def"]);
+                float critRate = Convert.ToSingle(itemInfo["CriticalRate"]);
+                float critDmg = Convert.ToSingle(itemInfo["CriticalDamage"]);
+                float missRate = Convert.ToSingle(itemInfo["MissRate"]);
                 AllItem.Add(new Item(name, type, maxHp, maxMp, atk, def, critRate, critDmg, missRate));
             }
 
             // 인벤토리&아이템 테스트용 코드
-            //GrantItem(0);
-            //GrantItem(1);
-            //GrantItem(2);
-            //GrantItem(3);
-            //GrantItem(4);
-            //GrantItem(5);
+            for(int i = 0; i < itemCount; i++)
+            {
+                GrantItem(i);
+            }
+
+            GrantPotion(0);
+            GrantPotion(1);
+            GrantPotion(2);
         }
+
 
         /// <summary>
         /// 플레이어에게 아이템 보상을 지급
@@ -99,6 +109,7 @@ namespace Dun9eonAndFi9ht.Manager
         {
             player = GameManager.Instance.Player;
             selectedItem.IsEquipped = false;
+            EquipSlot[selectedItem.EquipType] = null;
 
             player.MaxHp -= selectedItem.MaxHp;
             player.MaxMp -= selectedItem.MaxMp;
@@ -108,5 +119,93 @@ namespace Dun9eonAndFi9ht.Manager
             player.CrtDmg -= selectedItem.CriticalDamage;
             player.Miss -= selectedItem.MissRate;
         }
+
+        /// <summary>
+        /// 특정 ID의 포션을 지급
+        /// </summary>
+        public void GrantPotion(int potionID, int amount = 1)
+        {
+            if (PotionSlot.ContainsKey(potionID))
+            {
+                PotionSlot[potionID] += amount;
+            }
+            else
+            {
+                PotionSlot[potionID] = amount;
+            }
+        }
+
+        /// <summary>
+        /// 특정 ID의 포션을 사용
+        /// </summary>
+        public bool UsePotion(int potionID, Character character)
+        {
+            if (PotionSlot.ContainsKey(potionID) && PotionSlot[potionID] > 0)
+            {
+                Potion potion = GetPotionById(potionID); // ✅ 포션 객체 생성
+                potion.UsePotion(character);
+
+                // 포션 개수 감소
+                PotionSlot[potionID]--;
+                if (PotionSlot[potionID] <= 0)
+                {
+                    PotionSlot.Remove(potionID); // 개수가 0이면 제거
+                }
+
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("❌ 해당 포션이 없습니다.");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 특정 ID의 포션을 버리기
+        /// </summary>
+        public void DropPotion(int potionID, int amount)
+        {
+            if (PotionSlot.ContainsKey(potionID))
+            {
+                PotionSlot[potionID] -= amount;
+                if (PotionSlot[potionID] <= 0)
+                {
+                    PotionSlot.Remove(potionID); // 개수가 0이면 삭제
+                }
+            }
+        }
+
+        /// <summary>
+        /// 특정 포션의 개수를 반환
+        /// </summary>
+        public int GetPotionCount(int potionID)
+        {
+            return PotionSlot.ContainsKey(potionID) ? PotionSlot[potionID] : 0;
+        }
+
+        /// <summary>
+        /// 특정 ID의 포션 객체를 반환 (사용 시에만 생성)
+        /// </summary>
+        public Potion GetPotionById(int potionID)
+        {
+            Dictionary<string, object> potionData = DataTableManager.Instance.GetDBData("potion", potionID);
+
+            return new Potion(
+                potionData["name"].ToString(),
+                Convert.ToBoolean(potionData["isPercent"]),
+                Convert.ToSingle(potionData["changeHp"]),
+                Convert.ToSingle(potionData["changeMp"]),
+                Convert.ToSingle(potionData["changeAtk"]),
+                Convert.ToSingle(potionData["changeDef"]),
+                Convert.ToSingle(potionData["changeCrt"]),
+                Convert.ToSingle(potionData["changeCrtDmg"]),
+                Convert.ToSingle(potionData["changeMiss"]),
+                Convert.ToInt32(potionData["duration"]),
+                potionData["description"].ToString()
+            );
+        }
+
     }
 }
+    
