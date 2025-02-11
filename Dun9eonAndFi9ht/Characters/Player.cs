@@ -13,7 +13,6 @@ namespace Dun9eonAndFi9ht.Characters
         public int CurExp { get; set; }
 
         private int[] MaxExpArray;
-        public List<SkillBase> Skills { get; private set; }
 
         public Player(string name, EJobType job, float maxHp, int maxMp, float atk, float def, int level, int gold, int[] maxExpArray) : base(name, maxHp, maxMp, atk, def, level)
         {

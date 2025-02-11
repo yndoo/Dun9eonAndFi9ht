@@ -84,7 +84,7 @@ namespace Dun9eonAndFi9ht.Characters
         }
         public bool IsDead { get; private set; }
         public float FinalAtk { get; private set; }
-
+        public List<SkillBase> Skills { get; protected set; }
 
         private int buffDuration = 0;
         private float buffHp = 0, buffMp = 0, buffAtk = 0, buffDef = 0, buffCrt = 0, buffMiss = 0;
