@@ -133,10 +133,6 @@ namespace Dun9eonAndFi9ht.Scenes
         private void DisplayDungeonResult(float hpBeforeDungeon, Reward sumReward)
         {
             Utility.PrintScene("");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Utility.PrintScene(isPlayerLose ? "You Lose" : "Victory");
-            Console.ResetColor();
-            Utility.PrintScene("");
 
             switch (resultType)
             {
