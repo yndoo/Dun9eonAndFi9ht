@@ -55,14 +55,14 @@ namespace Dun9eonAndFi9ht.Manager
             }
 
             // 인벤토리&아이템 테스트용 코드
-            for(int i = 0; i < itemCount; i++)
-            {
-                GrantItem(i);
-            }
+            //for(int i = 0; i < itemCount; i++)
+            //{
+            //    GrantItem(i);
+            //}
 
-            GrantPotion(0);
-            GrantPotion(1);
-            GrantPotion(2);
+            //GrantPotion(0);
+            //GrantPotion(1);
+            //GrantPotion(2);
         }
 
 
