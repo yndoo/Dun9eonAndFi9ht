@@ -40,6 +40,12 @@ namespace DataDefinition
         Armor,
         Weapon,
     }
+    public enum EDungeonResultType
+    {
+        Victory,
+        Lose,
+        Escaped,
+    }
     #endregion
 
     #region 상수
