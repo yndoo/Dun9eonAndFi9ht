@@ -22,10 +22,10 @@ namespace Dun9eonAndFi9ht
 
 
         //퀘스트 생성자
-        public Quest(string questtitle, string[] questdescription, string targetMonster, int needKills, int rewardItem, int rewardMoney)
+        public Quest(string quesTtitle, string[] questDescription, string targetMonster, int needKills, int rewardItem, int rewardMoney)
         {
-            QuestTitle = questtitle;
-            QuestDescription = questdescription;
+            QuestTitle = quesTtitle;
+            QuestDescription = questDescription;
             TargetMonster = targetMonster;
             NeedKills = needKills;
             CurrentKills = 0; // 퀘스트 시작 시 잡은 몬스터 수 0으로 초기화

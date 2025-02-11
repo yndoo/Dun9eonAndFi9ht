@@ -35,6 +35,7 @@ namespace DataDefinition
         PlayerStat,
         MoveStage,
         InventoryScene,
+        QuestScene,
     }
     public enum EItemEquipType
     {
