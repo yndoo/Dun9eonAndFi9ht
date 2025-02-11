@@ -25,5 +25,10 @@ namespace Dun9eonAndFi9ht.Skill
         }
 
         public abstract List<Character> UseSkill(Character user, List<Character> targets);
+
+        public virtual void ConsumeMp(Character user)
+        {
+            user.UseMp(MpCost);
+        }
     }
 }
