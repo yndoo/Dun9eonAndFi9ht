@@ -146,7 +146,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 return;
             }
 
-            // 해당 부위 장착됨 && 다른 아이템 장착 -> 기존 아이템 해제하고 장착 
+            // 해당 부위 다른 아이템 장착 -> 기존 아이템 해제하고 장착 
             Item oldItem;
             if(EquipSlot.TryGetValue(select.EquipType, out oldItem))
             {

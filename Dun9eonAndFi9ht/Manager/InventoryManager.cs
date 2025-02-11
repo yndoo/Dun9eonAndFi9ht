@@ -56,9 +56,12 @@ namespace Dun9eonAndFi9ht.Manager
             selectedItem.IsEquipped = true;
 
             player.MaxHp += selectedItem.MaxHp;
+            player.MaxMp += selectedItem.MaxMp;
             player.Atk += selectedItem.Atk;
             player.Def += selectedItem.Def;
-            // To Do : 플레이어에 모든 속성 추가 된 후 추가 작업
+            player.Crt += selectedItem.CriticalRate;
+            player.CrtDmg += selectedItem.CriticalDamage;
+            player.Miss += selectedItem.MissRate;
         }
         public void ItemUnEquip(Item selectedItem)
         {
@@ -66,9 +69,12 @@ namespace Dun9eonAndFi9ht.Manager
             selectedItem.IsEquipped = false;
 
             player.MaxHp -= selectedItem.MaxHp;
+            player.MaxMp -= selectedItem.MaxMp;
             player.Atk -= selectedItem.Atk;
             player.Def -= selectedItem.Def;
-            // To Do : 플레이어에 모든 속성 추가 된 후 추가 작업
+            player.Crt -= selectedItem.CriticalRate;
+            player.CrtDmg -= selectedItem.CriticalDamage;
+            player.Miss -= selectedItem.MissRate;
         }
     }
 }

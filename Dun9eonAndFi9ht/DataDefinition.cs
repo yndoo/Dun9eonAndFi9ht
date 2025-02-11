@@ -33,7 +33,7 @@ namespace DataDefinition
         StartScene,
         Dungeon,
         PlayerStat,
-        MoveStage
+        MoveStage,
         InventoryScene,
     }
     public enum EItemEquipType
