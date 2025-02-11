@@ -16,6 +16,7 @@ namespace Dun9eonAndFi9ht.Scenes
         private Dictionary<EItemEquipType, Item> EquipSlot { get; } // 현재 장착 아이템
         private InventoryManager inventoryManager { get; }
         private Dictionary<int, int> PotionInventory { get; } // 현재 가지고 있는 포션
+        private int CurPage { get; set; }
 
         public InventoryScene()
         {
@@ -28,50 +29,69 @@ namespace Dun9eonAndFi9ht.Scenes
         public override ESceneType Start()
         {
             base.Start();
-            Utility.PrintScene("인벤토리");
-            Utility.PrintScene("이곳에서 아이템을 한 눈에 볼 수 있습니다.\n");
-            DisplayInventory();
-            /*Utility.PrintScene("");
-            DisplayPotions();*/
+            CurPage = 1;
             // 메뉴 출력
             while (true)
             {
-                Utility.ClearMenu();
+                Utility.ClearAll();
+                Utility.PrintScene("인벤토리");
+                Utility.PrintScene("이곳에서 아이템을 한 눈에 볼 수 있습니다.\n");
+                DisplayInventory(CurPage);
+                Utility.PrintScene($"<    {CurPage}페이지    >");
+
+                // 포션 출력
+                Utility.PrintScene("\n");
+                DisplayPotions();
+
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintMenuW("1");
                 Console.ResetColor();
                 Utility.PrintMenu(". 장착관리");
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("2");
+                Console.ResetColor();
+                Utility.PrintMenu(". 이전 페이지");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("3");
+                Console.ResetColor();
+                Utility.PrintMenu(". 다음 페이지");
+
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintMenuW("0");
                 Console.ResetColor();
                 Utility.PrintMenuW(". 나가기 ");
                 Utility.PrintMenu("\n원하시는 행동을 입력해주세요.\n>>");
 
-                int userInput = Utility.UserInput(0, 1);
-                if (userInput == 1)
+                int userInput = Utility.UserInput(0, 3);
+                switch(userInput)
                 {
-                    EquipManagement();
-                    return ESceneType.InventoryScene;
-                }
-                else if (userInput == 0)
-                {
-                    return ESceneType.StartScene;
-                }
-                else
-                {
-                    int nextInput = -1;
-                    while (nextInput != 0)
-                    {
-                        Utility.ClearMenu();
-                        Utility.PrintMenu("잘못된 입력입니다.");
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        Utility.PrintMenuW("0");
-                        Console.ResetColor();
-                        Utility.PrintMenu(". 확인");
-                        Utility.PrintMenu("");
-                        Utility.PrintMenu(">>");
-                        nextInput = Utility.UserInput(0, 0);
-                    }
+                    case 1:
+                        EquipManagement();
+                        return ESceneType.InventoryScene;
+                    case 2:
+                        CurPage = int.Max(--CurPage, 1);
+                        break;
+                    case 3:
+                        CurPage = int.Min(++CurPage, 3);
+                        break;
+                    case 0:
+                        return ESceneType.StartScene;
+                    default:
+                        int nextInput = -1;
+                        while (nextInput != 0)
+                        {
+                            Utility.ClearMenu();
+                            Utility.PrintMenu("잘못된 입력입니다.");
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            Utility.PrintMenuW("0");
+                            Console.ResetColor();
+                            Utility.PrintMenu(". 확인");
+                            Utility.PrintMenu("");
+                            Utility.PrintMenu(">>");
+                            nextInput = Utility.UserInput(0, 0);
+                        }
+                        break;
                 }
             }
         }
@@ -79,11 +99,15 @@ namespace Dun9eonAndFi9ht.Scenes
         /// <summary>
         /// 인벤토리에 있는 아이템 보여주기
         /// </summary>
-        void DisplayInventory()
+        /// <param name="page">보여줄 페이지</param>
+        void DisplayInventory(int page)
         {
-            for(int i = 0; i < Inventory.Count; i++)
+            int startIdx = (page - 1) * 5;
+            for (int i = startIdx; i < startIdx + 5; i++)
             {
-                Utility.PrintScene($"- {Inventory[i].ItemDisplay()}");
+                int invenIdx = 5 * (page - 1) + i % 5;
+                if (invenIdx >= Inventory.Count) break;
+                Utility.PrintScene($"- {Inventory[invenIdx].ItemDisplay()}");
             }
         }
 
