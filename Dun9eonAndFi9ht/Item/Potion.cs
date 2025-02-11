@@ -4,9 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
-namespace Dun9eonAndFi9ht.Item
+namespace Dun9eonAndFi9ht.Items
 {
     public class Potion
     {
@@ -17,11 +18,12 @@ namespace Dun9eonAndFi9ht.Item
         public float changeAtk;
         public float changeDef;
         public float changeCrt;
+        public float changeCrtDmg;
         public float changeMiss;
         public string description;
         int duration;
 
-        public Potion(string name, bool isPercent, float hp, float mp, float atk, float def, float crt, float miss, int duration, string description)
+        public Potion(string name, bool isPercent, float hp, float mp, float atk, float def, float crt, float crtDmg, float miss, int duration, string description)
         {
             this.name = name;
             this.isPercent = isPercent;
@@ -30,11 +32,15 @@ namespace Dun9eonAndFi9ht.Item
             this.changeAtk = atk;
             this.changeDef = def;
             this.changeCrt = crt;
+            this.changeCrtDmg = crtDmg;
             this.changeMiss = miss;
             this.duration = duration;
             this.description = description;
         }
-
+        /// <summary>
+        /// 포션 사용 시 어떤 식으로 작동하는지를 담은 메소드
+        /// </summary>
+        /// <param name="character">포션 사용하는 캐릭터</param>
         public void UsePotion(Character character)
         {
             if (isPercent)
@@ -46,13 +52,14 @@ namespace Dun9eonAndFi9ht.Item
                     character.Atk += changeAtk;
                     character.Def += changeDef;
                     character.Crt += changeCrt;
+                    character.CrtDmg += changeCrtDmg;
                     character.Miss += changeMiss;
                 }
                 else
                 {
-                    character.ApplyBuff(changeHp, changeMp, changeAtk, changeDef, changeCrt, changeMiss, duration);
+                    character.ApplyBuff(changeHp, changeMp, changeAtk, changeDef, changeCrt, changeCrtDmg, changeMiss, duration);
                 }
-                PrintResult(changeHp, changeMp, changeAtk, changeDef, changeCrt, changeMiss, duration);
+                PrintResult(changeHp, changeMp, changeAtk, changeDef, changeCrt, changeCrtDmg, changeMiss, duration);
             }
             else 
             {
@@ -61,6 +68,7 @@ namespace Dun9eonAndFi9ht.Item
                 float atk = CalResult(character.Atk, changeAtk);
                 float def = CalResult(character.Def, changeDef);
                 float crt = CalResult(character.Crt, changeCrt);
+                float crtDmg = CalResult(character.CrtDmg, changeCrtDmg);
                 float miss = CalResult(character.Miss, changeMiss);
                 if (duration == 0)
                 {
@@ -69,51 +77,61 @@ namespace Dun9eonAndFi9ht.Item
                     character.Atk += atk;
                     character.Def += def;
                     character.Crt += crt;
+                    character.CrtDmg += crtDmg;
                     character.Miss += miss;
                 }
                 else
                 {
-                    character.ApplyBuff(hp, mp, atk, def, crt, miss, duration);
+                    character.ApplyBuff(hp, mp, atk, def, crt,crtDmg, miss, duration);
                 }
-                PrintResult(hp, mp, atk, def, crt, miss, duration);
+                PrintResult(hp, mp, atk, def, crt,crtDmg, miss, duration);
             }
         }
-
+        /// <summary>
+        /// 간단히 얼마를 추가, 제거해야하는지를 표시하는 함수
+        /// </summary>
+        /// <param name="chStat"></param>
+        /// <param name="percent"></param>
+        /// <returns></returns>
         private float CalResult(float chStat, float percent)
         {
             if (chStat == 0 || percent == 0) return 0;
             return chStat * percent;
         }
+        /// <summary>
+        /// 퍼센트 회복, 수치 회복에 따라 결과를 다르게 내놓는 함수
+        /// </summary>
         public void DisplayPotion()
         {
             List<string> changes = new List<string>();
             if (duration != 0) changes.Add($" {duration}턴 지속");
-            if (changeHp != 0) changes.Add($" 체력 {(changeHp > 0 ? "+" : "")}{changeHp}{(isPercent ? "%" : "")}");
-            if (changeMp != 0) changes.Add($" 마나 {(changeMp > 0 ? "+" : "")}{changeMp}{(isPercent ? "%" : "")}");
-            if (changeAtk != 0) changes.Add($" 공격력 {(changeAtk > 0 ? "+" : "")}{changeAtk}{(isPercent ? "%" : "")}");
-            if (changeDef != 0) changes.Add($" 방어력 {(changeDef > 0 ? "+" : "")}{changeDef}{(isPercent ? "%" : "")}");
-            if (changeCrt != 0) changes.Add($" 치명타 확률 {(changeCrt > 0 ? "+" : "")}{changeCrt}{(isPercent ? "%" : "")}");
-            if (changeMiss != 0) changes.Add($" 회피 {(changeMiss > 0 ? "+" : "")}{changeMiss}{(isPercent ? "%" : "")}");
+            if (changeHp != 0) changes.Add($" 체력 {(changeHp > 0 ? "+" : "")}{(isPercent ? changeHp * 100 : changeHp)}{(isPercent ? "%" : "")}");
+            if (changeMp != 0) changes.Add($" 마나 {(changeMp > 0 ? "+" : "")}{(isPercent ? changeMp * 100 : changeMp)}{(isPercent ? "%" : "")}");
+            if (changeAtk != 0) changes.Add($" 공격력 {(changeAtk > 0 ? "+" : "")}{(isPercent ? changeAtk * 100 : changeAtk)}{(isPercent ? "%" : "")}");
+            if (changeDef != 0) changes.Add($" 방어력 {(changeDef > 0 ? "+" : "")}{(isPercent ? changeDef * 100 : changeDef)}{(isPercent ? "%" : "")}");
+            if (changeCrt != 0) changes.Add($" 치명타 확률 {(changeCrt > 0 ? "+" : "")}{(isPercent ? changeCrt * 100 : changeCrt)}{(isPercent ? "%" : "")}");
+            if (changeCrtDmg != 0) changes.Add($" 치명타 데미지 {(changeCrtDmg > 0 ? "+" : "")}{(isPercent ? changeCrtDmg * 100 : changeCrtDmg)}{(isPercent ? "%" : "")}");
+            if (changeMiss != 0) changes.Add($" 회피 {(changeMiss > 0 ? "+" : "")}{(isPercent ? changeMiss * 100 : changeMiss)}{(isPercent ? "%" : "")}");
 
             string message = $"{name} | {description} |" + string.Join(" | ", changes);
             Utility.PrintScene(message);
         }
 
-
-        public void PrintResult(float hp, float mp, float atk, float def, float crt, float miss, int duration)
+        public void PrintResult(float hp, float mp, float atk, float def, float crt, float crtDmg, float miss, int duration)
         {
             List<string> changes = new List<string>();
             if (duration != 0) changes.Add($"지속 시간: {duration}턴");
-            if (hp != 0) changes.Add($"HP: {(hp > 0 ? "+" : "")}{hp}");
-            if (mp != 0) changes.Add($"MP: {(mp > 0 ? "+" : "")}{mp}");
-            if (atk != 0) changes.Add($"ATK: {(atk > 0 ? "+" : "")}{atk}");
-            if (def != 0) changes.Add($"DEF: {(def > 0 ? "+" : "")}{def}");
-            if (crt != 0) changes.Add($"CRT: {(crt > 0 ? "+" : "")}{crt}");
-            if (miss != 0) changes.Add($"MISS: {(miss > 0 ? "+" : "")}{miss}");
+            if (hp != 0) changes.Add($"HP: {(hp > 0 ? "+" : "")}{(isPercent ? hp * 100 : hp)}{(isPercent ? "%" : "")}");
+            if (mp != 0) changes.Add($"MP: {(mp > 0 ? "+" : "")}{(isPercent ? mp * 100 : mp)}{(isPercent ? "%" : "")}");
+            if (atk != 0) changes.Add($"ATK: {(atk > 0 ? "+" : "")}{(isPercent ? atk * 100 : atk)}{(isPercent ? "%" : "")}");
+            if (def != 0) changes.Add($"DEF: {(def > 0 ? "+" : "")}{(isPercent ? def * 100 : def)}{(isPercent ? "%" : "")}");
+            if (crt != 0) changes.Add($"CRT: {(crt > 0 ? "+" : "")}{(isPercent ? crt * 100 : crt)}{(isPercent ? "%" : "")}");
+            if (crtDmg != 0) changes.Add($"CRTDmg: {(crtDmg > 0 ? "+" : "")}{(isPercent ? crtDmg * 100 : crtDmg)}{(isPercent ? "%" : "")}");
+            if (miss != 0) changes.Add($"MISS: {(miss > 0 ? "+" : "")}{(isPercent ? miss * 100 : miss)}{(isPercent ? "%" : "")}");
 
-            if(changes.Count > 0)
+            if (changes.Count > 0)
             {
-                Utility.PrintScene($"{name} 사용!\n"+string.Join("\n", changes));
+                Utility.PrintScene($"{name} 사용!\n" + string.Join("\n", changes));
             }
         }
     }

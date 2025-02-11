@@ -8,6 +8,7 @@
       "changeAtk": 0,
       "changeDef": 0,
       "changeCrt": 0,
+      "changeCrtDmg": 0,
       "changeMiss": 0,
       "description": "경상 치료에 좋은 표션",
       "duration": 0
@@ -20,6 +21,7 @@
       "changeAtk": 0,
       "changeDef": 0,
       "changeCrt": 0,
+      "changeCrtDmg": 0,
       "changeMiss": 0,
       "description": "중상 치료에 좋은 표션",
       "duration": 0
@@ -32,18 +34,20 @@
       "changeAtk": 0,
       "changeDef": 0,
       "changeCrt": 0,
+      "changeCrtDmg": 0,
       "changeMiss": 0,
       "description": "빈사도 치료하는 좋은 포션",
       "duration": 0
     },
     "3": {
       "name": "엘릭서",
-      "isPercent": false,
-      "changeHp": 100,
+      "isPercent": true,
+      "changeHp": 1,
       "changeMp": 0,
       "changeAtk": 0,
       "changeDef": 0,
       "changeCrt": 0,
+      "changeCrtDmg": 0,
       "changeMiss": 0,
       "description": "죽은 자도 부활시킨다는 전설의 포션",
       "duration": 0
