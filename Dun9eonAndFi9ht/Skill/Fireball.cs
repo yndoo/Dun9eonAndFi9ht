@@ -16,6 +16,8 @@ namespace Dun9eonAndFi9ht.Skill
         /// <param name="targets">스킬 대상 1명</param>
         public override List<Character> UseSkill(Character user, List<Character> targets)
         {
+            ConsumeMp(user);
+
             user.SetFinalAtk(user.Atk * 1.2f);
 
             return targets;

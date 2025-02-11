@@ -8,7 +8,8 @@
       "def": 5,
       "level": 7,
       "currentHp": 25,
-      "gold": 25
+      "gold": 25,
+      "type": "Minion"
     },
     "1": {
       "name": "Murk Wolves",
@@ -18,7 +19,8 @@
       "def": 3,
       "level": 9,
       "currentHp": 20,
-      "gold": 23
+      "gold": 23,
+      "type": "SmallJungle"
     },
     "2": {
       "name": "Rift Scuttler",
@@ -28,7 +30,8 @@
       "def": 10,
       "level": 10,
       "currentHp": 32,
-      "gold": 30
+      "gold": 30,
+      "type": "NeutralObjective"
     }
   }
 }

@@ -8,7 +8,8 @@
       "def": 20,
       "level": 20,
       "currentHp": 55,
-      "gold": 80
+      "gold": 80,
+      "type": "NeutralObjective"
     },
     "1": {
       "name": "Rift Herald",
@@ -18,7 +19,8 @@
       "def": 23,
       "level": 22,
       "currentHp": 62,
-      "gold": 85
+      "gold": 85,
+      "type": "NeutralObjective"
     },
     "2": {
       "name": "Elder Dragon",
@@ -28,7 +30,8 @@
       "def": 18,
       "level": 24,
       "currentHp": 70,
-      "gold": 100
+      "gold": 100,
+      "type": "BossMonster"
     }
   }
 }

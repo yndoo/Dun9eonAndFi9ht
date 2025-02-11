@@ -24,7 +24,7 @@ namespace Dun9eonAndFi9ht.Characters
             this.MaxExp = MaxExpArray[0];
 
             // 직업별 스킬 자동 세팅
-            Skills = SkillManager.GetPlayerSkills(Job); 
+            Skills = SkillManager.Instance.GetPlayerSkills(Job); 
         }
 
         /// <summary>

@@ -114,6 +114,18 @@ namespace Dun9eonAndFi9ht.Characters
             FinalAtk = value;
         }
 
+        public void UseMp(float amount)
+        {
+            if (CurrentMp >= amount)
+            {
+                CurrentMp -= amount;
+            }
+            else
+            {
+                CurrentMp = 0;
+            }
+        }
+
         public virtual void Damaged(float damage)
         {
             currentHp -= damage;
