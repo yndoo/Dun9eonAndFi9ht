@@ -126,7 +126,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintMenuW("1");
                 Console.ResetColor();
-                Utility.PrintMenu(". 다음 층으로");
+                Utility.PrintMenu(". 다시 던전으로...");
 
                 int userInput = Utility.UserInput(0, 1);
                 if (userInput == 0)
