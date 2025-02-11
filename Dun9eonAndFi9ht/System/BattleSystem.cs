@@ -1,5 +1,6 @@
 ﻿using DataDefinition;
 using Dun9eonAndFi9ht.Characters;
+using Dun9eonAndFi9ht.Scenes;
 using Dun9eonAndFi9ht.Skill;
 using Dun9eonAndFi9ht.StaticClass;
 using System;
@@ -402,7 +403,7 @@ namespace Dun9eonAndFi9ht.System
         {
             Utility.ClearAll();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Utility.PrintScene("Battle!!");
+            Utility.PrintScene($"Battle!! - {Dungeon.stage}층");
             Console.ResetColor();
             Utility.PrintScene("");
             for (int i = 0; i < monsterList.Count; i++)
@@ -429,7 +430,7 @@ namespace Dun9eonAndFi9ht.System
         {
             Utility.ClearAll();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Utility.PrintScene("Battle!!");
+            Utility.PrintScene($"Battle!! - {Dungeon.stage}층");
             Console.ResetColor();
             Utility.PrintScene("");
             Utility.PrintScene($"{attacker.Name}의 공격!");
@@ -453,7 +454,7 @@ namespace Dun9eonAndFi9ht.System
         {
             Utility.ClearAll();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Utility.PrintScene("Battle!!");
+            Utility.PrintScene($"Battle!! - {Dungeon.stage}층");
             Console.ResetColor();
             Utility.PrintScene("");
             Utility.PrintScene($"{attacker.Name}의 {skillName} 공격!");
@@ -473,7 +474,7 @@ namespace Dun9eonAndFi9ht.System
         {
             Utility.ClearAll();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Utility.PrintScene("Battle!!");
+            Utility.PrintScene($"Battle!! - {Dungeon.stage}층");
             Console.ResetColor();
             Utility.PrintScene("");
             Utility.PrintScene($"{attacker.Name}의 공격!");
@@ -500,7 +501,7 @@ namespace Dun9eonAndFi9ht.System
         private void DisplayRunFailScene()
         {
             Utility.ClearAll();
-            Utility.PrintScene("Battle!!");
+            Utility.PrintScene($"Battle!! - {Dungeon.stage}층");
             Utility.PrintScene("");
             Utility.PrintScene($"{player.Name}은(는) 도망에 실패했습니다.");
         }
