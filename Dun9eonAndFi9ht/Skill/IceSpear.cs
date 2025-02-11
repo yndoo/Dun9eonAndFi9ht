@@ -17,6 +17,8 @@ namespace Dun9eonAndFi9ht.Skill
         /// <param name="targets">모든 적 리스트</param>
         public override List<Character> UseSkill(Character user, List<Character> targets)
         {
+            ConsumeMp(user);
+
             List<Character> aliveTargets = new List<Character>();
             foreach (Character target in targets)
             {

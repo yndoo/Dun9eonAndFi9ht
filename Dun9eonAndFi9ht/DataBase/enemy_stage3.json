@@ -8,7 +8,8 @@
       "def": 8,
       "level": 12,
       "currentHp": 34,
-      "gold": 45
+      "gold": 45,
+      "type": "MediumJungle"
     },
     "1": {
       "name": "Greater Murk Wolf",
@@ -18,7 +19,8 @@
       "def": 9,
       "level": 13,
       "currentHp": 32,
-      "gold": 40
+      "gold": 40,
+      "type": "MediumJungle"
     },
     "2": {
       "name": "Krug",
@@ -28,7 +30,8 @@
       "def": 13,
       "level": 15,
       "currentHp": 37,
-      "gold": 50
+      "gold": 50,
+      "type": "SmallJungle"
     }
   }
 }

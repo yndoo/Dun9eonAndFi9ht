@@ -1,5 +1,6 @@
 ﻿using DataDefinition;
 using Dun9eonAndFi9ht.Characters;
+using Dun9eonAndFi9ht.Skill;
 using Dun9eonAndFi9ht.StaticClass;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Dun9eonAndFi9ht.System
 {
     public class BattleSystem
     {
+        #region Variables
         private Player player;
         private List<Monster> monsterList;
 
@@ -23,7 +25,9 @@ namespace Dun9eonAndFi9ht.System
         private bool isPlayerRun;
 
         private Random random;
+        #endregion
 
+        #region Method
         public BattleSystem(Player player, List<Monster> monsters)
         {
             this.player = player;
@@ -65,6 +69,7 @@ namespace Dun9eonAndFi9ht.System
             }
         }
 
+        #region Player Method
         /// <summary>
         /// 플레이어 턴 시작 시 호출되는 메서드
         /// </summary>
@@ -87,9 +92,7 @@ namespace Dun9eonAndFi9ht.System
         private void PlayerActionPhase()
         {
             DisplayCharaterInfoScene(false);
-            Utility.ClearMenu();
-            Utility.PrintMenu("1. 공격     2. 스킬");
-            Utility.PrintMenu("3. 도망가기");
+            DisplayPlayerActionMenu();
 
             int input = DisplaySelectMenu(1, 4, false);
             switch (input)
@@ -139,17 +142,16 @@ namespace Dun9eonAndFi9ht.System
                     }
                     else
                     {
-                        // 10% 확률로 미스
-                        if (random.Next(100) < Constants.MISS_RATE/*monsterList[monsterIndex].Miss*/)
+                        if (random.NextDouble() < monsterList[monsterIndex].Miss)
                         {
                             // 회피 출력
-                            DisplayMissAttackInfoScene(player, monsterList[monsterIndex]);
+                            DisplayMissScene(player, monsterList[monsterIndex]);
                             DisplayNextInputMenu();
 
                         }
                         else
                         {
-                            Battle(player, monsterList[monsterIndex]);
+                            Attack(player, monsterList[monsterIndex]);
                         }
                         isPlayerTurnEnd = true;
                     }
@@ -164,7 +166,7 @@ namespace Dun9eonAndFi9ht.System
         {
             DisplayCharaterInfoScene(false);
             DisplaySkillListScene();
-            int input = DisplaySelectMenu(0, 2, false);
+            int input = DisplaySelectMenu(0, player.Skills.Count, false);
             switch (input)
             {
                 case < 0:
@@ -177,12 +179,40 @@ namespace Dun9eonAndFi9ht.System
                     break;
                 default:
                     // 스킬 선택
-                    playerAction = PlayerTargetSelectPhase;
+                    int skillIndex = input - 1;
+                    if (player.Skills[skillIndex].MpCost <= player.CurrentMp)
+                    {
+                        if (player.Skills[skillIndex].Type.Equals(ESkillTargetType.Single))
+                        {
+                            playerAction = (() => PlayerSkillTargetSelectPhase(skillIndex));
+                        }
+                        else
+                        {
+                            // 다중 타겟
+                            List<Character> tmp = new List<Character>();
+                            foreach (Monster monster in monsterList)
+                            {
+                                tmp.Add(monster);
+                            }
+                            UseSkill(player, skillIndex, tmp);
+                            isPlayerTurnEnd = true;
+                        }
+                    }
+                    else
+                    {
+                        // 마나 부족
+                        DisplayNotEnoughManaMenu();
+                        playerAction = PlayerSkillSelectPhase;
+                    }
                     break;
             }
         }
 
-        private void PlayerTargetSelectPhase()
+        /// <summary>
+        /// 단일 대상 스킬 선택 시 호출되는 메서드
+        /// </summary>
+        /// <param name="skillIndex">선택한 스킬 인덱스</param>
+        private void PlayerSkillTargetSelectPhase(int skillIndex)
         {
             DisplayCharaterInfoScene(true);
             Utility.PrintScene("");
@@ -205,12 +235,13 @@ namespace Dun9eonAndFi9ht.System
                     {
                         // 이미 죽은 몬스터
                         DisplayWrongInputMenu();
-                        playerAction = PlayerTargetSelectPhase;
+                        playerAction = (() => PlayerSkillTargetSelectPhase(skillIndex));
                     }
                     else
                     {
-                        // 스킬 사용 임시 구현
-                        Battle(player, monsterList[monsterIndex]);
+                        List<Character> tmp = new List<Character>();
+                        tmp.Add(monsterList[monsterIndex]);
+                        UseSkill(player, skillIndex, tmp);
                         isPlayerTurnEnd = true;
                     }
                     break;
@@ -232,15 +263,16 @@ namespace Dun9eonAndFi9ht.System
 
             if (!isPlayerRun)
             {
-                DisplayRunScene();
+                DisplayRunFailScene();
                 DisplayNextInputMenu();
             }
 
             isPlayerTurnEnd = true;
         }
+        #endregion
 
         /// <summary>
-        /// 몬스턴 턴일 때 ㅅ호출하는 메서드
+        /// 몬스턴 턴일 때 호출하는 메서드
         /// </summary>
         private void MonsterTurn()
         {
@@ -248,44 +280,101 @@ namespace Dun9eonAndFi9ht.System
             {
                 if (!monsterList[i].IsDead)
                 {
-                    if (random.Next(100) < 10/*player.Miss*/)
+                    // 60% 확률로 스킬 사용
+                    if (random.NextDouble() < 0.6f)
                     {
-                        // 회피 출력
-                        DisplayMissAttackInfoScene(monsterList[i], player);
-                        DisplayNextInputMenu();
+                        MonsterSkill(i);
                     }
                     else
                     {
-                        Battle(monsterList[i], player);
-                        if (player.IsDead)
-                        {
-                            return;
-                        }
+                        MonsterAttack(i);
+                    }
+
+                    if (player.IsDead)
+                    {
+                        return;
                     }
                 }
             }
         }
 
         /// <summary>
-        /// 실제 전투를 하는 메서드
+        /// 몬스터 공격 메서드
+        /// </summary>
+        /// <param name="monsterIndex">공격하는 몬스터 인덱스</param>
+        private void MonsterAttack(int monsterIndex)
+        {
+            if (random.NextDouble() < player.Miss)
+            {
+                // 회피 출력
+                DisplayMissScene(monsterList[monsterIndex], player);
+                DisplayNextInputMenu();
+            }
+            else
+            {
+                Attack(monsterList[monsterIndex], player);
+            }
+        }
+
+        /// <summary>
+        /// 몬스터 스킬 사용 메서드
+        /// </summary>
+        /// <param name="monsterIndex">스킬 시전하는 몬스터 인덱스</param>
+        private void MonsterSkill(int monsterIndex)
+        {
+            int skillIndex = random.Next(0, monsterList[monsterIndex].Skills.Count);
+            if (monsterList[monsterIndex].Skills[skillIndex].MpCost <= monsterList[monsterIndex].CurrentMp)
+            {
+                List<Character> tmp = new List<Character>();
+                tmp.Add(player);
+                UseSkill(monsterList[monsterIndex], skillIndex, tmp);
+            }
+            else
+            {
+                MonsterAttack(monsterIndex);
+            }
+        }
+
+        /// <summary>
+        /// 기본 공격을 하는 메서드
         /// </summary>
         /// <param name="attacker">공격하는 캐릭터</param>
         /// <param name="target">공격 받는 캐릭터</param>
-        private void Battle(Character attacker, Character target)
+        private void Attack(Character attacker, Character target)
         {
             float targetHP = target.CurrentHp;
             attacker.Attack(target);
             float finalAtk = attacker.FinalAtk;
             bool isCritical = false;
             // 15% 확률로 크리티컬
-            if (random.Next(100) < Constants.CRITICAL_RATE/*attacker.Critical*/)
+            if (random.NextDouble() < attacker.Crt)
             {
-                finalAtk *= Constants.CRITICAL_DAMAGE_RATE;
+                finalAtk *= attacker.CrtDmg;
                 isCritical = true;
             }
             target.Damaged(finalAtk);
-            DisplayBattleInfoScene(attacker, target, finalAtk, targetHP, isCritical);
+            DisplayAttackResultScene(attacker, target, finalAtk, targetHP, isCritical);
             DisplayNextInputMenu();
+        }
+
+        /// <summary>
+        /// 스킬을 사용하는 메서드
+        /// </summary>
+        /// <param name="caster">스킬 시전하는 캐릭터</param>
+        /// <param name="skillIndex">선택한 스킬의 인덱스</param>
+        /// <param name="targetList">스킬 대상 캐릭터들</param>
+        private void UseSkill(Character caster, int skillIndex, List<Character> targetList)
+        {
+            List<Character> fianlTarget = caster.Skills[skillIndex].UseSkill(caster, targetList);
+
+            for (int i = 0; i < fianlTarget.Count && !fianlTarget[i].IsDead; i++)
+            {
+                float targetHP = fianlTarget[i].CurrentHp;
+                float finalAtk = caster.FinalAtk;
+                fianlTarget[i].Damaged(finalAtk);
+                DisplaySkillResultScene(caster, fianlTarget[i], finalAtk, targetHP, caster.Skills[skillIndex].Name);
+                DisplayNextInputMenu();
+            }
         }
 
         /// <summary>
@@ -305,6 +394,10 @@ namespace Dun9eonAndFi9ht.System
         }
 
         #region Display Method
+        /// <summary>
+        /// 캐릭터의 정보를 씬 화면에 출력하는 메서드
+        /// </summary>
+        /// <param name="isTargeting">대상을 지정해야 할 경우 True 값을 넣어서 호출</param>
         private void DisplayCharaterInfoScene(bool isTargeting)
         {
             Utility.ClearAll();
@@ -321,10 +414,18 @@ namespace Dun9eonAndFi9ht.System
             Utility.PrintScene("");
             Utility.PrintScene("[내 정보]");
             Utility.PrintScene($"Lv.{player.Level} {player.Name} ({player.Job})");
-            Utility.PrintScene($"HP {player.CurrentHp:F2}/{player.MaxHp:F2}");
+            Utility.PrintScene($"HP {player.CurrentHp:F2}/{player.MaxHp:F2}    MP {player.CurrentMp:F2}/{player.MaxMp:F2}");
         }
 
-        private void DisplayBattleInfoScene(Character attacker, Character target, float damage, float targetPrevHP, bool isCritical)
+        /// <summary>
+        /// 공격 시 씬 화면에 전투 결과를 출력하는 메서드
+        /// </summary>
+        /// <param name="attacker">공격하는 캐릭터</param>
+        /// <param name="target">공격 받는 캐릭터</param>
+        /// <param name="damage">최종 데미지</param>
+        /// <param name="targetPrevHP">공격 받기 이전의 HP</param>
+        /// <param name="isCritical">크리티컬 여부</param>
+        private void DisplayAttackResultScene(Character attacker, Character target, float damage, float targetPrevHP, bool isCritical)
         {
             Utility.ClearAll();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -340,7 +441,35 @@ namespace Dun9eonAndFi9ht.System
             Utility.PrintScene($"HP {targetPrevHP.ToString("F2")} -> {resultHP}");
         }
 
-        private void DisplayMissAttackInfoScene(Character attacker, Character target)
+        /// <summary>
+        /// 스킬 사용 시 씬 화면에 전투 결과를 출력하는 메서드
+        /// </summary>
+        /// <param name="attacker">공격하는 캐릭터</param>
+        /// <param name="target">공격 받는 캐릭터</param>
+        /// <param name="damage">최종 데미지</param>
+        /// <param name="targetPrevHP">공격 받기 이전의 HP</param>
+        /// <param name="skillName">시전한 스킬 이름</param>
+        private void DisplaySkillResultScene(Character attacker, Character target, float damage, float targetPrevHP, string skillName)
+        {
+            Utility.ClearAll();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Utility.PrintScene("Battle!!");
+            Console.ResetColor();
+            Utility.PrintScene("");
+            Utility.PrintScene($"{attacker.Name}의 {skillName} 공격!");
+            Utility.PrintScene($"{target.Name}을(를) 맞췄습니다. [데미지: {damage:F2}]");
+            Utility.PrintScene("");
+            Utility.PrintScene($"Lv.{target.Level} {target.Name}");
+            string resultHP = target.IsDead ? "Dead" : target.CurrentHp.ToString("F2");
+            Utility.PrintScene($"HP {targetPrevHP.ToString("F2")} -> {resultHP}");
+        }
+
+        /// <summary>
+        /// 공격이 빗나갔을 경우 씬 화면에 출력하는 메서드
+        /// </summary>
+        /// <param name="attacker">공격하는 캐릭터</param>
+        /// <param name="target">공격 받는 캐릭터</param>
+        private void DisplayMissScene(Character attacker, Character target)
         {
             Utility.ClearAll();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -351,22 +480,24 @@ namespace Dun9eonAndFi9ht.System
             Utility.PrintScene($"{target.Name}을(를) 공격했지만 아무일도 일어나지 않았습니다.");
         }
 
+        /// <summary>
+        /// 씬 화면에 사용 가능한 플레이어의 스킬 목록을 출력하는 메서드
+        /// </summary>
         private void DisplaySkillListScene()
         {
             Utility.PrintScene("");
-            //for (int i = 0; i < player.skillList; i++)
-            //{
-
-            //}
-            // 임시 출력
-            Utility.PrintScene("1. 알파 스트라이크 - MP 10");
-            Utility.PrintScene("   공격력 * 2 로 하나의 적을 공격합니다.");
-            Utility.PrintScene("2. 더블 스트라이크 - MP 15");
-            Utility.PrintScene("   공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.");
+            for (int i = 0; i < player.Skills.Count; i++)
+            {
+                Utility.PrintScene($"{i + 1}. {player.Skills[i].Name} - MP {player.Skills[i].MpCost}");
+                Utility.PrintScene($"   {player.Skills[i].Desc}");
+            }
             Utility.PrintScene("0. 취소");
         }
 
-        private void DisplayRunScene()
+        /// <summary>
+        /// 도망가기에 실패했을 경우 씬 화면에 출력하는 메서드
+        /// </summary>
+        private void DisplayRunFailScene()
         {
             Utility.ClearAll();
             Utility.PrintScene("Battle!!");
@@ -374,6 +505,23 @@ namespace Dun9eonAndFi9ht.System
             Utility.PrintScene($"{player.Name}은(는) 도망에 실패했습니다.");
         }
 
+        /// <summary>
+        /// 플레이어 행동을 메뉴 화면에 출력하는 메서드
+        /// </summary>
+        private void DisplayPlayerActionMenu()
+        {
+            Utility.ClearMenu();
+            Utility.PrintMenu("1. 공격     2. 스킬");
+            Utility.PrintMenu("3. 도망가기");
+        }
+
+        /// <summary>
+        /// 선택 안내를 메뉴 화면에 출력하는 메서드
+        /// </summary>
+        /// <param name="minIndex">선택 가능한 최소값</param>
+        /// <param name="maxIndex">선택 가능한 최대값</param>
+        /// <param name="isTargeting">대상을 선택해야하는 경우 True 넣어서 호출</param>
+        /// <returns>사용자가 입력한 번호</returns>
         private int DisplaySelectMenu(int minIndex, int maxIndex, bool isTargeting)
         {
             string menuTxt = isTargeting ? "대상을 선택해주세요." : "원하시는 행동을 입력해주세요.";
@@ -382,6 +530,9 @@ namespace Dun9eonAndFi9ht.System
             return Utility.UserInput(minIndex, maxIndex);
         }
 
+        /// <summary>
+        /// 잘못된 입력을 했을 경우 메뉴 화면에 출력하는 메서드
+        /// </summary>
         private void DisplayWrongInputMenu()
         {
             int input = -1;
@@ -396,6 +547,9 @@ namespace Dun9eonAndFi9ht.System
             }
         }
 
+        /// <summary>
+        /// 다음으로 넘어가기 위한 안내를 메뉴 화면에 출력하는 메서드
+        /// </summary>
         private void DisplayNextInputMenu()
         {
             int input = -1;
@@ -408,6 +562,24 @@ namespace Dun9eonAndFi9ht.System
                 input = Utility.UserInput(0, 0);
             }
         }
+
+        /// <summary>
+        /// 스킬 선택 시 마나가 부족할 경우 메뉴 화면에 출력하는 메서드
+        /// </summary>
+        private void DisplayNotEnoughManaMenu()
+        {
+            int input = -1;
+            while (input != 0)
+            {
+                Utility.ClearMenu();
+                Utility.PrintMenu("마나가 부족합니다.");
+                Utility.PrintMenu("0. 확인");
+                Utility.PrintMenu("");
+                Utility.PrintMenu(">>");
+                input = Utility.UserInput(0, 0);
+            }
+        }
+        #endregion
         #endregion
     }
 }
