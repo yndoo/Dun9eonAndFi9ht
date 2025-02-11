@@ -48,15 +48,19 @@ namespace Dun9eonAndFi9ht.Scenes
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintMenuW("3");
                 Console.ResetColor();
-                Utility.PrintMenuW(". 층 이동하기");
-                
+                Utility.PrintMenu(". 층 이동하기");
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("4");
+                Console.ResetColor();
+                Utility.PrintMenu(". 인벤토리");
 
 
                 Utility.PrintMenu("\n\n원하시는 행동을 입력해주세요.\n>>");
 
                 
 
-            int userInput = Utility.UserInput(1, 3);
+            int userInput = Utility.UserInput(1, 4);
                 if (userInput == 1)
                 {
                     return ESceneType.PlayerStat;
@@ -68,6 +72,10 @@ namespace Dun9eonAndFi9ht.Scenes
                 else if(userInput == 3)
                 {
                     return ESceneType.MoveStage;
+                }
+                else if (userInput == 4)
+                {
+                    return ESceneType.InventoryScene;
                 }
                 else
                 {
