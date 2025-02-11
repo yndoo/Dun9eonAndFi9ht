@@ -234,7 +234,9 @@ namespace Dun9eonAndFi9ht.System
         private void DisplayCharacterInfo()
         {
             Utility.ClearAll();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Utility.PrintScene("Battle!!");
+            Console.ResetColor();
             Utility.PrintScene("");
             for (int i = 0; i < monsterList.Count; i++)
             {
@@ -257,7 +259,9 @@ namespace Dun9eonAndFi9ht.System
         private void DisplayBattleInfo(Character attacker, Character target, float damage, float targetPrevHP, bool isCritical)
         {
             Utility.ClearAll();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Utility.PrintScene("Battle!!");
+            Console.ResetColor();
             Utility.PrintScene("");
             Utility.PrintScene($"{attacker.Name}의 공격!");
             string criticalTxt = isCritical ? " - 치명타 공격!!" : "";
@@ -286,7 +290,9 @@ namespace Dun9eonAndFi9ht.System
         private void DisplayMissAttackInfo(Character attacker, Character target)
         {
             Utility.ClearAll();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Utility.PrintScene("Battle!!");
+            Console.ResetColor();
             Utility.PrintScene("");
             Utility.PrintScene($"{attacker.Name}의 공격!");
             Utility.PrintScene($"{target.Name}을(를) 공격했지만 아무일도 일어나지 않았습니다.");

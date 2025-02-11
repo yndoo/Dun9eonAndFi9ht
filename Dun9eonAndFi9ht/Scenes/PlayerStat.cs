@@ -17,7 +17,9 @@ namespace Dun9eonAndFi9ht.Scenes
         public override ESceneType Start()
         {
             Utility.ClearScene();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Utility.PrintScene("상태 보기");
+            Console.ResetColor();
             Utility.PrintScene("캐릭터의 정보가 표시됩니다.\n");
 
             GameManager.Instance.Player.DisplayStatus();
