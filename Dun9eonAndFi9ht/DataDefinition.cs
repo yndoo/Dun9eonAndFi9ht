@@ -67,9 +67,6 @@ namespace DataDefinition
     static class Constants
     {
         public const int ERROR_RATE = 10;
-        public const float CRITICAL_DAMAGE_RATE = 1.6f;
-        public const int CRITICAL_RATE = 15;
-        public const int MISS_RATE = 10;
     }
     #endregion
 }
