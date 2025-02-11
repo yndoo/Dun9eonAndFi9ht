@@ -28,7 +28,10 @@ namespace Dun9eonAndFi9ht.Scenes
             while (true)
             {
                 Utility.ClearMenu();
-                Utility.PrintMenu("0. 나가기");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("0");
+                Console.ResetColor();
+                Utility.PrintMenu(". 나가기");
 
                 int userInput = Utility.UserInput(0, 0);
                 if (userInput == 0)
@@ -41,7 +44,10 @@ namespace Dun9eonAndFi9ht.Scenes
                 {
                     Utility.ClearMenu();
                     Utility.PrintMenu("잘못된 입력입니다.");
-                    Utility.PrintMenu("0. 확인");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintMenuW("0");
+                    Console.ResetColor();
+                    Utility.PrintMenu(". 확인");
                     Utility.PrintMenu("");
                     Utility.PrintMenu(">>");
                     nextInput = Utility.UserInput(0, 0);
