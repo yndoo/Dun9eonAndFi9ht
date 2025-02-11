@@ -43,7 +43,7 @@ namespace Dun9eonAndFi9ht.Items
         /// <param name="character">포션 사용하는 캐릭터</param>
         public void UsePotion(Character character)
         {
-            if (isPercent)
+            if (!isPercent)
             {
                 if(duration == 0)
                 {
@@ -63,8 +63,8 @@ namespace Dun9eonAndFi9ht.Items
             }
             else 
             {
-                float hp = CalResult(character.CurrentHp, changeHp);
-                float mp = CalResult(character.CurrentMp, changeMp);
+                float hp = CalResult(character.MaxHp, changeHp);
+                float mp = CalResult(character.MaxMp, changeMp);
                 float atk = CalResult(character.Atk, changeAtk);
                 float def = CalResult(character.Def, changeDef);
                 float crt = CalResult(character.Crt, changeCrt);
@@ -105,13 +105,13 @@ namespace Dun9eonAndFi9ht.Items
         {
             List<string> changes = new List<string>();
             if (duration != 0) changes.Add($" {duration}턴 지속");
-            if (changeHp != 0) changes.Add($" 체력 {(changeHp > 0 ? "+" : "")}{(isPercent ? changeHp * 100 : changeHp)}{(isPercent ? "%" : "")}");
-            if (changeMp != 0) changes.Add($" 마나 {(changeMp > 0 ? "+" : "")}{(isPercent ? changeMp * 100 : changeMp)}{(isPercent ? "%" : "")}");
-            if (changeAtk != 0) changes.Add($" 공격력 {(changeAtk > 0 ? "+" : "")}{(isPercent ? changeAtk * 100 : changeAtk)}{(isPercent ? "%" : "")}");
-            if (changeDef != 0) changes.Add($" 방어력 {(changeDef > 0 ? "+" : "")}{(isPercent ? changeDef * 100 : changeDef)}{(isPercent ? "%" : "")}");
-            if (changeCrt != 0) changes.Add($" 치명타 확률 {(changeCrt > 0 ? "+" : "")}{(isPercent ? changeCrt * 100 : changeCrt)}{(isPercent ? "%" : "")}");
-            if (changeCrtDmg != 0) changes.Add($" 치명타 데미지 {(changeCrtDmg > 0 ? "+" : "")}{(isPercent ? changeCrtDmg * 100 : changeCrtDmg)}{(isPercent ? "%" : "")}");
-            if (changeMiss != 0) changes.Add($" 회피 {(changeMiss > 0 ? "+" : "")}{(isPercent ? changeMiss * 100 : changeMiss)}{(isPercent ? "%" : "")}");
+            if (changeHp != 0) changes.Add($" 체력 {(changeHp >= 0 ? "+" : "-")}{(isPercent ? changeHp * 100 : changeHp)}{(isPercent ? "%" : "")}");
+            if (changeMp != 0) changes.Add($" 마나 {(changeMp >= 0 ? "+" : "-")}{(isPercent ? changeMp * 100 : changeMp)}{(isPercent ? "%" : "")}");
+            if (changeAtk != 0) changes.Add($" 공격력 {(changeAtk >= 0 ? "+" : "-")}{(isPercent ? changeAtk * 100 : changeAtk)}{(isPercent ? "%" : "")}");
+            if (changeDef != 0) changes.Add($" 방어력 {(changeDef >= 0 ? "+" : "-")}{(isPercent ? changeDef * 100 : changeDef)}{(isPercent ? "%" : "")}");
+            if (changeCrt != 0) changes.Add($" 치명타 확률 {(changeCrt >= 0 ? "+" : "-")}{(isPercent ? changeCrt * 100 : changeCrt)}{(isPercent ? "%" : "")}");
+            if (changeCrtDmg != 0) changes.Add($" 치명타 데미지 {(changeCrtDmg >= 0 ? "+" : "-")}{(isPercent ? changeCrtDmg * 100 : changeCrtDmg)}{(isPercent ? "%" : "")}");
+            if (changeMiss != 0) changes.Add($" 회피 {(changeMiss >= 0 ? "+" : "-")}{(isPercent ? changeMiss * 100 : changeMiss)}{(isPercent ? "%" : "")}");
 
             string message = $"{name} | {description} |" + string.Join(" | ", changes);
             Utility.PrintScene(message);
@@ -121,13 +121,13 @@ namespace Dun9eonAndFi9ht.Items
         {
             List<string> changes = new List<string>();
             if (duration != 0) changes.Add($"지속 시간: {duration}턴");
-            if (hp != 0) changes.Add($"HP: {(hp > 0 ? "+" : "")}{(isPercent ? hp * 100 : hp)}{(isPercent ? "%" : "")}");
-            if (mp != 0) changes.Add($"MP: {(mp > 0 ? "+" : "")}{(isPercent ? mp * 100 : mp)}{(isPercent ? "%" : "")}");
-            if (atk != 0) changes.Add($"ATK: {(atk > 0 ? "+" : "")}{(isPercent ? atk * 100 : atk)}{(isPercent ? "%" : "")}");
-            if (def != 0) changes.Add($"DEF: {(def > 0 ? "+" : "")}{(isPercent ? def * 100 : def)}{(isPercent ? "%" : "")}");
-            if (crt != 0) changes.Add($"CRT: {(crt > 0 ? "+" : "")}{(isPercent ? crt * 100 : crt)}{(isPercent ? "%" : "")}");
-            if (crtDmg != 0) changes.Add($"CRTDmg: {(crtDmg > 0 ? "+" : "")}{(isPercent ? crtDmg * 100 : crtDmg)}{(isPercent ? "%" : "")}");
-            if (miss != 0) changes.Add($"MISS: {(miss > 0 ? "+" : "")}{(isPercent ? miss * 100 : miss)}{(isPercent ? "%" : "")}");
+            if (hp != 0) changes.Add($"HP: {(hp > 0 ? "+" : "")} {hp}");
+            if (mp != 0) changes.Add($"MP: {(mp > 0 ? "+" : "")}{mp}");
+            if (atk != 0) changes.Add($"ATK: {(atk > 0 ? "+" : "")}{atk}");
+            if (def != 0) changes.Add($"DEF: {(def > 0 ? "+" : "")}{def}");
+            if (crt != 0) changes.Add($"CRT: {(crt > 0 ? "+" : "")}{crt}");
+            if (crtDmg != 0) changes.Add($"CRTDmg: {(crtDmg > 0 ? "+" : "")}{crtDmg}");
+            if (miss != 0) changes.Add($"MISS: {(miss > 0 ? "+" : "")}{miss}");
 
             if (changes.Count > 0)
             {

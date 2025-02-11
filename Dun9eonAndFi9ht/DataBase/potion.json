@@ -42,7 +42,7 @@
     "3": {
       "name": "엘릭서",
       "isPercent": true,
-      "changeHp": 1,
+      "changeHp": 0.8,
       "changeMp": 0,
       "changeAtk": 0,
       "changeDef": 0,
