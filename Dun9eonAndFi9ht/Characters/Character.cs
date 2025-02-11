@@ -17,6 +17,7 @@ namespace Dun9eonAndFi9ht.Characters
         public float Def { get; set; }
 
         public float Crt { get; set; }
+        public float CrtDmg { get; set; }
         public float Miss {  get; set; }
 
         public int Level { get; set; }
@@ -34,7 +35,7 @@ namespace Dun9eonAndFi9ht.Characters
                     return currentHp;
                 }
             }
-            set 
+            set
             {
                 if (currentHp <= 0)
                 {
@@ -55,7 +56,7 @@ namespace Dun9eonAndFi9ht.Characters
         {
             get
             {
-                if (currentHp <= 0)
+                if (currentMp <= 0)
                 {
                     return 0;
                 }
@@ -73,7 +74,7 @@ namespace Dun9eonAndFi9ht.Characters
                 }
                 else if (currentMp > MaxMp)
                 {
-                    currentMp = MaxHp;
+                    currentMp = MaxMp;
                 }
                 else
                 {
@@ -92,7 +93,7 @@ namespace Dun9eonAndFi9ht.Characters
         {
             this.Name = name;
             this.MaxHp = maxHp;
-            this.MaxHp = maxMp;
+            this.MaxMp = maxMp;
             this.Atk = atk;
             this.Def = def;
             this.Level = level;
