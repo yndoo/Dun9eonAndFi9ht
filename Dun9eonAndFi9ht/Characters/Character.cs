@@ -11,6 +11,7 @@ namespace Dun9eonAndFi9ht.Characters
     {
         public string Name { get; set; }
         public float MaxHp { get; set; }
+        public int MaxMp { get; set; }
         public float Atk { get; set; }
         public float Def { get; set; }
         public int Level { get; set; }
@@ -29,17 +30,20 @@ namespace Dun9eonAndFi9ht.Characters
                 }
             }
         }
+        public int CurrentMp { get; set; }
         public bool IsDead { get; private set; }
         public float FinalAtk { get; private set; }
 
-        public Character(string name, float maxHp, float atk, float def, int level)
+        public Character(string name, float maxHp, int maxMp, float atk, float def, int level)
         {
             this.Name = name;
             this.MaxHp = maxHp;
+            this.MaxMp = maxMp;
             this.Atk = atk;
             this.Def = def;
             this.Level = level;
             this.currentHp = maxHp;
+            this.CurrentMp = maxMp;
             this.IsDead = false;
         }
 

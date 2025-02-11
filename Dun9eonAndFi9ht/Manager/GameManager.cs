@@ -92,9 +92,9 @@ namespace Dun9eonAndFi9ht.Manager
         /// <param name="def">방어력</param>
         /// <param name="level">레벨</param>
         /// <param name="gold">골드</param>
-        public void GetPlayerInfo(string name, DataDefinition.EJobType job, int maxHp, int atk, int def, int level, int gold, int[] maxExp)
+        public void GetPlayerInfo(string name, DataDefinition.EJobType job, int maxHp, int maxMp, int atk, int def, int level, int gold, int[] maxExp)
         {
-            this.Player = new Player(name, job, maxHp, atk, def, level, gold, maxExp);
+            this.Player = new Player(name, job, maxHp, maxMp, atk, def, level, gold, maxExp);
         }
     }
 }

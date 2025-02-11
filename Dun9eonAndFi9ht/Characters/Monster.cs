@@ -11,7 +11,7 @@ namespace Dun9eonAndFi9ht.Characters
     {
         public Reward Reward { get; private set; }
 
-        public Monster(string name, float maxHp, float atk, float def, int level, int gold) : base(name, maxHp, atk, def, level)
+        public Monster(string name, float maxHp, int maxMp, float atk, float def, int level, int gold) : base(name, maxHp, maxMp, atk, def, level)
         {
             Reward = new Reward(level, gold);
         }

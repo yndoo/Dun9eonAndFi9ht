@@ -14,7 +14,7 @@ namespace Dun9eonAndFi9ht.Characters
         private int[] MaxExpArray;
 
 
-        public Player(string name, EJobType job, float maxHp, float atk, float def, int level, int gold, int[] maxExpArray) : base(name, maxHp, atk, def, level)
+        public Player(string name, EJobType job, float maxHp, int maxMp, float atk, float def, int level, int gold, int[] maxExpArray) : base(name, maxHp, maxMp, atk, def, level)
         {
             this.Job = job;
             this.Gold = gold;
@@ -34,6 +34,7 @@ namespace Dun9eonAndFi9ht.Characters
             Utility.PrintScene($"{"공격력"} : {Atk:F2}");
             Utility.PrintScene($"{"방어력"} : {Def:F2}");
             Utility.PrintScene($"{"체  력"} : {CurrentHp:F2}");
+            Utility.PrintScene($"{"마  나"} : {CurrentMp}");
             Utility.PrintScene($"{"Gold"}   : {Gold}");
             if(MaxExp < 0)
             {
