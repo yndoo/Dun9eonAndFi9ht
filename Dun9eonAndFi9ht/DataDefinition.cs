@@ -35,6 +35,12 @@ namespace DataDefinition
         PlayerStat,
         MoveStage
     }
+    public enum EDungeonResultType
+    {
+        Victory,
+        Lose,
+        Escaped,
+    }
     #endregion
 
     #region 상수

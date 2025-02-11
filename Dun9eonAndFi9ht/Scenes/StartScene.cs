@@ -30,8 +30,33 @@ namespace Dun9eonAndFi9ht.Scenes
             while(true)
             {
                 Utility.ClearMenu();
-                Utility.PrintMenu(new string[] { "1. 상태보기", $"2. 전투 시작 (현재 : {Dungeon.stage}층)", "3. 층 이동하기", "\n원하시는 행동을 입력해주세요.\n>>" });
-                int userInput = Utility.UserInput(1, 3);
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("1");
+                Console.ResetColor();
+                Utility.PrintMenu(". 상태보기");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+
+                Utility.PrintMenuW("2");
+                Console.ResetColor();
+                Utility.PrintMenuW(". 전투 시작 ");
+                Utility.PrintMenuW("(현재 ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW($"{Dungeon.stage}");
+                Console.ResetColor();
+                Utility.PrintMenu("층)");
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("3");
+                Console.ResetColor();
+                Utility.PrintMenuW(". 층 이동하기");
+                
+
+
+                Utility.PrintMenu("\n\n원하시는 행동을 입력해주세요.\n>>");
+
+                
+
+            int userInput = Utility.UserInput(1, 3);
                 if (userInput == 1)
                 {
                     return ESceneType.PlayerStat;
@@ -51,7 +76,10 @@ namespace Dun9eonAndFi9ht.Scenes
                     {
                         Utility.ClearMenu();
                         Utility.PrintMenu("잘못된 입력입니다.");
-                        Utility.PrintMenu("0. 확인");
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Utility.PrintMenuW("0");
+                        Console.ResetColor();
+                        Utility.PrintMenu(". 확인");
                         Utility.PrintMenu("");
                         Utility.PrintMenu(">>");
                         nextInput = Utility.UserInput(0, 0);
@@ -82,7 +110,14 @@ namespace Dun9eonAndFi9ht.Scenes
                 while(true)
                 {
                     Utility.ClearMenu();
-                    Utility.PrintMenu("1. 저장\n2. 다시 입력");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintMenuW("1");
+                    Console.ResetColor();
+                    Utility.PrintMenu(". 저장");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintMenuW("2");
+                    Console.ResetColor();
+                    Utility.PrintMenu(". 다시 입력");
                     Utility.PrintMenu("원하시는 행동을 입력해주세요.\n>>");
                     int command = Utility.UserInput(1, 2);
                     if (command == 1)
@@ -108,7 +143,18 @@ namespace Dun9eonAndFi9ht.Scenes
             {
                 Utility.ClearAll();
                 Utility.PrintScene("원하시는 직업을 선택해주세요.");
-                Utility.PrintScene("1. Warrior\n2. Mage\n3. Rogue");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintSceneW("1");
+                Console.ResetColor();
+                Utility.PrintScene(". Warrior");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintSceneW("2");
+                Console.ResetColor();
+                Utility.PrintScene(". Mage");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintSceneW("3");
+                Console.ResetColor();
+                Utility.PrintScene(". Rogue");
                 Utility.PrintMenu("직업을 선택하세요.\n>>");
                 int jobInput = Utility.UserInput(1, 3) - 1;
                 if (jobInput < 0)
@@ -126,7 +172,14 @@ namespace Dun9eonAndFi9ht.Scenes
                 while (true)
                 {
                     Utility.ClearMenu();
-                    Utility.PrintMenu("1. 저장\n2. 다시 입력");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintMenuW("1");
+                    Console.ResetColor();
+                    Utility.PrintMenu(". 저장");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintMenuW("2");
+                    Console.ResetColor();
+                    Utility.PrintMenu(". 다시 입력");
                     Utility.PrintMenu("원하시는 행동을 입력해주세요.\n>>");
                     int command = Utility.UserInput(1, 2);
                     if (command == 1)
