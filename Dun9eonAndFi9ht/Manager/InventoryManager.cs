@@ -109,7 +109,7 @@ namespace Dun9eonAndFi9ht.Manager
         {
             player = GameManager.Instance.Player;
             selectedItem.IsEquipped = false;
-            EquipSlot[selectedItem.EquipType] = null;
+            EquipSlot.Remove(selectedItem.EquipType);
 
             player.MaxHp -= selectedItem.MaxHp;
             player.MaxMp -= selectedItem.MaxMp;
