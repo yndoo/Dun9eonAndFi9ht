@@ -13,13 +13,14 @@ namespace Dun9eonAndFi9ht.System
 {
     public class BattleSystem
     {
-        private delegate void playerTurn();
-        private playerTurn playerAction;
-        private bool isPlayerTurnEnd;
-        private bool isPlayerRun;
-
         private Player player;
         private List<Monster> monsterList;
+
+        private delegate void playerTurn();
+        private playerTurn playerAction;
+
+        private bool isPlayerTurnEnd;
+        private bool isPlayerRun;
 
         private Random random;
 
@@ -27,8 +28,12 @@ namespace Dun9eonAndFi9ht.System
         {
             this.player = player;
             monsterList = monsters;
+
+            playerAction = PlayerActionPhase;
+
             isPlayerTurnEnd = false;
             isPlayerRun = false;
+
             random = new Random();
         }
 
