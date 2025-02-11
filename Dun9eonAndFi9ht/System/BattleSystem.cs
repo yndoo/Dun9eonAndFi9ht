@@ -280,21 +280,58 @@ namespace Dun9eonAndFi9ht.System
             {
                 if (!monsterList[i].IsDead)
                 {
-                    if (random.NextDouble() < player.Miss)
+                    // 60% 확률로 스킬 사용
+                    if (random.NextDouble() < 0.6f)
                     {
-                        // 회피 출력
-                        DisplayMissScene(monsterList[i], player);
-                        DisplayNextInputMenu();
+                        MonsterSkill(i);
                     }
                     else
                     {
-                        Attack(monsterList[i], player);
-                        if (player.IsDead)
-                        {
-                            return;
-                        }
+                        MonsterAttack(i);
+                    }
+
+                    if (player.IsDead)
+                    {
+                        return;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// 몬스터 공격 메서드
+        /// </summary>
+        /// <param name="monsterIndex">공격하는 몬스터 인덱스</param>
+        private void MonsterAttack(int monsterIndex)
+        {
+            if (random.NextDouble() < player.Miss)
+            {
+                // 회피 출력
+                DisplayMissScene(monsterList[monsterIndex], player);
+                DisplayNextInputMenu();
+            }
+            else
+            {
+                Attack(monsterList[monsterIndex], player);
+            }
+        }
+
+        /// <summary>
+        /// 몬스터 스킬 사용 메서드
+        /// </summary>
+        /// <param name="monsterIndex">스킬 시전하는 몬스터 인덱스</param>
+        private void MonsterSkill(int monsterIndex)
+        {
+            int skillIndex = random.Next(0, monsterList[monsterIndex].Skills.Count);
+            if (monsterList[monsterIndex].Skills[skillIndex].MpCost <= monsterList[monsterIndex].CurrentMp)
+            {
+                List<Character> tmp = new List<Character>();
+                tmp.Add(player);
+                UseSkill(monsterList[monsterIndex], skillIndex, tmp);
+            }
+            else
+            {
+                MonsterAttack(monsterIndex);
             }
         }
 
@@ -324,18 +361,18 @@ namespace Dun9eonAndFi9ht.System
         /// 스킬을 사용하는 메서드
         /// </summary>
         /// <param name="caster">스킬 시전하는 캐릭터</param>
-        /// <param name="index">선택한 스킬의 인덱스</param>
+        /// <param name="skillIndex">선택한 스킬의 인덱스</param>
         /// <param name="targetList">스킬 대상 캐릭터들</param>
-        private void UseSkill(Character caster, int index, List<Character> targetList)
+        private void UseSkill(Character caster, int skillIndex, List<Character> targetList)
         {
-            List<Character> fianlTarget = caster.Skills[index].UseSkill(caster, targetList);
+            List<Character> fianlTarget = caster.Skills[skillIndex].UseSkill(caster, targetList);
 
             for (int i = 0; i < fianlTarget.Count && !fianlTarget[i].IsDead; i++)
             {
                 float targetHP = fianlTarget[i].CurrentHp;
                 float finalAtk = caster.FinalAtk;
                 fianlTarget[i].Damaged(finalAtk);
-                DisplaySkillResultScene(caster, fianlTarget[i], finalAtk, targetHP, caster.Skills[index].Name);
+                DisplaySkillResultScene(caster, fianlTarget[i], finalAtk, targetHP, caster.Skills[skillIndex].Name);
                 DisplayNextInputMenu();
             }
         }
