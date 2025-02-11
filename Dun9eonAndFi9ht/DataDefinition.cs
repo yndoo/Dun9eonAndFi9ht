@@ -34,6 +34,11 @@ namespace DataDefinition
         Dungeon,
         PlayerStat,
     }
+    public enum EItemEquipType
+    {
+        Armor,
+        Weapon,
+    }
     #endregion
 
     #region 상수
