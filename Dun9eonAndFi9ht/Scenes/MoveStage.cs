@@ -28,10 +28,25 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.PrintMenu("이전 메뉴로 돌아갑니다.");
                     return ESceneType.StartScene;
                 }
-                else if (nextinput < 1 || nextinput > maxStageCleared + 1) // 범위를 벗어난 경우
+                else if (nextinput < 1) // 범위를 벗어난 경우
                 {
                     Utility.ClearMenu();
                     Utility.PrintMenu("잘못된 입력입니다.");
+                    Utility.PrintMenu("아무 키나 입력\n>>");
+                    Console.ReadLine();
+                    nextinput = -1; // 루프를 계속 돌도록 초기화
+                }
+                else if(nextinput <= 5 && nextinput > maxStageCleared+1)
+                {
+                    Utility.ClearMenu();
+                    Utility.PrintMenu("클리어하지 못한 층은 갈 수 없습니다.");
+                    Utility.PrintMenu("아무 키나 입력\n>>");
+                    Console.ReadLine();
+                }
+                else if(nextinput == stage)
+                {
+                    Utility.ClearMenu();
+                    Utility.PrintMenu("현재 위치한 층입니다!");
                     Utility.PrintMenu("아무 키나 입력\n>>");
                     Console.ReadLine();
                     nextinput = -1; // 루프를 계속 돌도록 초기화
