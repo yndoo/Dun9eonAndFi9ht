@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dun9eonAndFi9ht.Item
+namespace Dun9eonAndFi9ht.Items
 {
     public class Potion
     {
