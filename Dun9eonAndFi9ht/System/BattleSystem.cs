@@ -37,6 +37,12 @@ namespace Dun9eonAndFi9ht.System
             random = new Random();
         }
 
+        /// <summary>
+        /// 전체적인 전투를 진행하는 메서드
+        /// </summary>
+        /// <returns>몬스터 전멸 시 Victory 반환
+        /// 플레이어 도망가기 성공 시 Escaped 반환
+        /// 플레이어 사망 시 Lose 반환</returns>
         public EDungeonResultType BattleProcess()
         {
             while (true)
@@ -72,6 +78,9 @@ namespace Dun9eonAndFi9ht.System
             }
         }
 
+        /// <summary>
+        /// 플레이어 턴 시작 시 호출되는 메서드
+        /// </summary>
         private void PlayerActionPhase()
         {
             DisplayCharaterInfoScene(false);
@@ -97,6 +106,9 @@ namespace Dun9eonAndFi9ht.System
             }
         }
 
+        /// <summary>
+        /// 공격 선택 시 호출되는 메서드
+        /// </summary>
         private void PlayerAttackPhase()
         {
             DisplayCharaterInfoScene(true);
@@ -142,6 +154,9 @@ namespace Dun9eonAndFi9ht.System
             }
         }
 
+        /// <summary>
+        /// 스킬 선택 시 호출되는 메서드
+        /// </summary>
         private void PlayerSkillPhase()
         {
             DisplayCharaterInfoScene(false);
@@ -149,19 +164,37 @@ namespace Dun9eonAndFi9ht.System
             DisplaySelectMenu(0, 2, false);
         }
 
+        /// <summary>
+        /// 도망가기 선택 시 호출되는 메서드
+        /// </summary>
         private void PlayerRunPhase()
         {
+            int totalMonsterLevel = 0;
+            for (int i = 0; i < monsterList.Count; i++)
+            {
+                totalMonsterLevel += monsterList[i].Level;
+            }
+
+            isPlayerRun = random.Next(100) > totalMonsterLevel ? true : false;
+
+            if (!isPlayerRun)
+            {
+                DisplayRunScene();
+                DisplayNextInputMenu();
+            }
+
             isPlayerTurnEnd = true;
-            isPlayerRun = true;
         }
 
+        /// <summary>
+        /// 몬스턴 턴일 때 ㅅ호출하는 메서드
+        /// </summary>
         private void MonsterTurn()
         {
             for (int i = 0; i < monsterList.Count; i++)
             {
                 if (!monsterList[i].IsDead)
                 {
-                    Random random = new Random();
                     if (random.Next(100) < 10/*player.Miss*/)
                     {
                         // 회피 출력
@@ -180,6 +213,11 @@ namespace Dun9eonAndFi9ht.System
             }
         }
 
+        /// <summary>
+        /// 실제 전투를 하는 메서드
+        /// </summary>
+        /// <param name="attacker">공격하는 캐릭터</param>
+        /// <param name="target">공격 받는 캐릭터</param>
         private void Battle(Character attacker, Character target)
         {
             float targetHP = target.CurrentHp;
@@ -213,6 +251,7 @@ namespace Dun9eonAndFi9ht.System
             return true;
         }
 
+        #region Display Method
         private void DisplayCharaterInfoScene(bool isTargeting)
         {
             Utility.ClearAll();
@@ -268,6 +307,14 @@ namespace Dun9eonAndFi9ht.System
             Utility.PrintScene("0. 취소");
         }
 
+        private void DisplayRunScene()
+        {
+            Utility.ClearAll();
+            Utility.PrintScene("Battle!!");
+            Utility.PrintScene("");
+            Utility.PrintScene($"{player.Name}은(는) 도망에 실패했습니다.");
+        }
+
         private int DisplaySelectMenu(int minIndex, int maxIndex, bool isTargeting)
         {
             string menuTxt = isTargeting ? "대상을 선택해주세요." : "원하시는 행동을 입력해주세요.";
@@ -302,5 +349,6 @@ namespace Dun9eonAndFi9ht.System
                 input = Utility.UserInput(0, 0);
             }
         }
+        #endregion
     }
 }
