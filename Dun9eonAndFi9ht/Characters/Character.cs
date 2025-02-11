@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataDefinition;
+using Dun9eonAndFi9ht.Skill;
 
 namespace Dun9eonAndFi9ht.Characters
 {
@@ -83,18 +84,20 @@ namespace Dun9eonAndFi9ht.Characters
         public bool IsDead { get; private set; }
         public float FinalAtk { get; private set; }
 
+
         private int buffDuration = 0;
         private float buffHp = 0, buffMp = 0, buffAtk = 0, buffDef = 0, buffCrt = 0, buffMiss = 0;
 
-
-        public Character(string name, float maxHp, float atk, float def, int level)
+        public Character(string name, float maxHp, float maxMp, float atk, float def, int level)
         {
             this.Name = name;
             this.MaxHp = maxHp;
+            this.MaxHp = maxMp;
             this.Atk = atk;
             this.Def = def;
             this.Level = level;
             this.currentHp = maxHp;
+            this.currentMp = maxMp;
             this.IsDead = false;
         }
 

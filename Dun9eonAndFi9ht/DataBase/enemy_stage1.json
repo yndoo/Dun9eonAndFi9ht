@@ -3,6 +3,7 @@
     "0": {
       "name": "Melee Minion",
       "maxHp": 15,
+      "maxMp": 10,
       "atk": 3,
       "def": 3,
       "level": 4,
@@ -12,6 +13,7 @@
     "1": {
       "name": "Caster Minion",
       "maxHp": 12,
+      "maxMp": 20,
       "atk": 4,
       "def": 2,
       "level": 6,
@@ -21,6 +23,7 @@
     "2": {
       "name": "Raptors",
       "maxHp": 18,
+      "maxMp": 15,
       "atk": 5,
       "def": 1,
       "level": 5,

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Dun9eonAndFi9ht.Skill
 {
-    public abstract class Skill
+    public abstract class SkillBase
     {
         public string Name { get; private set; }
         public int MpCost { get; private set; }
         public string Desc { get; private set; }
 
-        public Skill(string name, int mpCost, string desc)
+        public SkillBase(string name, int mpCost, string desc)
         {
             this.Name = name;
             this.MpCost = mpCost;

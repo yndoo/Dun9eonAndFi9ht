@@ -3,6 +3,7 @@
     "0": {
       "name": "Blue Sentinel",
       "maxHp": 48,
+      "maxMp": 48,
       "atk": 12,
       "def": 14,
       "level": 17,
@@ -12,6 +13,7 @@
     "1": {
       "name": "Red Brambleback",
       "maxHp": 40,
+      "maxMp": 20,
       "atk": 15,
       "def": 10,
       "level": 18,
@@ -21,6 +23,7 @@
     "2": {
       "name": "Gromp",
       "maxHp": 45,
+      "maxMp": 25,
       "atk": 13,
       "def": 11,
       "level": 16,

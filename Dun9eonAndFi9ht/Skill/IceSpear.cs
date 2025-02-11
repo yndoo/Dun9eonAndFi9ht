@@ -1,15 +1,15 @@
-﻿using Dun9eonAndFi9ht.Characters;
-
+﻿
+using Dun9eonAndFi9ht.Characters;
 namespace Dun9eonAndFi9ht.Skill
 {
-    public class DoubleStrike : SkillBase
+    public class IceSpear : SkillBase
     {
-        public DoubleStrike() : base("더블 스트라이크", 15, "공격력의 150%로 2명의 적을 랜덤으로 공격합니다.")
+        public IceSpear() : base("아이스 스피어", 12, "여러개의 얼음 창을 소환해 적 모두에게 공격력의 80% 피해를 줍니다.")
         {
         }
 
         /// <summary>
-        /// 스킬 사용 "더블 스트라이크"
+        /// 스킬 사용 "아이스 스피어"
         /// 현재 모든 적을 받아와서 살아있는 적들만 선택
         /// </summary>
         /// <param name="user">스킬을 사용하는 유저</param>
@@ -25,14 +25,10 @@ namespace Dun9eonAndFi9ht.Skill
                 }
             }
 
-            Random random = new Random();
-            // 랜덤하게 2명 선택
-            List<Character> selectedTargets = aliveTargets.OrderBy(x => random.Next()).Take(2).ToList();
-
             // 선택된 대상 공격
-            foreach (Character target in selectedTargets)
+            foreach (Character target in aliveTargets)
             {
-                float damage = user.Atk * 1.5f;
+                float damage = user.Atk * 0.8f;
                 target.Damaged(damage);
             }
         }
