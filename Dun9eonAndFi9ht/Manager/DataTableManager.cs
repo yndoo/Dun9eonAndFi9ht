@@ -156,6 +156,5 @@ namespace Dun9eonAndFi9ht.Manager
             }
             return list;
         }
-
     }
 }

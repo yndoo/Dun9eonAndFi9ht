@@ -3,6 +3,8 @@ using Dun9eonAndFi9ht.Manager;
 using Dun9eonAndFi9ht.Scenes;
 using System.Runtime.CompilerServices;
 using DataDefinition;
+using Dun9eonAndFi9ht.Items;
+using Dun9eonAndFi9ht.StaticClass;
 
 namespace Dun9eonAndFi9ht.App
 {
