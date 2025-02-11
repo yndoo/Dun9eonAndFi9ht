@@ -98,7 +98,7 @@ namespace Dun9eonAndFi9ht.System
                     playerAction = PlayerAttackPhase;
                     break;
                 case 2:
-                    playerAction = PlayerSkillPhase;
+                    playerAction = PlayerSkillSelectPhase;
                     break;
                 case 3:
                     playerAction = PlayerRunPhase;
@@ -160,11 +160,61 @@ namespace Dun9eonAndFi9ht.System
         /// <summary>
         /// 스킬 선택 시 호출되는 메서드
         /// </summary>
-        private void PlayerSkillPhase()
+        private void PlayerSkillSelectPhase()
         {
             DisplayCharaterInfoScene(false);
             DisplaySkillListScene();
-            DisplaySelectMenu(0, 2, false);
+            int input = DisplaySelectMenu(0, 2, false);
+            switch (input)
+            {
+                case < 0:
+                    // 잘못된 입력
+                    DisplayWrongInputMenu();
+                    break;
+                case 0:
+                    // 취소
+                    playerAction = PlayerActionPhase;
+                    break;
+                default:
+                    // 스킬 선택
+                    playerAction = PlayerTargetSelectPhase;
+                    break;
+            }
+        }
+
+        private void PlayerTargetSelectPhase()
+        {
+            DisplayCharaterInfoScene(true);
+            Utility.PrintScene("");
+            Utility.PrintScene("0. 취소");
+            int input = DisplaySelectMenu(0, monsterList.Count, true);
+            switch (input)
+            {
+                case < 0:
+                    // 잘못된 입력
+                    DisplayWrongInputMenu();
+                    break;
+                case 0:
+                    // 취소
+                    playerAction = PlayerSkillSelectPhase;
+                    break;
+                default:
+                    // 몬스터 선택
+                    int monsterIndex = input - 1;
+                    if (monsterList[monsterIndex].IsDead)
+                    {
+                        // 이미 죽은 몬스터
+                        DisplayWrongInputMenu();
+                        playerAction = PlayerTargetSelectPhase;
+                    }
+                    else
+                    {
+                        // 스킬 사용 임시 구현
+                        Battle(player, monsterList[monsterIndex]);
+                        isPlayerTurnEnd = true;
+                    }
+                    break;
+            }
         }
 
         /// <summary>
