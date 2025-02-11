@@ -142,8 +142,7 @@ namespace Dun9eonAndFi9ht.System
                     }
                     else
                     {
-                        // 10% 확률로 미스
-                        if (random.NextDouble() < player.Miss)
+                        if (random.NextDouble() < monsterList[monsterIndex].Miss)
                         {
                             // 회피 출력
                             DisplayMissScene(player, monsterList[monsterIndex]);
@@ -281,7 +280,7 @@ namespace Dun9eonAndFi9ht.System
             {
                 if (!monsterList[i].IsDead)
                 {
-                    if (random.NextDouble() < monsterList[i].Miss)
+                    if (random.NextDouble() < player.Miss)
                     {
                         // 회피 출력
                         DisplayMissScene(monsterList[i], player);
