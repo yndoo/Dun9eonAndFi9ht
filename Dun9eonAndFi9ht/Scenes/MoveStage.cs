@@ -18,9 +18,21 @@ namespace Dun9eonAndFi9ht.Scenes
             while (true)
             {
                 Utility.ClearAll();
-                Utility.PrintScene($"현재 위치한 층을 이동합니다. (현재 {stage}층)");
-                Utility.PrintScene($"최고층 : {maxStageCleared + 1}층");
-                Utility.PrintMenu("층을 입력해 주세요 (0. 나가기)");
+                Utility.PrintSceneW("현재 위치한 층을 이동합니다. (현재 ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintSceneW($"{stage}");
+                Console.ResetColor();
+                Utility.PrintScene("층)");
+                Utility.PrintSceneW("최고층 : ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintSceneW($"{maxStageCleared + 1}");
+                Console.ResetColor();
+                Utility.PrintScene("층");
+                Utility.PrintMenu("층을 입력해 주세요");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("0");
+                Console.ResetColor();
+                Utility.PrintMenu(". 나가기");
                 Utility.PrintMenu(">> ");
                 nextinput = Utility.UserInput(0, 5);
                 if (nextinput == 0) // 유저가 취소를 선택한 경우
@@ -54,7 +66,10 @@ namespace Dun9eonAndFi9ht.Scenes
                 }
                 else
                 {
-                    Utility.PrintScene($"{nextinput}층으로 이동합니다.");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintScene($"{nextinput}");
+                    Console.ResetColor();
+                    Utility.PrintScene("층으로 이동합니다.");
                     stage = nextinput;
                     Utility.ClearMenu();
                     Utility.PrintMenu("아무 키나 입력하세요");
