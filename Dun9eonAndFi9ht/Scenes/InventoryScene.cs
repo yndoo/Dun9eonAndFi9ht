@@ -31,8 +31,8 @@ namespace Dun9eonAndFi9ht.Scenes
             Utility.PrintScene("인벤토리");
             Utility.PrintScene("이곳에서 아이템을 한 눈에 볼 수 있습니다.\n");
             DisplayInventory();
-            Utility.PrintScene("");
-            DisplayPotions();
+            /*Utility.PrintScene("");
+            DisplayPotions();*/
             // 메뉴 출력
             while (true)
             {
