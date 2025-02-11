@@ -21,12 +21,15 @@ namespace Dun9eonAndFi9ht.Scenes
         
         public static int stage { get; set; }
 
+        public static int maxStageCleared { get; set; }
+
         
         public Dungeon()
         {
             DataTableManager.Instance.Initialize("../../../DataBase");
             MonsterTypeCount = 3;
             stage = 1;
+            maxStageCleared = 0;
 
             MonsterList = new List<Monster>(MonsterTypeCount);
         }
@@ -201,9 +204,12 @@ namespace Dun9eonAndFi9ht.Scenes
             Utility.PrintScene($"{stage}층 클리어!");
             if(stage<5)
             {
+                if (maxStageCleared <= stage)
+                {
+                    maxStageCleared = stage;
+                }
                 stage++;
             }
         }
-
     }
 }
