@@ -11,8 +11,13 @@ namespace Dun9eonAndFi9ht.Characters
     {
         public string Name { get; set; }
         public float MaxHp { get; set; }
+        public float MaxMp { get; set; }
         public float Atk { get; set; }
         public float Def { get; set; }
+
+        public float Crt { get; set; }
+        public float Miss {  get; set; }
+
         public int Level { get; set; }
         private float currentHp;
         public float CurrentHp
@@ -26,6 +31,53 @@ namespace Dun9eonAndFi9ht.Characters
                 else
                 {
                     return currentHp;
+                }
+            }
+
+            set 
+            {
+                if (currentHp <= 0)
+                {
+                    currentHp = 0;
+                }
+                else if (currentHp > MaxHp)
+                {
+                    currentHp = MaxHp;
+                }
+                else
+                {
+                    currentHp = value;
+                }
+            }
+        }
+        private float currentMp;
+        public float CurrentMp
+        {
+            get
+            {
+                if (currentHp <= 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return currentMp;
+                }
+            }
+
+            set
+            {
+                if (currentMp <= 0)
+                {
+                    currentMp = 0;
+                }
+                else if (currentMp > MaxMp)
+                {
+                    currentMp = MaxHp;
+                }
+                else
+                {
+                    currentMp = value;
                 }
             }
         }

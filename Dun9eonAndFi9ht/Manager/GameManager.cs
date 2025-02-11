@@ -27,6 +27,7 @@ namespace Dun9eonAndFi9ht.Manager
             sceneList.Add(new StartScene());
             sceneList.Add(new Dungeon());
             sceneList.Add(new PlayerStat());
+            sceneList.Add(new MoveStage());
         }
         /// <summary>
         /// 시작할 씬을 string 값으로 받아 해당 씬 Start() 실행

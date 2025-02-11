@@ -33,6 +33,7 @@ namespace DataDefinition
         StartScene,
         Dungeon,
         PlayerStat,
+        MoveStage
     }
     public enum EDungeonResultType
     {
