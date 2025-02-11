@@ -65,6 +65,9 @@ namespace Dun9eonAndFi9ht.System
             }
         }
 
+        /// <summary>
+        /// 플레이어 턴 시작 시 호출되는 메서드
+        /// </summary>
         private void PlayerTurn()
         {
             playerAction = PlayerActionPhase;
@@ -79,7 +82,7 @@ namespace Dun9eonAndFi9ht.System
         }
 
         /// <summary>
-        /// 플레이어 턴 시작 시 호출되는 메서드
+        /// 플레이어 행동 선택 메서드
         /// </summary>
         private void PlayerActionPhase()
         {
