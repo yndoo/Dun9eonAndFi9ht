@@ -13,7 +13,7 @@ namespace Dun9eonAndFi9ht.Scenes
 {
     internal class Dungeon : Scene
     {
-        private bool isPlayerLose;
+        private EDungeonResultType resultType;
         private int MonsterTypeCount;
         public Player Player { get; set; }
         public List<Monster> MonsterList { get; set; }
@@ -71,7 +71,9 @@ namespace Dun9eonAndFi9ht.Scenes
             int rMonsterCnt = random.Next(1, 4);
             BattleSystem battleSystem;
             battleSystem = new BattleSystem(Player, MonsterList.OrderBy(x => random.Next(0, rMonsterCnt)).ToList());
-            isPlayerLose = battleSystem.BattleProcess();
+
+            // To Do : BattleProcess()의 return 값을 EDungeonResultType으로 변환해야함.
+            resultType = battleSystem.BattleProcess();
 
             // 전투 결과 출력
             return ResultScreen(hpBeforeDungeon);
@@ -96,7 +98,10 @@ namespace Dun9eonAndFi9ht.Scenes
                 gold = MonsterList.Sum(m => m.Reward.gold)
             };
 
-            GainItem(sumReward);
+            if (resultType == EDungeonResultType.Victory)
+            {
+                GainItem(sumReward);
+            }
             DisplayDungeonResult(hpBeforeDungeon, sumReward);
 
             while (true)
@@ -128,17 +133,27 @@ namespace Dun9eonAndFi9ht.Scenes
         private void DisplayDungeonResult(float hpBeforeDungeon, Reward sumReward)
         {
             Utility.PrintScene("");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Utility.PrintScene(isPlayerLose ? "You Lose" : "Victory");
-            Console.ResetColor();
-            Utility.PrintScene("");
 
-            if (!isPlayerLose)
+            switch (resultType)
             {
-                Utility.PrintScene($"던전에서 몬스터 {MonsterList.Count}마리를 잡았습니다.");
-                StageClear();
-                Utility.PrintScene("");
+                case EDungeonResultType.Victory:
+                    Utility.PrintScene("Victory");
+                    Utility.PrintScene("");
+                    Utility.PrintScene($"던전에서 몬스터 {MonsterList.Count}마리를 잡았습니다.");
+                    StageClear();
+                    break;
+
+                case EDungeonResultType.Lose:
+                    Utility.PrintScene("You Lose");
+                    break;
+
+                case EDungeonResultType.Escaped:
+                    Utility.PrintScene("Escape");
+                    Utility.PrintScene("");
+                    Utility.PrintScene("무사히 도망에 성공했습니다.");
+                    break;
             }
+            Utility.PrintScene("");
 
             // 캐릭터 정보 출력
             Utility.PrintScene("[캐릭터 정보]");
@@ -146,21 +161,21 @@ namespace Dun9eonAndFi9ht.Scenes
             int prevExp = Player.CurExp;
 
             // 경험치 획득
-            bool isLevelUp = Player.GainExp(sumReward.exp);
-
-            if (isLevelUp)
+            if (resultType == EDungeonResultType.Victory)
             {
-                Utility.PrintScene($"Lv.{prevLevel} {Player.Name} -> Lv.{Player.Level} {Player.Name}");
+                bool isLevelUp = Player.GainExp(sumReward.exp);
+                Utility.PrintScene(isLevelUp ? $"Lv.{prevLevel} {Player.Name} -> Lv.{Player.Level} {Player.Name}" :
+                    $"Lv.{Player.Level} {Player.Name}");
             }
-            else
-            {
-                Utility.PrintScene($"Lv.{Player.Level} {Player.Name}");
-            }
+            
             Utility.PrintScene($"HP {hpBeforeDungeon:F2} -> {Player.CurrentHp:F2}");
-            Utility.PrintScene($"EXP {prevExp} -> {sumReward.exp + prevExp}");
+            if (resultType == EDungeonResultType.Victory)
+            {
+                Utility.PrintScene($"EXP {prevExp} -> {sumReward.exp + prevExp}");
+            }
 
             // 획득한 보상 출력
-            if (!isPlayerLose)
+            if (resultType == EDungeonResultType.Victory)
             {
                 Utility.PrintScene("");
                 Utility.PrintScene("[획득 아이템]");
