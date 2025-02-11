@@ -42,7 +42,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 }
                 else if(userInput == 3)
                 {
-                    Dungeon.MovingStage();
+                    return ESceneType.MoveStage;
                 }
                 else
                 {
