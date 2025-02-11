@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataDefinition;
+using Dun9eonAndFi9ht.Skill;
 
 namespace Dun9eonAndFi9ht.Characters
 {
@@ -14,6 +15,9 @@ namespace Dun9eonAndFi9ht.Characters
         public Monster(string name, float maxHp, int maxMp, float atk, float def, int level, int gold) : base(name, maxHp, maxMp, atk, def, level)
         {
             Reward = new Reward(level, gold);
+
+            // 몬스터 종류별 스킬 자동 세팅
+            // Skills = SkillManager.GetPlayerSkills(Job);
         }
 
         public override void Attack(Character target)

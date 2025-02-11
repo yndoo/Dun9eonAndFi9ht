@@ -38,12 +38,37 @@ namespace Dun9eonAndFi9ht
         /// </summary>
         public virtual void ShowQuestInfo()
         {
-            Utility.PrintScene($"퀘스트 제목: {QuestTitle}\n");
-            Utility.PrintScene($"내용: {QuestDescription}\n");
-            Utility.PrintScene($"- {TargetMonster} {NeedKills}마리 처치 ({CurrentKills} / {NeedKills})\n");
+            Utility.ClearAll();
+            string[] desc = QuestDescription;
+            Utility.PrintScene($"{QuestTitle}");
+            Utility.PrintScene("");
+            Utility.PrintScene(desc);
+            Utility.PrintScene("");
+
+            Utility.PrintSceneW($"- {TargetMonster}");
+
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW($" {NeedKills}");
+            Console.ResetColor();
+
+            Utility.PrintSceneW("마리 처치 (");
+
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW($"{ CurrentKills}");
+            Console.ResetColor();
+
+            Utility.PrintSceneW("/");
+
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW($"{ NeedKills}");
+            Console.ResetColor();
+            Utility.PrintScene(")");
+
+            Utility.PrintScene("");
             Utility.PrintScene("-보상-");
-            Utility.PrintScene($"{RewardItem}");
-            Utility.PrintScene($"{RewardMoney} Gold");
+            Utility.PrintScene($"  {RewardItem}");
+            Utility.PrintScene($"  {RewardMoney}G");
+            Utility.PrintScene("");
             ShowSelect();
         }
 
@@ -52,20 +77,40 @@ namespace Dun9eonAndFi9ht
         /// </summary>
         public void ShowSelect()
         {
+            Utility.ClearMenu();
             if (HasAccepted == false)
             {
-                Utility.PrintMenu("1. 수락");
-                Utility.PrintMenu("2. 거절");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("1");
+                Console.ResetColor();
+                Utility.PrintMenu(". 수락");
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("2");
+                Console.ResetColor();
+                Utility.PrintMenu(". 거절");
             }
             else if (CurrentKills < NeedKills)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Utility.PrintMenu("클리어 조건이 충족되지 않았습니다.");
-                Utility.PrintMenu("0. 돌아가기");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("0");
+                Console.ResetColor();
+                Utility.PrintMenu(". 돌아가기");
             }
             else
             {
-                Utility.PrintMenu("1. 보상 받기");
-                Utility.PrintMenu("2. 돌아가기");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("1");
+                Console.ResetColor();
+                Utility.PrintMenu(". 보상 받기");
+
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("2");
+                Console.ResetColor();
+                Utility.PrintMenu(". 돌아가기");
             }
         }
 

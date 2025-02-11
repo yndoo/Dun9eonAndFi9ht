@@ -29,11 +29,11 @@ namespace Dun9eonAndFi9ht.Scenes
             Utility.PrintSceneW("3");
             Console.ResetColor();
             Utility.PrintScene(". 더욱 더 강해지기!");
-
+            Utility.ClearMenu();
             Utility.PrintMenu("원하시는 퀘스트를 선택해주세요.\n>>");
 
             int selectCase = 0;
-            Utility.UserInput(1, 3);
+            selectCase = Utility.UserInput(1, 3);
 
             switch(selectCase)
             {
@@ -44,7 +44,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 case 1:
                     Dictionary<string, object> data= DataTableManager.Instance.GetDBData("questTable", 0);
                     
-                    string[] message = Utility.ConvertObjToStrArr((List<object>)data["questdescription"]);
+                    string[] message = Utility.ConvertObjToStrArr(data["questdescription"] as List<object>);
 
                     Quest quest = new Quest(
                         data["questtitle"].ToString(),
