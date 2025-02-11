@@ -28,18 +28,20 @@ namespace Dun9eonAndFi9ht.Manager
         {
             AllItem = new List<Item>();
             Inventory = new List<Item>();
+            EquipSlot = new Dictionary<EItemEquipType, Item>();
 
             // TO DO : 전체 아이템 리스트 불러오기 (+테스트용 지우기)
             AllItem.Add(new Item("예시아이템", EItemEquipType.Weapon, 0.1f, 1.1f, 0, 0, 20f, 0, 0)); // 테스트용
             AllItem.Add(new Item("어쩌구무기", EItemEquipType.Weapon, 0, 0, 10f, 0, 0, 0, 0)); // 테스트용
-            AllItem.Add(new Item("방어구", EItemEquipType.Weapon, 0, 0, 0, 0, 0, 41.1f, 2f)); // 테스트용
-            AllItem.Add(new Item("방어구", EItemEquipType.Weapon, 0, 0, 0, 0, 0, 41.1f, 2f)); // 테스트용
+            AllItem.Add(new Item("어쩌구방어구", EItemEquipType.Armor, 0, 0, 0, 0, 0, 41.1f, 2f)); // 테스트용
+            AllItem.Add(new Item("방어구구구", EItemEquipType.Armor, 0, 0, 0, 0f, 41.1f, 0f, 2f)); // 테스트용
             AllItem.Add(new Item("어쩌구템", EItemEquipType.Weapon, 30, 0, 0, 0, 0, 0, 0)); // 테스트용
 
             // 테스트용으로 아이템 갖고있게 함
             Inventory.Add(AllItem[0]);
             Inventory.Add(AllItem[1]);
             Inventory.Add(AllItem[2]);
+            Inventory.Add(AllItem[3]);
             Inventory.Add(AllItem[4]);
         }
 
@@ -49,6 +51,7 @@ namespace Dun9eonAndFi9ht.Manager
         /// <param name="selectedItem">장착할 아이템</param>
         public void ItemEquip(Item selectedItem)
         {
+            player = GameManager.Instance.Player;
             EquipSlot[selectedItem.EquipType] = selectedItem;
             selectedItem.IsEquipped = true;
 
@@ -59,6 +62,7 @@ namespace Dun9eonAndFi9ht.Manager
         }
         public void ItemUnEquip(Item selectedItem)
         {
+            player = GameManager.Instance.Player;
             selectedItem.IsEquipped = false;
 
             player.MaxHp -= selectedItem.MaxHp;

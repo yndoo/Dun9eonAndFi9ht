@@ -26,19 +26,51 @@ namespace Dun9eonAndFi9ht.Scenes
         public override ESceneType Start()
         {
             base.Start();
+            Utility.PrintScene("인벤토리");
+            Utility.PrintScene("이곳에서 아이템을 한 눈에 볼 수 있습니다.\n");
             DisplayInventory();
 
-            // To Do : 출력
-            // 1. 장착관리
-            // 2. 나가기
+            // 메뉴 출력
+            while (true)
+            {
+                Utility.ClearMenu();
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("1");
+                Console.ResetColor();
+                Utility.PrintMenu(". 장착관리");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("0");
+                Console.ResetColor();
+                Utility.PrintMenuW(". 나가기 ");
+                Utility.PrintMenu("\n원하시는 행동을 입력해주세요.\n>>");
 
-            int input = Utility.UserInput(1, 2);
-            if (input == 1) 
-            { 
-                EquipManagement();
-                return ESceneType.InventoryScene;
+                int userInput = Utility.UserInput(0, 1);
+                if (userInput == 1)
+                {
+                    EquipManagement();
+                    return ESceneType.InventoryScene;
+                }
+                else if (userInput == 0)
+                {
+                    return ESceneType.StartScene;
+                }
+                else
+                {
+                    int nextInput = -1;
+                    while (nextInput != 0)
+                    {
+                        Utility.ClearMenu();
+                        Utility.PrintMenu("잘못된 입력입니다.");
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Utility.PrintMenuW("0");
+                        Console.ResetColor();
+                        Utility.PrintMenu(". 확인");
+                        Utility.PrintMenu("");
+                        Utility.PrintMenu(">>");
+                        nextInput = Utility.UserInput(0, 0);
+                    }
+                }
             }
-            else return ESceneType.StartScene;
         }
 
         /// <summary>
@@ -48,7 +80,7 @@ namespace Dun9eonAndFi9ht.Scenes
         {
             for(int i = 0; i < Inventory.Count; i++)
             {
-                Utility.PrintScene($"{Inventory[i].ItemDisplay()}");
+                Utility.PrintScene($"- {Inventory[i].ItemDisplay()}");
             }
         }
 
@@ -57,12 +89,47 @@ namespace Dun9eonAndFi9ht.Scenes
         /// </summary>
         void EquipManagement()
         {
-            for (int i = 0; i < Inventory.Count; i++)
+            // 번호 선택 시 장착
+            while (true)
             {
-                Utility.PrintScene($"{i + 1}. {Inventory[i].ItemDisplay()}");
+                Utility.ClearAll();
+                Utility.PrintScene("인벤토리 - 장착 관리");
+                Utility.PrintScene("이곳에서 아이템을 장착하거나 해제할 수 있습니다.\n");
+                for (int i = 0; i < Inventory.Count; i++)
+                {
+                    Utility.PrintScene($"{i + 1}. {Inventory[i].ItemDisplay()}");
+                }
+
+                Utility.PrintMenu("아이템 번호를 입력하세요.");
+                Utility.PrintMenu("0. 나가기");
+                Utility.PrintMenu("\n원하시는 행동을 입력해주세요.\n>>");
+
+                int userInput = Utility.UserInput(0, Inventory.Count);
+                if (userInput == 0)
+                {
+                    return;
+                }
+                else if(userInput < 0)
+                {
+                    int nextInput = -1;
+                    while (nextInput != 0)
+                    {
+                        Utility.ClearMenu();
+                        Utility.PrintMenu("잘못된 입력입니다.");
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Utility.PrintMenuW("0");
+                        Console.ResetColor();
+                        Utility.PrintMenu(". 확인");
+                        Utility.PrintMenu("");
+                        Utility.PrintMenu(">>");
+                        nextInput = Utility.UserInput(0, 0);
+                    }
+                }
+                else
+                {
+                    Equip(userInput);
+                }
             }
-            // TO DO : 번호 선택시 아이템 장착 / 장착해제
- 
         }
         /// <summary>
         /// 아이템 장착 / 장착 해제
@@ -79,11 +146,16 @@ namespace Dun9eonAndFi9ht.Scenes
                 return;
             }
 
-            // 해당 부위 && 다른 아이템 장착 -> 기존 아이템 해제하고 장착 
+            // 해당 부위 장착됨 && 다른 아이템 장착 -> 기존 아이템 해제하고 장착 
             Item oldItem;
             if(EquipSlot.TryGetValue(select.EquipType, out oldItem))
             {
                 inventoryManager.ItemUnEquip(oldItem);
+                inventoryManager.ItemEquip(select);
+            }
+            // 해당 부위 비어있으면 장착 
+            else
+            {
                 inventoryManager.ItemEquip(select);
             }
         }

@@ -40,13 +40,13 @@ namespace Dun9eonAndFi9ht.Items
         {
             string desc = IsEquipped ? "[E] " : "";
             desc += $"{Name}\t";
-            desc += MaxHp != 0 ? $" | 최대 체력 + {MaxHp}" : "";
-            desc += MaxMp != 0 ? $" | 최대 마나 + {MaxMp}" : "";
-            desc += Atk != 0 ? $" | 공격력 + {Atk}" : "";
-            desc += Def != 0 ? $" | 방어력 + {Def}" : "";
-            desc += CriticalRate != 0 ? $" | 치명타 확률 + {CriticalRate}%" : "";
-            desc += CriticalDamage != 0 ? $" | 치명타 데미지 + {CriticalDamage}%" : "";
-            desc += MissRate != 0 ? $" | 회피 확률 + {MissRate}%" : "";
+            desc += MaxHp != 0 ? $" | 최대 체력 +{MaxHp}" : "";
+            desc += MaxMp != 0 ? $" | 최대 마나 +{MaxMp}" : "";
+            desc += Atk != 0 ? $" | 공격력 +{Atk}" : "";
+            desc += Def != 0 ? $" | 방어력 +{Def}" : "";
+            desc += CriticalRate != 0 ? $" | 치명타 확률 +{CriticalRate}%" : "";
+            desc += CriticalDamage != 0 ? $" | 치명타 데미지 +{CriticalDamage}%" : "";
+            desc += MissRate != 0 ? $" | 회피 확률 +{MissRate}%" : "";
             return desc;
         }
     }
