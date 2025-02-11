@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dun9eonAndFi9ht.StaticClass;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,16 +38,12 @@ namespace Dun9eonAndFi9ht
         /// </summary>
         public virtual void ShowQuestInfo()
         {
-            Console.WriteLine($"퀘스트 제목: {QuestTitle}");
-            Console.WriteLine();
-            Console.WriteLine($"내용: {QuestDescription}");
-            Console.WriteLine();
-            Console.WriteLine($"{TargetMonster} {NeedKills}마리 처치 ({CurrentKills} / {NeedKills})");
-            Console.WriteLine();
-            Console.WriteLine("-보상-");
-            Console.WriteLine($"{RewardItem}");
-            Console.WriteLine($"{RewardMoney}G");
-            Console.WriteLine();
+            Utility.PrintScene($"퀘스트 제목: {QuestTitle}\n");
+            Utility.PrintScene($"내용: {QuestDescription}\n");
+            Utility.PrintScene($"- {TargetMonster} {NeedKills}마리 처치 ({CurrentKills} / {NeedKills})\n");
+            Utility.PrintScene("-보상-");
+            Utility.PrintScene($"{RewardItem}");
+            Utility.PrintScene($"{RewardMoney} Gold");
             ShowSelect();
         }
 
@@ -57,18 +54,18 @@ namespace Dun9eonAndFi9ht
         {
             if (HasAccepted == false)
             {
-                Console.WriteLine("1. 수락");
-                Console.WriteLine("2. 거절");
+                Utility.PrintMenu("1. 수락");
+                Utility.PrintMenu("2. 거절");
             }
             else if (CurrentKills < NeedKills)
             {
-                Console.WriteLine("클리어 조건이 충족되지 않았습니다.");
-                Console.WriteLine("0. 돌아가기");
+                Utility.PrintMenu("클리어 조건이 충족되지 않았습니다.");
+                Utility.PrintMenu("0. 돌아가기");
             }
             else
             {
-                Console.WriteLine("1. 보상 받기");
-                Console.WriteLine("2. 돌아가기");
+                Utility.PrintMenu("1. 보상 받기");
+                Utility.PrintMenu("2. 돌아가기");
             }
         }
 
