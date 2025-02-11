@@ -13,16 +13,20 @@ namespace Dun9eonAndFi9ht.Scenes
 {
     internal class Dungeon : Scene
     {
-        private bool isPlayerLose;
+        private EDungeonResultType resultType;
         private int MonsterTypeCount;
         public Player Player { get; set; }
         public List<Monster> MonsterList { get; set; }
         public bool IsPlayerWin { get; set; }
+        
+        public static int stage { get; set; }
 
+        
         public Dungeon()
         {
             DataTableManager.Instance.Initialize("../../../DataBase");
             MonsterTypeCount = 3;
+            stage = 1;
 
             MonsterList = new List<Monster>(MonsterTypeCount);
         }
@@ -42,9 +46,9 @@ namespace Dun9eonAndFi9ht.Scenes
             {
                 try
                 {
-                    List<string> lst = dtManager.GetMonsterData("enemy", i);
-                    MonsterList.Add(new Monster(lst[1], int.Parse(lst[2]), int.Parse(lst[3]), int.Parse(lst[4]), int.Parse(lst[5]), int.Parse(lst[6])));
-                }
+                    Dictionary<string, object> lst = dtManager.GetDBData($"enemy_stage{stage}", i);
+                    MonsterList.Add(new Monster(lst["name"].ToString(), Convert.ToInt32(lst["maxHp"]), Convert.ToInt32(lst["atk"]), Convert.ToInt32(lst["def"]), Convert.ToInt32(lst["level"]), Convert.ToInt32(lst["gold"])));
+                }   
                 catch (Exception ex)
                 {
                     Utility.PrintMenu($"\n{i} 인덱스 Monster 데이터 로드 오류 : {ex.Message}");
@@ -60,13 +64,16 @@ namespace Dun9eonAndFi9ht.Scenes
             base.Start();
             EnterDungeon();
 
+            Utility.PrintScene($"현재 스테이지: {Dungeon.stage}");
             float hpBeforeDungeon = Player.CurrentHp;
 
             Random random = new Random();
             int rMonsterCnt = random.Next(1, 4);
             BattleSystem battleSystem;
             battleSystem = new BattleSystem(Player, MonsterList.OrderBy(x => random.Next(0, rMonsterCnt)).ToList());
-            isPlayerLose = battleSystem.BattleProcess();
+
+            // To Do : BattleProcess()의 return 값을 EDungeonResultType으로 변환해야함.
+            resultType = battleSystem.BattleProcess();
 
             // 전투 결과 출력
             return ResultScreen(hpBeforeDungeon);
@@ -81,16 +88,18 @@ namespace Dun9eonAndFi9ht.Scenes
             Utility.ClearScene();
             Utility.PrintScene("Battle!! - Result");
 
-            Utility.PrintScene("");
-            Utility.PrintScene(isPlayerLose ? "You Lose" : "Victory");
-            Utility.PrintScene("");
-            if (!isPlayerLose)
+            // 몬스터 보상 합산
+            Reward sumReward = new Reward
             {
-                Utility.PrintScene($"던전에서 몬스터 {MonsterList.Count}마리를 잡았습니다.");
-                Utility.PrintScene("");
+                exp = MonsterList.Sum(m => m.Reward.exp),
+                gold = MonsterList.Sum(m => m.Reward.gold)
+            };
+
+            if (resultType == EDungeonResultType.Victory)
+            {
+                GainItem(sumReward);
             }
-            Utility.PrintScene($"Lv.{Player.Level} {Player.Name}");
-            Utility.PrintScene($"HP {hpBeforeDungeon:F2} -> {Player.CurrentHp:F2}");
+            DisplayDungeonResult(hpBeforeDungeon, sumReward);
 
             while (true)
             {
@@ -113,5 +122,84 @@ namespace Dun9eonAndFi9ht.Scenes
                 }
             }
         }
+
+        /// <summary>
+        /// 던전 결과 출력 핵심 기능
+        /// </summary>
+        /// <param name="hpBeforeDungeon">던전 입장 전 플레이어 체력</param>
+        private void DisplayDungeonResult(float hpBeforeDungeon, Reward sumReward)
+        {
+            Utility.PrintScene("");
+            switch (resultType)
+            {
+                case EDungeonResultType.Victory:
+                    Utility.PrintScene("Victory");
+                    Utility.PrintScene("");
+                    Utility.PrintScene($"던전에서 몬스터 {MonsterList.Count}마리를 잡았습니다.");
+                    StageClear();
+                    break;
+
+                case EDungeonResultType.Lose:
+                    Utility.PrintScene("You Lose");
+                    break;
+
+                case EDungeonResultType.Escaped:
+                    Utility.PrintScene("Escape");
+                    Utility.PrintScene("");
+                    Utility.PrintScene("무사히 도망에 성공했습니다.");
+                    break;
+            }
+            Utility.PrintScene("");
+
+            // 캐릭터 정보 출력
+            Utility.PrintScene("[캐릭터 정보]");
+            int prevLevel = Player.Level;
+            int prevExp = Player.CurExp;
+
+            // 경험치 획득
+            if (resultType == EDungeonResultType.Victory)
+            {
+                bool isLevelUp = Player.GainExp(sumReward.exp);
+                Utility.PrintScene(isLevelUp ? $"Lv.{prevLevel} {Player.Name} -> Lv.{Player.Level} {Player.Name}" :
+                    $"Lv.{Player.Level} {Player.Name}");
+            }
+            
+            Utility.PrintScene($"HP {hpBeforeDungeon:F2} -> {Player.CurrentHp:F2}");
+            if (resultType == EDungeonResultType.Victory)
+            {
+                Utility.PrintScene($"EXP {prevExp} -> {sumReward.exp + prevExp}");
+            }
+
+            // 획득한 보상 출력
+            if (resultType == EDungeonResultType.Victory)
+            {
+                Utility.PrintScene("");
+                Utility.PrintScene("[획득 아이템]");
+                Utility.PrintScene($"{sumReward.gold} Gold");
+            }
+            Utility.PrintScene("");
+
+        }
+
+        /// <summary>
+        /// 던전 결과 아이템 획득
+        /// </summary>
+        /// <param name="sumReward">던전 보상</param>
+        private void GainItem(Reward sumReward)
+        {
+            Player.GainGold(sumReward.gold);
+        }
+        /// <summary>
+        /// 스테이지 클리어 처리 메시지 출력
+        /// </summary>
+        private void StageClear()
+        {
+            Utility.PrintScene($"{stage}층 클리어!");
+            if(stage<5)
+            {
+                stage++;
+            }
+        }
+
     }
 }

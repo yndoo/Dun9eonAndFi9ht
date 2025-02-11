@@ -1,0 +1,6 @@
+{
+  "job": {
+    "0": { "jobType": "None", "jobName": "무직" },
+    "1": { "jobType": "Warrior", "jobName": "전사"}
+  }
+}

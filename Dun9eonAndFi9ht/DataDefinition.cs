@@ -34,6 +34,12 @@ namespace DataDefinition
         Dungeon,
         PlayerStat,
     }
+    public enum EDungeonResultType
+    {
+        Victory,
+        Lose,
+        Escaped,
+    }
     #endregion
 
     #region 상수
