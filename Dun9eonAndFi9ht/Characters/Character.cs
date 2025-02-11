@@ -87,7 +87,7 @@ namespace Dun9eonAndFi9ht.Characters
         public List<SkillBase> Skills { get; protected set; }
 
         private int buffDuration = 0;
-        private float buffHp = 0, buffMp = 0, buffAtk = 0, buffDef = 0, buffCrt = 0, buffMiss = 0;
+        private float buffHp = 0, buffMp = 0, buffAtk = 0, buffDef = 0, buffCrt = 0, buffCrtDmg = 0, buffMiss = 0;
 
         public Character(string name, float maxHp, float maxMp, float atk, float def, int level)
         {
@@ -130,13 +130,14 @@ namespace Dun9eonAndFi9ht.Characters
 
 
         // 버프 적용
-        public void ApplyBuff(float hp, float mp, float atk, float def, float crt, float miss, int duration)
+        public void ApplyBuff(float hp, float mp, float atk, float def, float crt, float crtDmg, float miss, int duration)
         {
             buffHp = hp;
             buffMp = mp;
             buffAtk = atk;
             buffDef = def;
             buffCrt = crt;
+            buffCrtDmg = crtDmg;
             buffMiss = miss;
             buffDuration = duration;
 
@@ -146,6 +147,7 @@ namespace Dun9eonAndFi9ht.Characters
             Atk += buffAtk;
             Def += buffDef;
             Crt += buffCrt;
+            CrtDmg += buffCrtDmg;
             Miss += buffMiss;
         }
 
@@ -176,6 +178,7 @@ namespace Dun9eonAndFi9ht.Characters
             Atk -= buffAtk;
             Def -= buffDef;
             Crt -= buffCrt;
+            CrtDmg -= buffCrtDmg;
             Miss -= buffMiss;
 
             // 초기화
