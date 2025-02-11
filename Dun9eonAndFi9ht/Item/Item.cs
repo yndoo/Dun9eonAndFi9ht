@@ -33,21 +33,24 @@ namespace Dun9eonAndFi9ht.Items
             CriticalRate = criticalRate;
             CriticalDamage = criticalDamage;
             MissRate = missRate;
-            //IsEquipped = isEquipped;
+            IsEquipped = false;
         }
         
         public string ItemDisplay()
         {
-            string desc = IsEquipped ? "[E] " : "";
-            desc += $"{Name}\t";
-            desc += MaxHp != 0 ? $" | 최대 체력 +{MaxHp}" : "";
-            desc += MaxMp != 0 ? $" | 최대 마나 +{MaxMp}" : "";
-            desc += Atk != 0 ? $" | 공격력 +{Atk}" : "";
-            desc += Def != 0 ? $" | 방어력 +{Def}" : "";
-            desc += CriticalRate != 0 ? $" | 치명타 확률 +{CriticalRate}%" : "";
-            desc += CriticalDamage != 0 ? $" | 치명타 데미지 +{CriticalDamage}%" : "";
-            desc += MissRate != 0 ? $" | 회피 확률 +{MissRate}%" : "";
-            return desc;
+            string desc1 = IsEquipped ? "[E] " : "";
+            desc1 += $"{Name}";
+            desc1 = desc1.PadRight(20);
+            desc1 += "\t";
+            string desc2 = "";
+            desc2 += MaxHp   != 0 ? $" | 최대 체력 +{MaxHp}" : "";
+            desc2 += MaxMp   != 0 ? $" | 최대 마나 +{MaxMp}" : "";
+            desc2 += Atk     != 0 ? $" | 공격력 +{Atk}" : "";
+            desc2 += Def     != 0 ? $" | 방어력 +{Def}" : "";
+            desc2 += CriticalRate != 0 ? $" | 치명타 확률 +{CriticalRate}%" : "";
+            desc2 += CriticalDamage != 0 ? $" | 치명타 데미지 +{CriticalDamage}%" : "";
+            desc2 += MissRate != 0 ? $" | 회피 확률 +{MissRate}%" : "";
+            return desc1 + desc2;
         }
     }
 }

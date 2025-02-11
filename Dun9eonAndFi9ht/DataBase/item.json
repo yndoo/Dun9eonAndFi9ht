@@ -1,0 +1,70 @@
+{
+  "item": {
+    "0": {
+      "Name": "천으로 된 옷",
+      "EquipType": 0,
+      "MaxHp": 0,
+      "MaxMp": 0,
+      "Atk": 0,
+      "Def": 10,
+      "CriticalRate": 0,
+      "CriticalDamage": 0,
+      "MissRate": 0
+    },
+    "1": {
+      "Name": "짱두꺼운 갑옷",
+      "EquipType": 0,
+      "MaxHp": 0,
+      "MaxMp": 0,
+      "Atk": 0,
+      "Def": 20,
+      "CriticalRate": 0,
+      "CriticalDamage": 0,
+      "MissRate": 0
+    },
+    "2": {
+      "Name": "스파르탄 갑옷",
+      "EquipType": 0,
+      "MaxHp": 20,
+      "MaxMp": 0,
+      "Atk": 0,
+      "Def": 10,
+      "CriticalRate": 0,
+      "CriticalDamage": 0,
+      "MissRate": 0
+    },
+    "3": {
+      "Name": "날카로운 단검",
+      "EquipType": 1,
+      "MaxHp": 0,
+      "MaxMp": 0,
+      "Atk": 10,
+      "Def": 0,
+      "CriticalRate": 5,
+      "CriticalDamage": 10,
+      "MissRate": 0
+    },
+    "4": {
+      "Name": "뾰로롱 요술봉",
+      "EquipType": 1,
+      "MaxHp": 0,
+      "MaxMp": 0,
+      "Atk": 40,
+      "Def": 0,
+      "CriticalRate": 0,
+      "CriticalDamage": 0,
+      "MissRate": 0
+    },
+    "5": {
+      "Name": "무한의 대검",
+      "EquipType": 1,
+      "MaxHp": 0,
+      "MaxMp": 0,
+      "Atk": 35,
+      "Def": 0,
+      "CriticalRate": 25,
+      "CriticalDamage": 40,
+      "MissRate": 0
+    }
+  }
+}
