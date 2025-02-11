@@ -33,6 +33,15 @@ namespace Dun9eonAndFi9ht.Scenes
 
             int selectCase = 0;
             Utility.UserInput(1, 3);
+
+            switch(selectCase)
+            {
+                case 0:
+                    return ESceneType.QuestScene;
+                default:
+                    return ESceneType.QuestScene;
+            }
+            
         }
     }
 }
