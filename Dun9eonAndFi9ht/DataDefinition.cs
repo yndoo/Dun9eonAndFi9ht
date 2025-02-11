@@ -41,6 +41,11 @@ namespace DataDefinition
         Lose,
         Escaped,
     }
+    public enum ESkillTargetType
+    {
+        Single,
+        Multi,
+    }
     #endregion
 
     #region 상수
