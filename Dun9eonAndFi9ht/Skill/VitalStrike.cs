@@ -1,11 +1,12 @@
 ﻿using Dun9eonAndFi9ht.Characters;
 using Dun9eonAndFi9ht.Skill;
+using DataDefinition;
 
 namespace Dun9eonAndFi9ht.Skill
 {
     public class VitalStrike : SkillBase
     {
-        public VitalStrike() : base("급소 찌르기", 10, "적의 급소를 찔러 공격력의 150% 피해를 줍니다.")
+        public VitalStrike() : base("급소 찌르기", 10, "적의 급소를 찔러 공격력의 150% 피해를 줍니다.", ESkillTargetType.Single)
         {
         }
 

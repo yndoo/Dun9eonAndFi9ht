@@ -1,11 +1,12 @@
 ﻿using Dun9eonAndFi9ht.Characters;
 using Dun9eonAndFi9ht.Skill;
+using DataDefinition;
 
 namespace Dun9eonAndFi9ht.Skill
 {
     public class SlashFrenzy : SkillBase
     {
-        public SlashFrenzy() : base("난도질", 15, "빠른 연속 공격으로 공격력의 170% 피해를 줍니다.")
+        public SlashFrenzy() : base("난도질", 15, "빠른 연속 공격으로 공격력의 170% 피해를 줍니다.", ESkillTargetType.Single)
         {
         }
 

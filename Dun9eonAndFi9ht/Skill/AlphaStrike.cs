@@ -1,10 +1,11 @@
 ﻿using Dun9eonAndFi9ht.Characters;
+using DataDefinition;
 
 namespace Dun9eonAndFi9ht.Skill
 {
     public class AlphaStrike : SkillBase
     {
-        public AlphaStrike() : base("알파 스트라이크", 10, "공격력의 200%로 하나의 적을 공격합니다.") 
+        public AlphaStrike() : base("알파 스트라이크", 10, "공격력의 200%로 하나의 적을 공격합니다.", ESkillTargetType.Single) 
         {
         }
 

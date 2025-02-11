@@ -1,9 +1,11 @@
 ﻿using Dun9eonAndFi9ht.Characters;
+using DataDefinition;
+
 namespace Dun9eonAndFi9ht.Skill
 {
     public class Fireball : SkillBase
     {
-        public Fireball() : base("파이어볼", 10, "적 하나에게 불덩이를 날려 공격력의 120% 피해를 줍니다.")
+        public Fireball() : base("파이어볼", 10, "적 하나에게 불덩이를 날려 공격력의 120% 피해를 줍니다.", ESkillTargetType.Single)
         {
         }
 

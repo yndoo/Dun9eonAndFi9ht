@@ -1,10 +1,11 @@
-﻿
-using Dun9eonAndFi9ht.Characters;
+﻿using Dun9eonAndFi9ht.Characters;
+using DataDefinition;
+
 namespace Dun9eonAndFi9ht.Skill
 {
     public class IceSpear : SkillBase
     {
-        public IceSpear() : base("아이스 스피어", 12, "여러개의 얼음 창을 소환해 적 모두에게 공격력의 80% 피해를 줍니다.")
+        public IceSpear() : base("아이스 스피어", 12, "여러개의 얼음 창을 소환해 적 모두에게 공격력의 80% 피해를 줍니다.", ESkillTargetType.Multi)
         {
         }
 
