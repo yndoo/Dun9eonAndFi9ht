@@ -38,6 +38,7 @@ namespace Dun9eonAndFi9ht
         /// </summary>
         public virtual void ShowQuestInfo()
         {
+            Utility.ClearAll();
             string[] desc = QuestDescription;
             Utility.PrintScene($"{QuestTitle}");
             Utility.PrintScene("");
@@ -59,8 +60,9 @@ namespace Dun9eonAndFi9ht
             Utility.PrintSceneW("/");
 
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Utility.PrintScene($"{ NeedKills})");
+            Utility.PrintSceneW($"{ NeedKills}");
             Console.ResetColor();
+            Utility.PrintScene(")");
 
             Utility.PrintScene("");
             Utility.PrintScene("-보상-");

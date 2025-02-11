@@ -30,11 +30,6 @@ namespace Dun9eonAndFi9ht.StaticClass
             return input;
         }
 
-        public static string[] ConvertObjToStrArr(List<object> list)
-        {
-            return list.Select(item => item.ToString()).ToArray();
-        }
-
         /// <summary>
         /// string[]을 json 변환 시 적용. object를 string[]로 변환
         /// </summary>
