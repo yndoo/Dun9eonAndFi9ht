@@ -33,7 +33,7 @@ namespace Dun9eonAndFi9ht.Scenes
             Utility.PrintMenu("원하시는 퀘스트를 선택해주세요.\n>>");
 
             int selectCase = 0;
-            Utility.UserInput(1, 3);
+            selectCase = Utility.UserInput(1, 3);
 
             switch(selectCase)
             {
