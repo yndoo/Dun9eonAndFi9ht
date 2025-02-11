@@ -41,7 +41,7 @@ namespace Dun9eonAndFi9ht.Scenes
 
                 // 포션 출력
                 Utility.PrintScene("\n");
-                DisplayPotions();
+                //DisplayPotions();
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintMenuW("1");
