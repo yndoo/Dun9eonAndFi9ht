@@ -15,12 +15,14 @@ namespace Dun9eonAndFi9ht.Scenes
         private List<Item> Inventory { get; } // 현재 갖고 있는 아이템 
         private Dictionary<EItemEquipType, Item> EquipSlot { get; } // 현재 장착 아이템
         private InventoryManager inventoryManager { get; }
+        private Dictionary<Potion, int> PotionInventory { get; } // 현재 가지고 있는 포션
 
         public InventoryScene()
         {
             inventoryManager = InventoryManager.Instance;
             Inventory = InventoryManager.Instance.Inventory;
             EquipSlot = InventoryManager.Instance.EquipSlot;
+            PotionInventory = InventoryManager.Instance.PotionSlot;
         }
 
         public override ESceneType Start()
@@ -81,6 +83,22 @@ namespace Dun9eonAndFi9ht.Scenes
             for(int i = 0; i < Inventory.Count; i++)
             {
                 Utility.PrintScene($"- {Inventory[i].ItemDisplay()}");
+            }
+        }
+
+        void DisplayPotions()
+        {
+            if (PotionInventory.Count == 0)
+            {
+                Utility.PrintScene("보유 포션 없음");
+                return;
+            }
+            Utility.PrintScene("보유 포션 목록:");
+            foreach (var dict in PotionInventory)
+            {
+                Potion potion = dict.Key;
+                int quantity = dict.Value;
+                Utility.PrintScene($"- {potion.name} ({quantity}개)");
             }
         }
 
