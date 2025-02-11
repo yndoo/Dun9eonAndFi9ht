@@ -5,7 +5,7 @@ namespace Dun9eonAndFi9ht.Skill
 {
     public class DoubleStrike : SkillBase
     {
-        public DoubleStrike() : base("더블 스트라이크", 15, "공격력의 150%로 2명의 적을 랜덤으로 공격합니다.", ESkillTargetType.Multi)
+        public DoubleStrike(string name, int mpCost, string desc, ESkillTargetType targetType, float value) : base(name, mpCost, desc, targetType, value)
         {
         }
 

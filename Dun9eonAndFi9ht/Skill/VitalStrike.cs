@@ -6,7 +6,7 @@ namespace Dun9eonAndFi9ht.Skill
 {
     public class VitalStrike : SkillBase
     {
-        public VitalStrike() : base("급소 찌르기", 10, "적의 급소를 찔러 공격력의 150% 피해를 줍니다.", ESkillTargetType.Single)
+        public VitalStrike(string name, int mpCost, string desc, ESkillTargetType targetType, float value) : base(name, mpCost, desc, targetType, value)
         {
         }
 

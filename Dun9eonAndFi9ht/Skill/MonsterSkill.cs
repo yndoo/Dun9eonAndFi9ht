@@ -10,11 +10,8 @@ namespace Dun9eonAndFi9ht.Skill
 {
     public class MonsterSkill : SkillBase
     {
-        public float DamageMultiplier { get; set; }
-
-        public MonsterSkill(string name, int mpCost, string desc, float damageMultiplier) : base(name, mpCost, desc, ESkillTargetType.Single)
+        public MonsterSkill(string name, int mpCost, string desc, ESkillTargetType targetType, float value) : base(name, mpCost, desc, ESkillTargetType.Single, value)
         {
-            DamageMultiplier = damageMultiplier;
         }
 
         /// <summary>
@@ -27,7 +24,7 @@ namespace Dun9eonAndFi9ht.Skill
         {
             ConsumeMp(user);
 
-            user.SetFinalAtk(user.Atk * DamageMultiplier);
+            user.SetFinalAtk(user.Atk * Value);
 
             return targets;
         }
