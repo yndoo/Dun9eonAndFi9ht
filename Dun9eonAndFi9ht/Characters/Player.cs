@@ -55,6 +55,10 @@ namespace Dun9eonAndFi9ht.Characters
             {
                 case EJobType.Warrior:
                     return "전사";
+                case EJobType.Mage:
+                    return "마법사";
+                case EJobType.Rogue:
+                    return "도적";
                 default:
                     return "";
             }

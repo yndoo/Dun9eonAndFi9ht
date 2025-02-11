@@ -54,6 +54,17 @@ namespace Dun9eonAndFi9ht.StaticClass
             }
             UpdateMenuLine();
         }
+        /// <summary>
+        /// string 출력시 (0,15) 위치 아래에서 줄바꿈 없이 출력
+        /// </summary>
+        /// <param name="message">출력 메시지</param>
+        public static void PrintMenuW(string message)
+        {
+            EnsurePrintLine();
+            Console.SetCursorPosition(0, currentMenuLine);
+            Console.Write(message);
+            UpdateMenuLine();
+        }
 
         /// <summary>
         /// string 출력 시 위쪽에서 출력하게 만드는 코드
@@ -81,6 +92,19 @@ namespace Dun9eonAndFi9ht.StaticClass
             UpdateSceneLine();
             EnsurePrintLine();
         }
+        /// <summary>
+        /// string 출력 시 위쪽에서 줄바꿈 없이 출력
+        /// </summary>
+        /// <param name="message">출력할 메시지</param>
+        public static void PrintSceneW(string message)
+        {
+            Console.SetCursorPosition(0, currentSceneLine);
+            Console.Write(message);
+            UpdateSceneLine();
+            EnsurePrintLine();
+        }
+
+
 
         /// <summary>
         /// string을 자유 위치에서 적을 수 있도록 만드는 코드, 단 중심줄은 안된다.
