@@ -37,10 +37,12 @@ namespace Dun9eonAndFi9ht.Scenes
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintMenuW("2. ");
                 Console.ResetColor();
-                Utility.PrintMenu("전투 시작");
-                Utility.PrintMenuW("현재 ");
+                Utility.PrintMenuW("전투 시작 ");
+                Utility.PrintMenuW("(현재 ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintMenuW($"{Dungeon.stage}");
-                Utility.PrintMenu("층\n\n원하시는 행동을 입력해주세요.\n>>");
+                Console.ResetColor();
+                Utility.PrintMenu("층)\n\n원하시는 행동을 입력해주세요.\n>>");
             int userInput = Utility.UserInput(1, 2);
                 if (userInput == 1)
                 {
