@@ -10,8 +10,10 @@ namespace Dun9eonAndFi9ht.StaticClass
     {
         const int startMenuLine = 15;
         static int currentMenuLine = 16;
+        static int currentMenuRow = 0;
         const int startSceneLine = 0;
         static int currentSceneLine = 0;
+        static int currentSceneRow = 0;
 
         /// <summary>
         /// 입력값의 범위를 받고 입력을 실행. 유효 입력 값인지 검사 후 결과 반환
@@ -35,9 +37,10 @@ namespace Dun9eonAndFi9ht.StaticClass
         public static void PrintMenu(string message)
         {
             EnsurePrintLine();
-            Console.SetCursorPosition(0, currentMenuLine);
+            Console.SetCursorPosition(currentMenuRow, currentMenuLine);
             Console.WriteLine(message);
             UpdateMenuLine();
+            currentMenuRow = 0;
         }
 
         /// <summary>
@@ -47,12 +50,13 @@ namespace Dun9eonAndFi9ht.StaticClass
         public static void PrintMenu(string[] messages)
         {
             EnsurePrintLine();
-            Console.SetCursorPosition(0, currentMenuLine);
+            Console.SetCursorPosition(currentMenuRow, currentMenuLine);
             foreach (string message in messages)
             {
                 Console.WriteLine(message);
             }
             UpdateMenuLine();
+            currentMenuRow = 0;
         }
         /// <summary>
         /// string 출력시 (0,15) 위치 아래에서 줄바꿈 없이 출력
@@ -61,9 +65,9 @@ namespace Dun9eonAndFi9ht.StaticClass
         public static void PrintMenuW(string message)
         {
             EnsurePrintLine();
-            Console.SetCursorPosition(0, currentMenuLine);
+            Console.SetCursorPosition(currentMenuRow, currentMenuLine);
             Console.Write(message);
-            UpdateMenuLine();
+            currentMenuRow = Console.CursorLeft;
         }
 
         /// <summary>
@@ -72,10 +76,11 @@ namespace Dun9eonAndFi9ht.StaticClass
         /// <param name="message"></param>
         public static void PrintScene(string message)
         {
-            Console.SetCursorPosition(0, currentSceneLine);
+            Console.SetCursorPosition(currentSceneRow, currentSceneLine);
             Console.WriteLine(message);
             UpdateSceneLine();
             EnsurePrintLine();
+            currentSceneRow = 0;
         }
 
         /// <summary>
@@ -84,13 +89,15 @@ namespace Dun9eonAndFi9ht.StaticClass
         /// <param name="messages"></param>
         public static void PrintScene(string[] messages)
         {
-            Console.SetCursorPosition(0, currentSceneLine); // 화면 최상단(0,0)에서 시작
+            Console.SetCursorPosition(currentSceneRow, currentSceneLine); // 화면 최상단(0,0)에서 시작
             foreach (string message in messages)
             {
                 Console.WriteLine(message);
             }
             UpdateSceneLine();
             EnsurePrintLine();
+            currentSceneRow = 0;
+
         }
         /// <summary>
         /// string 출력 시 위쪽에서 줄바꿈 없이 출력
@@ -98,9 +105,9 @@ namespace Dun9eonAndFi9ht.StaticClass
         /// <param name="message">출력할 메시지</param>
         public static void PrintSceneW(string message)
         {
-            Console.SetCursorPosition(0, currentSceneLine);
+            Console.SetCursorPosition(currentSceneRow, currentSceneLine);
             Console.Write(message);
-            UpdateSceneLine();
+            currentSceneRow = Console.CursorLeft;
             EnsurePrintLine();
         }
 
@@ -133,6 +140,7 @@ namespace Dun9eonAndFi9ht.StaticClass
                 Console.Write(new String(' ', Console.WindowWidth));
             }
             currentMenuLine = startMenuLine + 1;
+            currentMenuRow = 0;
         }
 
         /// <summary>
@@ -146,6 +154,7 @@ namespace Dun9eonAndFi9ht.StaticClass
                 Console.Write(new String(' ', Console.WindowWidth));
             }
             currentSceneLine = startSceneLine;
+            currentSceneRow = 0;
         }
 
         /// <summary>
