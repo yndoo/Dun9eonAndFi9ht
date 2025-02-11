@@ -72,9 +72,9 @@ namespace Dun9eonAndFi9ht.Scenes
             BattleSystem battleSystem;
             battleSystem = new BattleSystem(Player, MonsterList.OrderBy(x => random.Next(0, rMonsterCnt)).ToList());
 
-           // resultType = battleSystem.BattleProcess();
-            battleSystem.BattleProcess();
-            resultType = EDungeonResultType.Escaped;
+            // To Do : BattleProcess()의 return 값을 EDungeonResultType으로 변환해야함.
+            resultType = battleSystem.BattleProcess();
+
             // 전투 결과 출력
             return ResultScreen(hpBeforeDungeon);
         }
@@ -165,7 +165,10 @@ namespace Dun9eonAndFi9ht.Scenes
             }
             
             Utility.PrintScene($"HP {hpBeforeDungeon:F2} -> {Player.CurrentHp:F2}");
-            Utility.PrintScene($"EXP {prevExp} -> {sumReward.exp + prevExp}");
+            if (resultType == EDungeonResultType.Victory)
+            {
+                Utility.PrintScene($"EXP {prevExp} -> {sumReward.exp + prevExp}");
+            }
 
             // 획득한 보상 출력
             if (resultType == EDungeonResultType.Victory)
