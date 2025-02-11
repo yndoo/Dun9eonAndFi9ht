@@ -33,7 +33,6 @@ namespace Dun9eonAndFi9ht.Characters
                     return currentHp;
                 }
             }
-
             set 
             {
                 if (currentHp <= 0)

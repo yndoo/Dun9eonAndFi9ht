@@ -18,9 +18,10 @@ namespace Dun9eonAndFi9ht.Item
         public float changeDef;
         public float changeCrt;
         public float changeMiss;
+        public string description;
         int duration;
 
-        public Potion(string name, bool isPercent, float hp, float mp, float atk, float def, float crt, float miss, int duration)
+        public Potion(string name, bool isPercent, float hp, float mp, float atk, float def, float crt, float miss, int duration, string description)
         {
             this.name = name;
             this.isPercent = isPercent;
@@ -31,6 +32,7 @@ namespace Dun9eonAndFi9ht.Item
             this.changeCrt = crt;
             this.changeMiss = miss;
             this.duration = duration;
+            this.description = description;
         }
 
         public void UsePotion(Character character)
@@ -81,6 +83,22 @@ namespace Dun9eonAndFi9ht.Item
             if (chStat == 0 || percent == 0) return 0;
             return chStat * percent;
         }
+        
+        public void DisplayPotion()
+        {
+            List<string> changes = new List<string>();
+            if (duration != 0) changes.Add($" {duration}턴 지속");
+            if (changeHp != 0) changes.Add($" 체력 {(changeHp > 0 ? "+" : "")}{changeHp}{(isPercent ? "%" : "")}");
+            if (changeMp != 0) changes.Add($" 마나 {(changeMp > 0 ? "+" : "")}{changeMp}{(isPercent ? "%" : "")}");
+            if (changeAtk != 0) changes.Add($" 공격력 {(changeAtk > 0 ? "+" : "")}{changeAtk}{(isPercent ? "%" : "")}");
+            if (changeDef != 0) changes.Add($" 방어력 {(changeDef > 0 ? "+" : "")}{changeDef}{(isPercent ? "%" : "")}");
+            if (changeCrt != 0) changes.Add($" 치명타 확률 {(changeCrt > 0 ? "+" : "")}{changeCrt}{(isPercent ? "%" : "")}");
+            if (changeMiss != 0) changes.Add($" 회피 {(changeMiss > 0 ? "+" : "")}{changeMiss}{(isPercent ? "%" : "")}");
+
+            string message = $"{name} : 📜 {description} → " + string.Join(" | ", changes);
+            Utility.PrintScene(message);
+        }
+
 
         public void PrintResult(float hp, float mp, float atk, float def, float crt, float miss, int duration)
         {
