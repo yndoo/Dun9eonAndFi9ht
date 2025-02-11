@@ -13,35 +13,34 @@ namespace Dun9eonAndFi9ht.System
 {
     public class BattleSystem
     {
+        private delegate void playerTurn();
+        private playerTurn playerAction;
+        private bool isPlayerTurnEnd;
+
         private Player player;
         private List<Monster> monsterList;
+
+        private Random random;
 
         public BattleSystem(Player player, List<Monster> monsters)
         {
             this.player = player;
             monsterList = monsters;
+            isPlayerTurnEnd = false;
+            random = new Random();
         }
 
-        /// <summary>
-        /// Battle 시작 시 사용할 메서드
-        /// 전투가 지속되는 동안 PlayerPhase와 MonsterPhase 계속 반복
-        /// </summary>
-        /// <returns>플레이어의 사망 시 Ture 반환
-        /// 모든 몬스터 처치 시 False 반환</returns>
-        public bool BattleProcess()
+        public bool Battle()
         {
             while (true)
             {
-                // 플레이어 턴
-                PlayerPhase();
-                // 몬스터 전멸 검사
+                isPlayerTurnEnd = false;
+                PlayerTurn();
                 if (IsAllMonsterDead())
                 {
                     return player.IsDead;
                 }
-                // 몬스터 턴
-                MonsterPhase();
-                // 플레이어 생존 검사
+                MonsterTurn();
                 if (player.IsDead)
                 {
                     return player.IsDead;
@@ -49,33 +48,113 @@ namespace Dun9eonAndFi9ht.System
             }
         }
 
-        /// <summary>
-        /// 플레이어 턴에 실행되는 메서드
-        /// </summary>
-        private void PlayerPhase()
+        private void PlayerTurn()
         {
-            bool isPlayerTurnEnd = false;
-            while (!isPlayerTurnEnd)
+            playerAction = PlayerActionPhase;
+            while (true)
             {
-                isPlayerTurnEnd = PlayerAction();
+                playerAction();
+                if (isPlayerTurnEnd)
+                {
+                    return;
+                }
             }
         }
 
-        /// <summary>
-        /// 몬스터 턴에 실행되는 메서드
-        /// 한 번 전투 한 후 바로 플레이어 생존 검사
-        /// </summary>
-        private void MonsterPhase()
+        private void PlayerActionPhase()
+        {
+            DisplayCharaterInfoScene(false);
+            Utility.ClearMenu();
+            Utility.PrintMenu("1. 공격     2. 스킬");
+            Utility.PrintMenu("3. 도망가기");
+
+            int input = DisplaySelectMenu(1, 4, false);
+            switch (input)
+            {
+                case 1:
+                    playerAction = PlayerAttackPhase;
+                    break;
+                case 2:
+                    playerAction = PlayerSkillPhase;
+                    break;
+                case 3:
+                    playerAction = PlayerRunPhase;
+                    break;
+                default:
+                    DisplayWrongInputMenu();
+                    break;
+            }
+        }
+
+        private void PlayerAttackPhase()
+        {
+            DisplayCharaterInfoScene(true);
+            Utility.PrintScene("");
+            Utility.PrintScene("0. 취소");
+            int input = DisplaySelectMenu(0, monsterList.Count, true);
+            switch (input)
+            {
+                case < 0:
+                    // 잘못된 입력
+                    DisplayWrongInputMenu();
+                    break;
+                case 0:
+                    // 취소
+                    playerAction = PlayerActionPhase;
+                    break;
+                default:
+                    // 몬스터 선택
+                    int monsterIndex = input - 1;
+                    if (monsterList[monsterIndex].IsDead)
+                    {
+                        // 이미 죽은 몬스터
+                        DisplayWrongInputMenu();
+                        playerAction = PlayerAttackPhase;
+                    }
+                    else
+                    {
+                        // 10% 확률로 미스
+                        if (random.Next(100) < Constants.MISS_RATE/*monsterList[monsterIndex].Miss*/)
+                        {
+                            // 회피 출력
+                            DisplayMissAttackInfoScene(player, monsterList[monsterIndex]);
+                            DisplayNextInputMenu();
+
+                        }
+                        else
+                        {
+                            Battle(player, monsterList[monsterIndex]);
+                        }
+                        isPlayerTurnEnd = true;
+                    }
+                    break;
+            }
+        }
+
+        private void PlayerSkillPhase()
+        {
+            DisplayCharaterInfoScene(false);
+            DisplaySkillListScene();
+            DisplaySelectMenu(0, 2, false);
+        }
+
+        private void PlayerRunPhase()
+        {
+
+        }
+
+        private void MonsterTurn()
         {
             for (int i = 0; i < monsterList.Count; i++)
             {
                 if (!monsterList[i].IsDead)
                 {
                     Random random = new Random();
-                    if (random.Next(100) < 10)
+                    if (random.Next(100) < 10/*player.Miss*/)
                     {
                         // 회피 출력
-                        DisplayMissAttackInfo(monsterList[i], player);
+                        DisplayMissAttackInfoScene(monsterList[i], player);
+                        DisplayNextInputMenu();
                     }
                     else
                     {
@@ -89,127 +168,21 @@ namespace Dun9eonAndFi9ht.System
             }
         }
 
-        /// <summary>
-        /// 플레이어 턴에 호출하는 플레이어 행동 메서드
-        /// </summary>
-        /// <returns>행동 입력 시 True 반환
-        /// 잘못된 입력 시 False 반환</returns>
-        private bool PlayerAction()
-        {
-            bool isPlayerActionEnd = false;
-            while (!isPlayerActionEnd)
-            {
-                DisplayCharacterInfo();
-                Utility.ClearMenu();
-                Utility.PrintMenu("1. 공격");
-                Utility.PrintMenu("");
-                Utility.PrintMenu("원하시는 행동을 입력해주세요.");
-                Utility.PrintMenu(">>");
-                int input = Utility.UserInput(1, 1);
-                switch (input)
-                {
-                    case 1:
-                        isPlayerActionEnd = PlayerAttack();
-                        break;
-                    default:
-                        isPlayerActionEnd = DisplayWrongInput();
-                        break;
-                }
-            }
-            return isPlayerActionEnd;
-        }
-
-        /// <summary>
-        /// 공격 선택 시 호출하는 메서드
-        /// 몬스터 번호를 입력받아 해당 몬스터가 살아있으면 공격, 아니면 다시 선택
-        /// </summary>
-        /// <returns>몬스터 선택 시 True 반환
-        /// 취소 입력 시 False 반환</returns>
-        private bool PlayerAttack()
-        {
-            bool isPlayerAttackEnd = false;
-            while (!isPlayerAttackEnd)
-            {
-                for (int i = 0; i < monsterList.Count; i++)
-                {
-                    Utility.PrintFree($"{i + 1}번 Lv.{monsterList[i].Level} {monsterList[i].Name} HP {monsterList[i].CurrentHp:F2}", i + 2);
-                }
-                Utility.ClearMenu();
-                Utility.PrintMenu("0. 취소");
-                Utility.PrintMenu("");
-                Utility.PrintMenu("대상을 선택해주세요.");
-                Utility.PrintMenu(">>");
-                int input = Utility.UserInput(0, monsterList.Count);
-                switch (input)
-                {
-                    case < 0:
-                        isPlayerAttackEnd = DisplayWrongInput();
-                        break;
-                    case 0:
-                        return false;
-                    default:
-                        int monsterIndex = input - 1;
-                        if (monsterList[monsterIndex].IsDead)
-                        {
-                            isPlayerAttackEnd = DisplayWrongInput();
-                        }
-                        else
-                        {
-                            Random random = new Random();
-                            // 10% 확률로 미스
-                            if (random.Next(100) < Constants.MISS_RATE)
-                            {
-                                // 회피 출력
-                                DisplayMissAttackInfo(player, monsterList[monsterIndex]);
-                            }
-                            else
-                            {
-                                Battle(player, monsterList[monsterIndex]);
-                            }
-                            isPlayerAttackEnd = true;
-                        }
-                        break;
-                }
-            }
-            return isPlayerAttackEnd;
-        }
-
-        /// <summary>
-        /// 스킬 선택 시 호출하는 메서드
-        /// 몬스터 번호를 입력받아 해당 몬스터가 살아있으면 공격, 아니면 다시 선택
-        /// </summary>
-        /// <returns>몬스터 선택 시 True 반환
-        /// 취소 입력 시 False 반환</returns>
-        private bool PlayerSkillSelect()
-        {
-            bool isPlayerSkillSelectEnd = false;
-            while (!isPlayerSkillSelectEnd)
-            {
-
-            }
-            return isPlayerSkillSelectEnd;
-        }
-
-        /// <summary>
-        /// 공격 대상에게 공격을 하는 메서드
-        /// </summary>
-        /// <param name="attacker">공격하는 캐릭터</param>
-        /// <param name="target">공격받는 캐릭터</param>
         private void Battle(Character attacker, Character target)
         {
             float targetHP = target.CurrentHp;
             attacker.Attack(target);
             float finalAtk = attacker.FinalAtk;
-            Random random = new Random();
             bool isCritical = false;
             // 15% 확률로 크리티컬
-            if (random.Next(100) < Constants.CRITICAL_RATE)
+            if (random.Next(100) < Constants.CRITICAL_RATE/*attacker.Critical*/)
             {
                 finalAtk *= Constants.CRITICAL_DAMAGE_RATE;
                 isCritical = true;
             }
             target.Damaged(finalAtk);
-            DisplayBattleInfo(attacker, target, finalAtk, targetHP, isCritical);
+            DisplayBattleInfoScene(attacker, target, finalAtk, targetHP, isCritical);
+            DisplayNextInputMenu();
         }
 
         /// <summary>
@@ -228,18 +201,16 @@ namespace Dun9eonAndFi9ht.System
             return true;
         }
 
-        /// <summary>
-        /// 화면 상단 전투 정보 표시 메서드
-        /// </summary>
-        private void DisplayCharacterInfo()
+        private void DisplayCharaterInfoScene(bool isTargeting)
         {
             Utility.ClearAll();
             Utility.PrintScene("Battle!!");
             Utility.PrintScene("");
             for (int i = 0; i < monsterList.Count; i++)
             {
-                string curHP = monsterList[i].IsDead ? "Dead" : $"HP {monsterList[i].CurrentHp:F2}";
-                Utility.PrintScene($"Lv.{monsterList[i].Level} {monsterList[i].Name} {curHP}");
+                string monsterState = monsterList[i].IsDead ? "Dead" : $"HP {monsterList[i].CurrentHp:F2}";
+                string index = isTargeting ? $"{i + 1}번 " : "";
+                Utility.PrintScene($"{index}Lv.{monsterList[i].Level} {monsterList[i].Name} {monsterState}");
             }
             Utility.PrintScene("");
             Utility.PrintScene("[내 정보]");
@@ -247,14 +218,7 @@ namespace Dun9eonAndFi9ht.System
             Utility.PrintScene($"HP {player.CurrentHp:F2}/{player.MaxHp:F2}");
         }
 
-        /// <summary>
-        /// 화면 상단 공격 시 전투 정보를 출력하는 메서드
-        /// </summary>
-        /// <param name="attacker">공격하는 캐릭터</param>
-        /// <param name="target">공격 받는 캐릭터</param>
-        /// <param name="damage">최종 공격 데미지</param>
-        /// <param name="targetPrevHP">공격 받는 캐릭터의 공격 받기 이전의 HP</param>
-        private void DisplayBattleInfo(Character attacker, Character target, float damage, float targetPrevHP, bool isCritical)
+        private void DisplayBattleInfoScene(Character attacker, Character target, float damage, float targetPrevHP, bool isCritical)
         {
             Utility.ClearAll();
             Utility.PrintScene("Battle!!");
@@ -266,31 +230,56 @@ namespace Dun9eonAndFi9ht.System
             Utility.PrintScene($"Lv.{target.Level} {target.Name}");
             string resultHP = target.IsDead ? "Dead" : target.CurrentHp.ToString("F2");
             Utility.PrintScene($"HP {targetPrevHP.ToString("F2")} -> {resultHP}");
-
-            int input = -1;
-            while (input != 0)
-            {
-                Utility.ClearMenu();
-                Utility.PrintMenu("0. 다음");
-                Utility.PrintMenu("");
-                Utility.PrintMenu(">>");
-                input = Utility.UserInput(0, 0);
-            }
         }
 
-        /// <summary>
-        /// 공격 회피 시 화면 상단에 전투 정보를 출력하는 메서드
-        /// </summary>
-        /// <param name="attacker">공격하는 캐릭터</param>
-        /// <param name="target">공격 받는 캐릭터</param>
-        private void DisplayMissAttackInfo(Character attacker, Character target)
+        private void DisplayMissAttackInfoScene(Character attacker, Character target)
         {
             Utility.ClearAll();
             Utility.PrintScene("Battle!!");
             Utility.PrintScene("");
             Utility.PrintScene($"{attacker.Name}의 공격!");
             Utility.PrintScene($"{target.Name}을(를) 공격했지만 아무일도 일어나지 않았습니다.");
+        }
 
+        private void DisplaySkillListScene()
+        {
+            Utility.PrintScene("");
+            //for (int i = 0; i < player.skillList; i++)
+            //{
+
+            //}
+            // 임시 출력
+            Utility.PrintScene("1. 알파 스트라이크 - MP 10");
+            Utility.PrintScene("   공격력 * 2 로 하나의 적을 공격합니다.");
+            Utility.PrintScene("2. 더블 스트라이크 - MP 15");
+            Utility.PrintScene("   공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.");
+            Utility.PrintScene("0. 취소");
+        }
+
+        private int DisplaySelectMenu(int minIndex, int maxIndex, bool isTargeting)
+        {
+            string menuTxt = isTargeting ? "대상을 선택해주세요." : "원하시는 행동을 입력해주세요.";
+            Utility.PrintMenu(menuTxt);
+            Utility.PrintMenu(">>");
+            return Utility.UserInput(minIndex, maxIndex);
+        }
+
+        private void DisplayWrongInputMenu()
+        {
+            int input = -1;
+            while (input != 0)
+            {
+                Utility.ClearMenu();
+                Utility.PrintMenu("잘못된 입력입니다.");
+                Utility.PrintMenu("0. 확인");
+                Utility.PrintMenu("");
+                Utility.PrintMenu(">>");
+                input = Utility.UserInput(0, 0);
+            }
+        }
+
+        private void DisplayNextInputMenu()
+        {
             int input = -1;
             while (input != 0)
             {
@@ -300,27 +289,6 @@ namespace Dun9eonAndFi9ht.System
                 Utility.PrintMenu(">>");
                 input = Utility.UserInput(0, 0);
             }
-        }
-
-        /// <summary>
-        /// 잘못된 입력 시 화면 하단에 출력하는 메서드
-        /// </summary>
-        /// <returns>0번 선택 시 True
-        /// 잘못 입력 시 False</returns>
-        private bool DisplayWrongInput()
-        {
-            bool isCorrectInput = false;
-            while (!isCorrectInput)
-            {
-                Utility.ClearMenu();
-                Utility.PrintMenu("잘못된 입력입니다.");
-                Utility.PrintMenu("0. 확인");
-                Utility.PrintMenu("");
-                Utility.PrintMenu(">>");
-                int nextInput = Utility.UserInput(0, 0);
-                isCorrectInput = nextInput == 0 ? true : false;
-            }
-            return !isCorrectInput;
         }
     }
 }
