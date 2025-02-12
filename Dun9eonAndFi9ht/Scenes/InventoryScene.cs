@@ -128,7 +128,10 @@ namespace Dun9eonAndFi9ht.Scenes
                 }
 
                 Utility.PrintMenu("아이템 번호를 입력하세요.");
-                Utility.PrintMenu("0. 나가기");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("0");
+                Console.ResetColor();
+                Utility.PrintMenu(". 나가기");
                 Utility.PrintMenu("\n원하시는 행동을 입력해주세요.\n>>");
 
                 int userInput = Utility.UserInput(0, Inventory.Count);
