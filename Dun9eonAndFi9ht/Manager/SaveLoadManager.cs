@@ -79,7 +79,8 @@ namespace Dun9eonAndFi9ht.Manager
             string filePath = "../../../DataBase/SaveData/InventoryData.json";
             if(!File.Exists(filePath))
             {
-                // TO DO : 로드된 데이터 없을 때 처리
+                // 저장된 데이터 없을 때 처리
+                return;
             }
             string json = File.ReadAllText(filePath);
             try
