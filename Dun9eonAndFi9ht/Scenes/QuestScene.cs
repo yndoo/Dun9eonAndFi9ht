@@ -39,7 +39,11 @@ namespace Dun9eonAndFi9ht.Scenes
             Utility.PrintScene(". 완료한 퀘스트");
 
 
-            Utility.PrintMenu("원하는 목록을 선택하세요. (0. 나가기)");
+            Utility.PrintMenuW("원하는 목록을 선택하세요. (");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintMenuW("0.");
+            Console.ResetColor();
+            Utility.PrintMenu(" 나가기)");
             Utility.PrintMenuW(">>> ");
 
             int selectCase = Utility.UserInput(0, 4);
