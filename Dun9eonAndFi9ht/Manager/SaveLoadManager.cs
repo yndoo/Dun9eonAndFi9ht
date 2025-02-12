@@ -33,12 +33,15 @@ namespace Dun9eonAndFi9ht.Manager
         {
 
         }
+        /// <summary>
+        /// 인벤토리 데이터 저장
+        /// </summary>
         public void InventorySave()
         {
             string filePath = "../../../DataBase/SaveData/InventoryData.json";
             InventoryManager inventoryManager = InventoryManager.Instance;
             InventoryData data = new InventoryData();
-            foreach (Item it in inventoryManager.Inventory)          // 소지 아이템 Id 저장
+            foreach (Item it in inventoryManager.Inventory)         // 소지 아이템 Id 저장
             {
                 data.Inventory.Add(it.Id);
             }
@@ -50,7 +53,7 @@ namespace Dun9eonAndFi9ht.Manager
 
             try
             {
-                string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
+                string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true /*줄바꿈, 들여쓰기 정렬 해줌*/});
                 File.WriteAllText(filePath, json);
             }
             catch(Exception ex)
@@ -64,6 +67,14 @@ namespace Dun9eonAndFi9ht.Manager
         }
 
         public void GameSave()
+        {
+
+        }
+
+        /// <summary>
+        /// 인벤토리 데이터 로드
+        /// </summary>
+        public void InventoryLoad()
         {
 
         }

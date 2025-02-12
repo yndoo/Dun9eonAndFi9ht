@@ -76,6 +76,7 @@ namespace Dun9eonAndFi9ht.Scenes
                         CurPage = int.Min(++CurPage, 3);
                         break;
                     case 0:
+                        SaveLoadManager.Instance.InventorySave();
                         return ESceneType.StartScene;
                     default:
                         int nextInput = -1;
