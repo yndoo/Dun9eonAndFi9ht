@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataDefinition;
 using Dun9eonAndFi9ht.Characters;
+using Dun9eonAndFi9ht.Quests;
 using Dun9eonAndFi9ht.Scenes;
 using Dun9eonAndFi9ht.StaticClass;
 

@@ -40,7 +40,7 @@ namespace Dun9eonAndFi9ht.Scenes
         private void EnterDungeon()
         {
             Player = GameManager.Instance.Player;
-            //CheckPotionUse();
+            CheckPotionUse();
             //Monster 데이터 가져오기
             DataTableManager dtManager = DataTableManager.Instance;
             if (MonsterList!=null&&MonsterList.Count != 0) MonsterList.Clear();
@@ -67,9 +67,6 @@ namespace Dun9eonAndFi9ht.Scenes
         public override ESceneType Start()
         {
             base.Start();
-
-           
-
             EnterDungeon();
 
             Utility.PrintSceneW("현재 스테이지: ");
@@ -112,6 +109,7 @@ namespace Dun9eonAndFi9ht.Scenes
             if (resultType == EDungeonResultType.Victory)
             {
                 GainItem(sumReward);
+                QuestManager.Instance.CheckQuests();
             }
             DisplayDungeonResult(hpBeforeDungeon, sumReward);
 
@@ -209,6 +207,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 }
                 else
                 {
+                    Utility.PrintSceneW("Lv.");
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     Utility.PrintSceneW($"{Player.Level}");
                     Console.ResetColor();
@@ -277,35 +276,51 @@ namespace Dun9eonAndFi9ht.Scenes
                 stage++;
             }
         }
-
-        /*private void CheckPotionUse()
+        /// <summary>
+        /// 스테이지 시작 전 포션 사용 질문 메소드
+        /// </summary>
+        private void CheckPotionUse()
         {
-            bool isFirst = true;
-            int input = -1;
-            while (input != 0)
+            try
             {
-                Utility.ClearAll();
-                Utility.PrintScene(isFirst ? "던전 입장 전, 포션을 사용하시겠습니까?" : "추가로 포션을 사용하시겠습니까?");
-                InventoryManager.Instance.DisplayPotions();
-                Utility.PrintMenu("원하시는 포션을 선택 해주세요 (0. 나가기)");
-                Utility.PrintMenuW(">>> ");
-                Dictionary<int, int> map = InventoryManager.Instance.PotionSlot;
-                input = Utility.UserInput(0, map.Count);
-                if (input > 0 || input < map.Count)
+                bool isFirst = true;
+                int input = -1;
+                while (input != 0)
                 {
-                    InventoryManager.Instance.UsePotion(map.ElementAt(input-1).Key, Player);
-                }
-                if(input == 0)
-                {
-                    Utility.PrintScene("전투를 시작합니다.");
-                    Console.ReadKey();
-                }
-                else
-                {
-                    Utility.PrintScene("올바르지 않은 입력입니다.");
-                    Console.ReadKey();
+                    Utility.ClearAll();
+                    Utility.PrintScene(isFirst ? "던전 입장 전, 포션을 사용하시겠습니까?" : "추가로 포션을 사용하시겠습니까?");
+                    InventoryManager.Instance.DisplayPotion(2);
+                    Utility.PrintMenu("원하시는 포션을 선택 해주세요 (0. 나가기)");
+                    Utility.PrintMenuW(">>> ");
+                    List<Dictionary<int, int>> map = InventoryManager.Instance.PotionSlot;  
+
+                    input = Utility.UserInput(0, map.Count);
+                    if (input > 0 && input <= map.Count)
+                    {
+                        int index = input - 1;
+                        bool result = InventoryManager.Instance.UsePotion(index, Player);
+                        isFirst = false;
+                    }
+                    else if (input == 0)
+                    {
+                        Utility.ClearAll();
+                        Utility.PrintScene("전투를 시작합니다.");
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        Utility.ClearAll();
+                        Console.SetCursorPosition(0, 18);
+                        Utility.PrintScene("올바르지 않은 입력입니다.");
+                        Utility.PrintMenu("아무 키나 눌러서 돌아가기");
+                        Console.ReadKey();
+                    }
                 }
             }
-        }*/
+            catch (Exception e) 
+            {
+                Console.WriteLine("오류" + e);
+            }
+        }
     }
 }

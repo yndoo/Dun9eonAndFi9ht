@@ -62,6 +62,13 @@ namespace DataDefinition
         NeutralObjective,
         BossMonster      
     }
+
+    public enum EQuestType
+    {
+        KillMonster,
+        ReachLevel,
+        EquipItem
+    }
     #endregion
 
     #region 상수

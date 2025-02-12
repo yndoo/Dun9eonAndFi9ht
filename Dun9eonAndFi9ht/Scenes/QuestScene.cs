@@ -1,5 +1,6 @@
 ﻿using DataDefinition;
 using Dun9eonAndFi9ht.Manager;
+using Dun9eonAndFi9ht.Quests;
 using Dun9eonAndFi9ht.StaticClass;
 using System;
 using System.Collections.Generic;
@@ -13,53 +14,90 @@ namespace Dun9eonAndFi9ht.Scenes
     {
         public override ESceneType Start()
         {
-            Utility.ClearScene();
+            Utility.ClearAll();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Utility.PrintScene("Quest!!\n");
+            Utility.PrintScene("Quest!!");
             Console.ResetColor();
+            Utility.PrintScene(" ");
+            Utility.PrintScene("확인할 퀘스트 목록을 선택하세요");
+            Utility.PrintScene(" ");
+
+
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintSceneW("1");
             Console.ResetColor();
-            Utility.PrintScene(". 마을을 위협하는 미니언 처치");
+            Utility.PrintScene(". 수행 중인 퀘스트");
+
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintSceneW("2");
             Console.ResetColor();
-            Utility.PrintScene(". 장비를 장착해보자");
+            Utility.PrintScene(". 받지 않은 퀘스트");
+
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintSceneW("3");
             Console.ResetColor();
-            Utility.PrintScene(". 더욱 더 강해지기!");
-            Utility.ClearMenu();
-            Utility.PrintMenu("원하시는 퀘스트를 선택해주세요.\n>>");
+            Utility.PrintScene(". 완료한 퀘스트");
 
-            int selectCase = 0;
-            selectCase = Utility.UserInput(1, 3);
+
+            Utility.PrintMenu("원하는 목록을 선택하세요. (0. 나가기)");
+            Utility.PrintMenuW(">>> ");
+
+            int selectCase = Utility.UserInput(0, 4);
+            if (selectCase == 0) return ESceneType.StartScene;
+            List<Quest> quests = new List<Quest>();
 
             switch(selectCase)
             {
-                case 0:
-                    return ESceneType.QuestScene;
-                default:
-                    return ESceneType.QuestScene;
                 case 1:
-                    Dictionary<string, object> data= DataTableManager.Instance.GetDBData("questTable", 0);
-                    
-                    string[] message = Utility.ConvertObjToStrArr(data["questdescription"] as List<object>);
-
-                    Quest quest = new Quest(
-                        data["questtitle"].ToString(),
-                        message, 
-                        data["targetMonster"].ToString(),
-                        Convert.ToInt32(data["needKills"]), 
-                        Convert.ToInt32(data["rewardItem"]), 
-                        Convert.ToInt32(data["rewardMoney"])
-                        );
-                    quest.ShowQuestInfo();
-                    Console.ReadKey();
+                    quests = QuestManager.Instance.GetAcceptedQuests();
+                    break;
+                case 2:
+                    quests = QuestManager.Instance.GetAvailableQuests();
+                    break;
+                case 3:
+                    quests = QuestManager.Instance.GetCompletedQuests();
+                    break;
+                case 4:
+                    quests = QuestManager.Instance.GetAllQuests();
                     break;
             }
-            return ESceneType.QuestScene;
 
+            if (quests.Count == 0)
+            {
+                Utility.ClearAll();
+                Utility.PrintScene("해당 목록에 퀘스트가 없습니다.");
+                Utility.PrintMenu("돌아가려면 아무 키나 누르세요");
+                Console.SetCursorPosition(0, 17);
+                Console.ReadKey();
+                return ESceneType.QuestScene;
+            }
+
+            Utility.ClearAll();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Utility.PrintScene("Quest!!");
+            Console.ResetColor();
+            Utility.PrintScene(" ");
+            Utility.PrintScene("확인할 퀘스트 목록을 선택하세요");
+            Utility.PrintScene(" ");
+            for (int i = 0; i < quests.Count; i++)
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintSceneW($"{i + 1}");
+                Console.ResetColor();
+                Utility.PrintScene($". {quests[i].QuestTitle}");
+            }
+
+            Utility.PrintMenu("확인할 퀘스트를 선택하세요. (0. 나가기)");
+            Utility.PrintMenuW(">>> ");
+
+            int questSelect = Utility.UserInput(0, quests.Count);
+            if (questSelect == 0) return ESceneType.QuestScene;
+
+            Quest selectedQuest = quests[questSelect - 1];
+            selectedQuest.ShowQuestInfo();
+            Console.ReadKey();
+
+            return ESceneType.QuestScene;
         }
     }
 }
