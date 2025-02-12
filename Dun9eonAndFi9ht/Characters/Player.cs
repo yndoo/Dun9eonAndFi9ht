@@ -128,6 +128,8 @@ namespace Dun9eonAndFi9ht.Characters
             Level++;
             CurExp -= MaxExp;
 
+            CurrentHp = MaxHp;
+            CurrentMp = MaxMp;
             Atk += 0.5f;
             Def++;
 
