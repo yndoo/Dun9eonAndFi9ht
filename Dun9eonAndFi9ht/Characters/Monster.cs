@@ -13,9 +13,9 @@ namespace Dun9eonAndFi9ht.Characters
         public Reward Reward { get; private set; }
         public EMonsterType MonsterType { get; private set; }
 
-        public Monster(string name, float maxHp, int maxMp, float atk, float def, int level, int gold, EMonsterType monsterType) : base(name, maxHp, maxMp, atk, def, level)
+        public Monster(string name, float maxHp, int maxMp, float atk, float def, int level, int gold, EMonsterType monsterType, int dropItemID) : base(name, maxHp, maxMp, atk, def, level)
         {
-            Reward = new Reward(level, gold);
+            Reward = new Reward(level, gold, dropItemID);
 
             // 몬스터 유형별 스킬 자동 세팅
             Skills = SkillManager.Instance.GetMonsterSkills(monsterType);

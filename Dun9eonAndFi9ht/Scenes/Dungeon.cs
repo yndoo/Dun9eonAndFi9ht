@@ -52,7 +52,7 @@ namespace Dun9eonAndFi9ht.Scenes
                     Dictionary<string, object> lst = dtManager.GetDBData($"enemy_stage{stage}", i);
                     string monsterTypeStr = lst["type"].ToString();
                     EMonsterType monsterType = (EMonsterType)Enum.Parse(typeof(EMonsterType), monsterTypeStr);
-                    MonsterList.Add(new Monster(lst["name"].ToString(), Convert.ToInt32(lst["maxHp"]), Convert.ToInt32(lst["maxMp"]), Convert.ToInt32(lst["atk"]), Convert.ToInt32(lst["def"]), Convert.ToInt32(lst["level"]), Convert.ToInt32(lst["gold"]), monsterType));
+                    MonsterList.Add(new Monster(lst["name"].ToString(), Convert.ToInt32(lst["maxHp"]), Convert.ToInt32(lst["maxMp"]), Convert.ToInt32(lst["atk"]), Convert.ToInt32(lst["def"]), Convert.ToInt32(lst["level"]), Convert.ToInt32(lst["gold"]), monsterType, Convert.ToInt32(lst["dropItemID"])));
                 }   
                 catch (Exception ex)
                 {
