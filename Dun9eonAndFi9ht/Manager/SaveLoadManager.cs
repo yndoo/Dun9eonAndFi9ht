@@ -10,6 +10,8 @@ namespace Dun9eonAndFi9ht.Manager
 {
     internal class SaveLoadManager
     {
+        private static SaveLoadManager? instance;
+        public static SaveLoadManager Instance => instance ??= new SaveLoadManager();
         public void PlayerSave()
         {
 
