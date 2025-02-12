@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dun9eonAndFi9ht.Characters;
 
 namespace Dun9eonAndFi9ht.Scenes
 {
@@ -22,6 +23,10 @@ namespace Dun9eonAndFi9ht.Scenes
             {
                 NewGame();
             }
+
+            SaveLoadManager.Instance.PlayerSave(GameManager.Instance.Player);
+            //SaveLoadManager.Instance.PlayerLoad();
+            Console.ReadKey();
 
             Utility.PrintScene("Dun9eon & Fi9ht에 오신 여러분 환영합니다.");
             Utility.PrintScene("이제 전투를 시작할 수 있습니다.");

@@ -1,5 +1,6 @@
 ﻿using DataDefinition;
 using Dun9eonAndFi9ht.Characters;
+using Dun9eonAndFi9ht.Manager;
 using Dun9eonAndFi9ht.Scenes;
 using Dun9eonAndFi9ht.Skill;
 using Dun9eonAndFi9ht.StaticClass;

@@ -1,0 +1,35 @@
+{
+  "Job": 1,
+  "Gold": 300,
+  "MaxExp": 10,
+  "CurExp": 0,
+  "Name": "오재원",
+  "MaxHp": 80,
+  "MaxMp": 100,
+  "Atk": 20,
+  "Def": 3,
+  "Crt": 0,
+  "CrtDmg": 0,
+  "Miss": 0,
+  "Level": 1,
+  "CurrentHp": 80,
+  "CurrentMp": 100,
+  "IsDead": false,
+  "FinalAtk": 0,
+  "Skills": [
+    {
+      "Name": "파이어볼",
+      "MpCost": 10,
+      "Desc": "적 하나에게 불덩이를 날려 공격력의 120% 피해를 줍니다.",
+      "Type": 0,
+      "Value": 1.2
+    },
+    {
+      "Name": "아이스 스피어",
+      "MpCost": 12,
+      "Desc": "여러개의 얼음 창을 소환해 적 모두에게 공격력의 80% 피해를 줍니다.",
+      "Type": 1,
+      "Value": 0.8
+    }
+  ]
+}
