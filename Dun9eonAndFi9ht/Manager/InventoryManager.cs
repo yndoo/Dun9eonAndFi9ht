@@ -238,6 +238,23 @@ namespace Dun9eonAndFi9ht.Manager
             }
             return "알 수 없는 아이템";
         }
+
+        public string GetPotionNameById(int potionId)
+        {
+            try
+            {
+                Dictionary<string, object> potionData = DataTableManager.Instance.GetDBData("potion", potionId);
+                if (potionData != null && potionData.ContainsKey("name"))
+                {
+                    return potionData["name"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"포션 ID {potionId} 조회 중 오류 발생: {ex.Message}");
+            }
+            return "알 수 없는 포션";
+        }
         /// <summary>
         /// 포션 목록을 출력하는 함수
         /// </summary>
