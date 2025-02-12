@@ -96,14 +96,10 @@ namespace Dun9eonAndFi9ht.Scenes
                 }
                 else
                 {
-                    int nextInput = -1;
-                    while (nextInput != 0)
-                    {
-                        Utility.ClearMenu();
-                        Utility.PrintMenu("잘못된 입력입니다.\n");
-                        Utility.PrintMenu("아무 키나 입력해주세요.\n>>");
-                        nextInput = Utility.UserInput(0, 0);
-                    }
+                    Utility.ClearMenu();
+                    Utility.PrintMenu("잘못된 입력입니다.\n");
+                    Utility.PrintMenu("아무 키나 입력해주세요.\n>>");
+                    Console.ReadKey();
                 }
             }            
         }
@@ -156,7 +152,7 @@ namespace Dun9eonAndFi9ht.Scenes
                         Utility.ClearMenu();
                         Utility.PrintMenu("잘못된 입력입니다.\n");
                         Utility.PrintMenu("아무 키나 입력해주세요.\n>>");
-                        Console.ReadLine();
+                        Console.ReadKey();
                     }
                 }
                 if (isSaved) break;
@@ -187,7 +183,7 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.ClearMenu();
                     Utility.PrintMenu("잘못된 입력입니다.\n");
                     Utility.PrintMenu("아무 키나 입력해주세요.\n>>");
-                    Console.ReadLine();
+                    Console.ReadKey();
                     continue;
                 }
                 jobType = (EJobType)jobInput;
@@ -219,7 +215,7 @@ namespace Dun9eonAndFi9ht.Scenes
                         Utility.ClearMenu();
                         Utility.PrintMenu("잘못된 입력입니다.\n");
                         Utility.PrintMenu("아무 키나 입력해주세요.\n>>");
-                        Console.ReadLine();
+                        Console.ReadKey();
                     }
                 }
                 if (isSaved) break;
