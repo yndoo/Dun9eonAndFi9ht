@@ -14,7 +14,7 @@ namespace Dun9eonAndFi9ht.Items
         public string name;
         public bool isPercent;
         public float changeHp;
-        public float changeMp;
+        public int changeMp;
         public float changeAtk;
         public float changeDef;
         public float changeCrt;
@@ -23,7 +23,7 @@ namespace Dun9eonAndFi9ht.Items
         public string description;
         int duration;
 
-        public Potion(string name, bool isPercent, float hp, float mp, float atk, float def, float crt, float crtDmg, float miss, int duration, string description)
+        public Potion(string name, bool isPercent, float hp, int mp, float atk, float def, float crt, float crtDmg, float miss, int duration, string description)
         {
             this.name = name;
             this.isPercent = isPercent;
@@ -52,7 +52,7 @@ namespace Dun9eonAndFi9ht.Items
             float prevMiss = character.Miss;
 
             float hp = isPercent ? character.MaxHp * changeHp : changeHp;
-            float mp = isPercent ? character.MaxMp * changeMp : changeMp;
+            int mp = isPercent ? character.MaxMp * changeMp : changeMp;
             float atk = isPercent ? character.Atk * changeAtk : changeAtk;
             float def = isPercent ? character.Def * changeDef : changeDef;
             float crt = isPercent ? character.Crt * changeCrt : changeCrt;
