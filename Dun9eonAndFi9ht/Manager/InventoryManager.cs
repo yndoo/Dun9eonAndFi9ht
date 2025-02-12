@@ -55,17 +55,34 @@ namespace Dun9eonAndFi9ht.Manager
             }
 
             // 인벤토리&아이템 테스트용 코드
-            for (int i = 0; i < itemCount; i++)
-            {
-                GrantItem(i);
-            }
+            //for (int i = 0; i < itemCount; i++)
+            //{
+            //    GrantItem(i);
+            //}
 
-            GrantPotion(0);
-            GrantPotion(1);
-            GrantPotion(2);
+            //GrantPotion(0);
+            //GrantPotion(1);
+            //GrantPotion(2);
         }
-
-
+        /// <summary>
+        /// 로드된 데이터를 인벤토리에 적용시키는 함수.
+        /// </summary>
+        /// <param name="loadData">json파일에서 읽어온 인벤토리 데이터</param>
+        public void ApplyLoadedData(InventoryData loadData)
+        {
+            foreach (int id in loadData.Inventory)
+            {
+                GrantItem(id);
+            }
+            foreach (int id in loadData.EquipItems)
+            {
+                ItemEquip(AllItem[id]);
+            }
+            for(int i = 0; i < PotionSlot.Count; i++)
+            {
+                PotionSlot[i] = loadData.PotionSlot[i];
+            }
+        }
         /// <summary>
         /// 플레이어에게 아이템 보상을 지급
         /// </summary>

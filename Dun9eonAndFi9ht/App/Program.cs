@@ -16,6 +16,11 @@ namespace Dun9eonAndFi9ht.App
             if (isPlayerSet)
             {
                 GameManager.Instance.Player.DisplayStatus();
+
+                // 게임 데이터 로드
+                SaveLoadManager.Instance.InventoryLoad();
+
+                // 게임 실행
                 RunGame();
             }
             else

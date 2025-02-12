@@ -58,7 +58,7 @@ namespace Dun9eonAndFi9ht.Manager
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine("인벤토리 데이터 저장 오류 {0}", ex.Message);
             }
         }
         public void DungeonSave()
@@ -76,6 +76,20 @@ namespace Dun9eonAndFi9ht.Manager
         /// </summary>
         public void InventoryLoad()
         {
+            string filePath = "../../../DataBase/SaveData/InventoryData.json";
+            if(!File.Exists(filePath))
+            {
+                // TO DO : 로드된 데이터 없을 때 처리
+            }
+            string json = File.ReadAllText(filePath);
+            try
+            {
+                InventoryManager.Instance.ApplyLoadedData(JsonSerializer.Deserialize<InventoryData>(json));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("인벤토리 데이터 로드 오류 {0}", ex.Message);
+            }
 
         }
     }
