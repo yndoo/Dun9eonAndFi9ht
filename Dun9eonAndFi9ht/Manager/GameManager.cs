@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataDefinition;
 using Dun9eonAndFi9ht.Characters;
+using Dun9eonAndFi9ht.Quests;
 using Dun9eonAndFi9ht.Scenes;
 using Dun9eonAndFi9ht.StaticClass;
 
@@ -29,6 +30,7 @@ namespace Dun9eonAndFi9ht.Manager
             sceneList.Add(new PlayerStat());
             sceneList.Add(new MoveStage());
             sceneList.Add(new InventoryScene());
+            sceneList.Add(new QuestScene());
         }
         /// <summary>
         /// 시작할 씬을 string 값으로 받아 해당 씬 Start() 실행

@@ -15,7 +15,7 @@ namespace Dun9eonAndFi9ht.Scenes
         private List<Item> Inventory { get; } // 현재 갖고 있는 아이템 
         private Dictionary<EItemEquipType, Item> EquipSlot { get; } // 현재 장착 아이템
         private InventoryManager inventoryManager { get; }
-        private Dictionary<int, int> PotionInventory { get; } // 현재 가지고 있는 포션
+        private List<Dictionary<int, int>> PotionInventory { get; } // 현재 가지고 있는 포션
         private int CurPage { get; set; }
 
         public InventoryScene()
@@ -41,7 +41,7 @@ namespace Dun9eonAndFi9ht.Scenes
 
                 // 포션 출력
                 Utility.PrintScene("\n");
-                //DisplayPotions();
+                InventoryManager.Instance.DisplayPotion(11);
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintMenuW("1");

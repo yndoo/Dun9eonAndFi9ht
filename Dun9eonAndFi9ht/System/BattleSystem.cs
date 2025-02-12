@@ -1,5 +1,7 @@
 ﻿using DataDefinition;
 using Dun9eonAndFi9ht.Characters;
+using Dun9eonAndFi9ht.Manager;
+using Dun9eonAndFi9ht.Quests;
 using Dun9eonAndFi9ht.Scenes;
 using Dun9eonAndFi9ht.Skill;
 using Dun9eonAndFi9ht.StaticClass;
@@ -105,6 +107,9 @@ namespace Dun9eonAndFi9ht.System
                     playerAction = PlayerSkillSelectPhase;
                     break;
                 case 3:
+                    playerAction = PlayerPotionSelectPhase;
+                    break;
+                case 4:
                     playerAction = PlayerRunPhase;
                     break;
                 default:
@@ -276,6 +281,62 @@ namespace Dun9eonAndFi9ht.System
 
             isPlayerTurnEnd = true;
         }
+
+        private void PlayerPotionSelectPhase()
+        {
+            Utility.ClearAll();
+            DisplayCharaterInfoScene(false);
+            InventoryManager.Instance.DisplayPotion(1);
+
+            Utility.PrintScene("");
+            Utility.PrintScene("사용할 포션을 선택하세요.");
+            Utility.PrintScene("");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW("0");
+            Console.ResetColor();
+            Utility.PrintScene(". 취소");
+
+            List<Dictionary<int, int>> map = InventoryManager.Instance.PotionSlot;
+
+            if (map.Count == 0)
+            {
+                Utility.PrintScene("사용 가능한 포션이 없습니다.");
+                Console.ReadKey();
+                playerAction = PlayerActionPhase;
+                return;
+            }
+
+            int input = Utility.UserInput(0, map.Count);
+
+            if (input == 0)
+            {
+                playerAction = PlayerActionPhase;
+                return;
+            }
+
+            if (input > 0 && input <= map.Count)
+            {
+                int slotIndex = input - 1;
+                bool result = InventoryManager.Instance.UsePotion(slotIndex, player);
+
+                if (!result)
+                {
+                    Utility.PrintScene("포션을 사용할 수 없습니다.");
+                }
+                else
+                {
+                    Utility.PrintScene("포션을 사용하였습니다.");
+                    isPlayerTurnEnd = true; // ✅ 포션 사용 후 턴 종료
+                }
+            }
+            else
+            {
+                Utility.PrintScene("잘못된 입력입니다.");
+                Console.ReadKey();
+            }
+
+        }
+
         #endregion
 
         /// <summary>
@@ -361,6 +422,12 @@ namespace Dun9eonAndFi9ht.System
             }
             target.Damaged(finalAtk);
             DisplayAttackResultScene(attacker, target, finalAtk, targetHP, isCritical);
+
+            if (target.IsDead && target is Monster monster)
+            {
+                UpdateMonsterKillQuests(monster);
+            }
+
             DisplayNextInputMenu();
         }
 
@@ -595,7 +662,12 @@ namespace Dun9eonAndFi9ht.System
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintMenuW("3");
             Console.ResetColor();
+            Utility.PrintMenuW(". 포션 사용     ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintMenuW("4");
+            Console.ResetColor();
             Utility.PrintMenu(". 도망가기");
+            Utility.PrintMenu("");
         }
 
         /// <summary>
@@ -671,6 +743,17 @@ namespace Dun9eonAndFi9ht.System
                 input = Utility.UserInput(0, 0);
             }
         }
+        /// <summary>
+        /// 퀘스트 진행 상태 업데이트 (몬스터 처치 퀘스트)
+        /// </summary>
+        private void UpdateMonsterKillQuests(Monster monster)
+        {
+            foreach (var quest in QuestManager.Instance.GetAcceptedQuests().OfType<KillMonsterQuest>())
+            {
+                quest.AddKillCount(monster.Name);
+            }
+        }
+
         #endregion
         #endregion
     }

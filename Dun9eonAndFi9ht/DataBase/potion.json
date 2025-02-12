@@ -40,16 +40,16 @@
       "duration": 0
     },
     "3": {
-      "name": "엘릭서",
-      "isPercent": true,
-      "changeHp": 0.8,
-      "changeMp": 0,
+      "name": "마나포션",
+      "isPercent": false,
+      "changeHp": 0,
+      "changeMp": 20,
       "changeAtk": 0,
       "changeDef": 0,
       "changeCrt": 0,
       "changeCrtDmg": 0,
       "changeMiss": 0,
-      "description": "죽은 자도 부활시킨다는 전설의 포션",
+      "description": "호랑이 기운이 솟아나요",
       "duration": 0
     }
   }

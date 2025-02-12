@@ -37,6 +37,7 @@ namespace DataDefinition
         PlayerStat,
         MoveStage,
         InventoryScene,
+        QuestScene,
     }
     public enum EItemEquipType
     {
@@ -62,6 +63,13 @@ namespace DataDefinition
         LargeJungle,     
         NeutralObjective,
         BossMonster      
+    }
+
+    public enum EQuestType
+    {
+        KillMonster,
+        ReachLevel,
+        EquipItem
     }
     #endregion
 
