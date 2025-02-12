@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,17 +11,44 @@ namespace Dun9eonAndFi9ht.Characters
 {
     public class Character
     {
-        public string Name { get; set; }
-        public float MaxHp { get; set; }
-        public float MaxMp { get; set; }
-        public float Atk { get; set; }
-        public float Def { get; set; }
+        public string Name
+        {
+            get; set;
+        }
+        public float MaxHp
+        {
+            get; set;
+        }
+        public float MaxMp
+        {
+            get; set;
+        }
+        public float Atk
+        {
+            get; set;
+        }
+        public float Def
+        {
+            get; set;
+        }
 
-        public float Crt { get; set; }
-        public float CrtDmg { get; set; }
-        public float Miss {  get; set; }
+        public float Crt
+        {
+            get; set;
+        }
+        public float CrtDmg
+        {
+            get; set;
+        }
+        public float Miss
+        {
+            get; set;
+        }
 
-        public int Level { get; set; }
+        public int Level
+        {
+            get; set;
+        }
         private float currentHp;
         public float CurrentHp
         {
@@ -41,7 +69,7 @@ namespace Dun9eonAndFi9ht.Characters
                 {
                     currentHp = 0;
                 }
-                else if (currentHp+value > MaxHp)
+                else if (currentHp + value > MaxHp)
                 {
                     currentHp = MaxHp;
                 }
@@ -72,7 +100,7 @@ namespace Dun9eonAndFi9ht.Characters
                 {
                     currentMp = 0;
                 }
-                else if (currentMp+value > MaxMp)
+                else if (currentMp + value > MaxMp)
                 {
                     currentMp = MaxMp;
                 }
@@ -82,9 +110,18 @@ namespace Dun9eonAndFi9ht.Characters
                 }
             }
         }
-        public bool IsDead { get; private set; }
-        public float FinalAtk { get; private set; }
-        public List<SkillBase> Skills { get; protected set; }
+        public bool IsDead
+        {
+            get; private set;
+        }
+        public float FinalAtk
+        {
+            get; private set;
+        }
+        public List<SkillBase> Skills
+        {
+            get; protected set;
+        }
 
         private int buffDuration = 0;
         private float buffHp = 0, buffMp = 0, buffAtk = 0, buffDef = 0, buffCrt = 0, buffCrtDmg = 0, buffMiss = 0;
@@ -128,7 +165,8 @@ namespace Dun9eonAndFi9ht.Characters
 
         public virtual void Damaged(float damage)
         {
-            currentHp -= damage + Def;
+            float finalDMG = Math.Max(damage - (Def * 0.5f), 1);
+            currentHp -= finalDMG;
             if (currentHp <= 0)
             {
                 Dead();
@@ -197,6 +235,6 @@ namespace Dun9eonAndFi9ht.Characters
             buffHp = buffMp = buffAtk = buffDef = buffCrt = buffMiss = 0;
         }
 
-        
+
     }
 }
