@@ -642,7 +642,9 @@ namespace Dun9eonAndFi9ht.System
         private void DisplayRunFailScene()
         {
             Utility.ClearAll();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Utility.PrintScene($"Battle!! - {Dungeon.stage}층");
+            Console.ResetColor();
             Utility.PrintScene("");
             Utility.PrintScene($"{player.Name}은(는) 도망에 실패했습니다.");
         }
