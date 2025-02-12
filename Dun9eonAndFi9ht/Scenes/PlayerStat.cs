@@ -40,18 +40,13 @@ namespace Dun9eonAndFi9ht.Scenes
                 }
 
                 int nextInput = -1;
-                while (nextInput != 0)
-                {
-                    Utility.ClearMenu();
-                    Utility.PrintMenu("잘못된 입력입니다.");
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Utility.PrintMenuW("0");
-                    Console.ResetColor();
-                    Utility.PrintMenu(". 확인");
-                    Utility.PrintMenu("");
-                    Utility.PrintMenu(">>");
-                    nextInput = Utility.UserInput(0, 0);
-                }
+
+                Utility.ClearMenu();
+                Utility.PrintMenu("잘못된 입력입니다.");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("아무 키나 눌러주세요.");
+                Utility.PrintMenu(">>");
+                Console.ReadKey();
             }
         }
     }

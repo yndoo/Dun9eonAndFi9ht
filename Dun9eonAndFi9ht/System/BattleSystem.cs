@@ -331,7 +331,9 @@ namespace Dun9eonAndFi9ht.System
             }
             else
             {
-                Utility.PrintScene("잘못된 입력입니다.");
+                Utility.PrintMenu("잘못된 입력입니다.");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("아무 키나 눌러주세요.");
                 Console.ReadKey();
             }
 
