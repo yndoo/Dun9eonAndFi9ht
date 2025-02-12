@@ -80,6 +80,7 @@ namespace Dun9eonAndFi9ht.Quests
                         Utility.PrintMenuW("아무 키를 눌러 돌아가기");
                         Console.SetCursorPosition(0, 18);
                         Console.ReadKey();
+                        Utility.PrintMenu("");
                         return;
                     }
 
@@ -109,11 +110,13 @@ namespace Dun9eonAndFi9ht.Quests
                         case 1:
                             HasAccepted = true;
                             Utility.PrintScene("퀘스트를 수락했습니다!");
+                            Utility.PrintMenu("");
                             Utility.PrintFree("아무 키나 눌러 돌아가기",22);
                             Console.SetCursorPosition(0, 23);
                             return;
                         case 2:
                             Utility.PrintScene("퀘스트를 거절했습니다.");
+                            Utility.PrintMenu("");
                             Utility.PrintFree("아무 키나 눌러 돌아가기", 22);
                             Console.SetCursorPosition(0, 23);
                             return;
@@ -137,8 +140,10 @@ namespace Dun9eonAndFi9ht.Quests
                             ReceiveReward();
                             return;
                         case 2:
+                            Utility.PrintMenu("");
+                            Utility.PrintMenu("");
+                            Utility.PrintMenu("퀘스트 종류 확인 창으로 돌아갑니다.");
                             return;
-
                         default:
                             Utility.ClearMenu();
                             Utility.PrintMenu("잘못된 입력입니다.");
