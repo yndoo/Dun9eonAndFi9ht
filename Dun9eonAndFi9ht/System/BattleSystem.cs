@@ -421,7 +421,8 @@ namespace Dun9eonAndFi9ht.System
                 isCritical = true;
             }
             target.Damaged(finalAtk);
-            DisplayAttackResultScene(attacker, target, finalAtk, targetHP, isCritical);
+            float realDamage = targetHP - target.CurrentHp;
+            DisplayAttackResultScene(attacker, target, realDamage, targetHP, isCritical);
 
             if (target.IsDead && target is Monster monster)
             {
@@ -446,7 +447,8 @@ namespace Dun9eonAndFi9ht.System
                 float targetHP = fianlTarget[i].CurrentHp;
                 float finalAtk = caster.FinalAtk;
                 fianlTarget[i].Damaged(finalAtk);
-                DisplaySkillResultScene(caster, fianlTarget[i], finalAtk, targetHP, caster.Skills[skillIndex].Name);
+                float realDamage = targetHP - fianlTarget[i].CurrentHp;
+                DisplaySkillResultScene(caster, fianlTarget[i], realDamage, targetHP, caster.Skills[skillIndex].Name);
                 DisplayNextInputMenu();
             }
         }
@@ -654,7 +656,7 @@ namespace Dun9eonAndFi9ht.System
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintMenuW("1");
             Console.ResetColor();
-            Utility.PrintMenuW(". 공격     ");
+            Utility.PrintMenuW(". 공격          ");
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintMenuW("2");
             Console.ResetColor();
@@ -690,19 +692,12 @@ namespace Dun9eonAndFi9ht.System
         /// </summary>
         private void DisplayWrongInputMenu()
         {
-            int input = -1;
-            while (input != 0)
-            {
-                Utility.ClearMenu();
-                Utility.PrintMenu("잘못된 입력입니다.");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Utility.PrintMenuW("0");
-                Console.ResetColor();
-                Utility.PrintMenu(". 확인");
-                Utility.PrintMenu("");
-                Utility.PrintMenu(">>");
-                input = Utility.UserInput(0, 0);
-            }
+            Utility.ClearMenu();
+            Utility.PrintMenu("잘못된 입력입니다.");
+            Utility.PrintMenu("");
+            Utility.PrintMenu("아무 키나 눌러주세요.");
+            Utility.PrintMenu(">>");
+            Console.ReadKey();
         }
 
         /// <summary>
@@ -710,18 +705,12 @@ namespace Dun9eonAndFi9ht.System
         /// </summary>
         private void DisplayNextInputMenu()
         {
-            int input = -1;
-            while (input != 0)
-            {
-                Utility.ClearMenu();
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Utility.PrintMenuW("0");
-                Console.ResetColor();
-                Utility.PrintMenu(". 다음");
-                Utility.PrintMenu("");
-                Utility.PrintMenu(">>");
-                input = Utility.UserInput(0, 0);
-            }
+            Utility.ClearMenu();
+            Utility.PrintMenu("다음");
+            Utility.PrintMenu("");
+            Utility.PrintMenu("아무 키나 눌러주세요.");
+            Utility.PrintMenu(">>");
+            Console.ReadKey();
         }
 
         /// <summary>
@@ -729,19 +718,12 @@ namespace Dun9eonAndFi9ht.System
         /// </summary>
         private void DisplayNotEnoughManaMenu()
         {
-            int input = -1;
-            while (input != 0)
-            {
-                Utility.ClearMenu();
-                Utility.PrintMenu("마나가 부족합니다.");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Utility.PrintMenuW("0");
-                Console.ResetColor();
-                Utility.PrintMenu(". 확인");
-                Utility.PrintMenu("");
-                Utility.PrintMenu(">>");
-                input = Utility.UserInput(0, 0);
-            }
+            Utility.ClearMenu();
+            Utility.PrintMenu("마나가 부족합니다.");
+            Utility.PrintMenu("");
+            Utility.PrintMenu("아무 키나 눌러주세요.");
+            Utility.PrintMenu(">>");
+            Console.ReadKey();
         }
         /// <summary>
         /// 퀘스트 진행 상태 업데이트 (몬스터 처치 퀘스트)
