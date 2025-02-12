@@ -6,7 +6,7 @@ namespace Dun9eonAndFi9ht.Skill
 {
     public class SlashFrenzy : SkillBase
     {
-        public SlashFrenzy() : base("난도질", 15, "빠른 연속 공격으로 공격력의 170% 피해를 줍니다.", ESkillTargetType.Single)
+        public SlashFrenzy(string name, int mpCost, string desc, ESkillTargetType targetType, float value) : base(name, mpCost, desc, targetType, value)
         {
         }
 
