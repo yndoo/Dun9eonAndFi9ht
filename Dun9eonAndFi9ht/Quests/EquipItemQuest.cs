@@ -50,9 +50,18 @@ namespace Dun9eonAndFi9ht.Quests
             ShowSelect();
         }
         /// <summary>
+        /// 퀘스트 진행도를 초기화하는 메서드
+        /// </summary>
+        public override void ResetProgress()
+        {
+            // 아이템 장착 퀘스트는 아이템 상태를 직접 조작하지 않음.
+        }
+
+        /// <summary>
         /// 아이템을 가지고 있는지 확인하는 함수
         /// </summary>
         /// <returns></returns>
+        /// 
         private string HasItem()
         {
             return InventoryManager.Instance.Inventory.Any(item => item.Name == RequiredItemName) ? "O" : "X";

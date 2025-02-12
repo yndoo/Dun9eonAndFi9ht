@@ -147,5 +147,18 @@ namespace Dun9eonAndFi9ht.Manager
                 }
             }
         }
+
+        public void InitializeQuest()
+        {
+            foreach(var quest in AllQuests)
+            {
+                if (quest.HasAccepted && !quest.IsCleared)
+                {
+                    quest.ResetProgress();
+                    quest.HasAccepted = false;
+                    quest.IsCleared = false;
+                }
+            }
+        }
     }
 }

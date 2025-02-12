@@ -24,6 +24,14 @@ namespace Dun9eonAndFi9ht.Scenes
 
         public static int maxStageCleared { get; set; }
 
+        /// <summary>
+        /// 죽었을 때 스테이지 초기화
+        /// </summary>
+        public static void InitializeStage()
+        {
+            stage = 1;
+        }
+
         
         public Dungeon()
         {

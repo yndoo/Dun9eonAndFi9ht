@@ -47,6 +47,12 @@ namespace Dun9eonAndFi9ht.Quests
         {
             return CurrentKills >= NeedKills;
         }
+
+        public override void ResetProgress()
+        {
+            CurrentKills = 0;
+        }
+
         /// <summary>
         /// 퀘스트 정보 출력 함수
         /// </summary>
