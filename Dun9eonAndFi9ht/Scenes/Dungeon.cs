@@ -285,6 +285,14 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.PrintScene($" {Player.Name}");
                 }
             }
+            else
+            {
+                Utility.PrintSceneW("Lv.");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintSceneW($"{Player.Level}");
+                Console.ResetColor();
+                Utility.PrintScene($" {Player.Name}");
+            }
             
             Utility.PrintSceneW("HP ");
             Console.ForegroundColor = ConsoleColor.Magenta;
