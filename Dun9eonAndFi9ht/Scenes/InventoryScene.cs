@@ -60,8 +60,8 @@ namespace Dun9eonAndFi9ht.Scenes
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintMenuW("0");
                 Console.ResetColor();
-                Utility.PrintMenuW(". 나가기 ");
-                Utility.PrintMenu("\n원하시는 행동을 입력해주세요.\n>>");
+                Utility.PrintMenu(". 나가기 ");
+                Utility.PrintMenu("\n\n원하시는 행동을 입력해주세요.\n>>");
 
                 int userInput = Utility.UserInput(0, 3);
                 switch(userInput)
@@ -123,7 +123,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintMenuW("0");
                 Console.ResetColor();
                 Utility.PrintMenu(". 나가기");
-                Utility.PrintMenu("\n원하시는 행동을 입력해주세요.\n>>");
+                Utility.PrintMenu("\n\n원하시는 행동을 입력해주세요.\n>>");
 
                 int userInput = Utility.UserInput(0, Inventory.Count);
                 if (userInput == 0)

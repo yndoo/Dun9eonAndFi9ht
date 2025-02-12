@@ -30,12 +30,12 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintSceneW($"{maxStageCleared + 1}");
                 Console.ResetColor();
                 Utility.PrintScene("층");
-                Utility.PrintMenu("층을 입력해 주세요");
+                Utility.PrintMenu("층을 입력해 주세요.");
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintMenuW("0");
                 Console.ResetColor();
                 Utility.PrintMenu(". 나가기");
-                Utility.PrintMenu(">> ");
+                Utility.PrintMenu("\n\n원하시는 행동을 입력해주세요.\n>>");
                 nextinput = Utility.UserInput(0, 5);
                 if (nextinput == 0) // 유저가 취소를 선택한 경우
                 {
