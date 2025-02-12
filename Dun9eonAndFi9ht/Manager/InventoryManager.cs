@@ -154,7 +154,14 @@ namespace Dun9eonAndFi9ht.Manager
             potion.UsePotion(character);
             potionEntry[potionID]--;
 
-            if (potionEntry[potionID] <= 0) PotionSlot.RemoveAt(slotIndex);
+            if (potionEntry[potionID] <= 0)
+            {
+                potionEntry.Remove(potionID); //  Dictionary 내부에서 Key 삭제
+                if (potionEntry.Count == 0)   //  Dictionary가 비었으면 리스트에서 삭제
+                {
+                    PotionSlot.RemoveAt(slotIndex);
+                }
+            }
 
             return true;
         }

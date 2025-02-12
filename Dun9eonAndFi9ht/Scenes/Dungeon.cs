@@ -292,12 +292,13 @@ namespace Dun9eonAndFi9ht.Scenes
                     InventoryManager.Instance.DisplayPotion(2);
                     Utility.PrintMenu("원하시는 포션을 선택 해주세요 (0. 나가기)");
                     Utility.PrintMenuW(">>> ");
-                    List<Dictionary<int, int>> map = InventoryManager.Instance.PotionSlot;
+                    List<Dictionary<int, int>> map = InventoryManager.Instance.PotionSlot;  
 
                     input = Utility.UserInput(0, map.Count);
                     if (input > 0 && input <= map.Count)
                     {
-                        bool result = InventoryManager.Instance.UsePotion(map[input - 1].Keys.First(), Player);
+                        int index = input - 1;
+                        bool result = InventoryManager.Instance.UsePotion(index, Player);
                         isFirst = false;
                     }
                     else if (input == 0)
@@ -308,7 +309,10 @@ namespace Dun9eonAndFi9ht.Scenes
                     }
                     else
                     {
+                        Utility.ClearAll();
+                        Console.SetCursorPosition(0, 18);
                         Utility.PrintScene("올바르지 않은 입력입니다.");
+                        Utility.PrintMenu("아무 키나 눌러서 돌아가기");
                         Console.ReadKey();
                     }
                 }

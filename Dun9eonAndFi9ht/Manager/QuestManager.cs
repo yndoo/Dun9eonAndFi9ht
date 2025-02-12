@@ -87,7 +87,7 @@ namespace Dun9eonAndFi9ht.Manager
         /// </summary>
         public List<Quest> GetAvailableQuests()
         {
-            return AllQuests.FindAll(q => !q.HasAccepted);
+            return AllQuests.FindAll(q => !q.HasAccepted&&!q.IsCleared);
         }
 
         /// <summary>
