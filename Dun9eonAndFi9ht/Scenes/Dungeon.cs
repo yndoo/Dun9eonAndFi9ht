@@ -150,34 +150,47 @@ namespace Dun9eonAndFi9ht.Scenes
                 GainItem(sumReward);
                 QuestManager.Instance.CheckQuests();
             }
+
             DisplayDungeonResult(hpBeforeDungeon, sumReward);
+
             bool isDead = GameManager.Instance.Player.CurrentHp <= 0;
+            bool isEscaped = resultType == EDungeonResultType.Escaped;
+
+            // 결과 메시지를 단 한 번만 출력하도록 변경
+            Utility.ClearMenu();
+            if (isDead)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Utility.PrintScene("You Died");
+                Console.ResetColor();
+                Utility.PrintScene("\n당신은 전투에서 패배했습니다...");
+                Utility.PrintScene("모든 HP를 소진하여 전투를 지속할 수 없습니다.");
+            }
+            else if (isEscaped)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Utility.PrintScene("몬스터로부터 무사히 도망치는 데 성공했습니다.");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Utility.PrintScene("층 클리어!");
+                Console.ResetColor();
+                Utility.PrintScene("계속 던전을 진행하시겠습니까?");
+            }
+
+           
+
             while (true)
             {
                 Utility.ClearMenu();
-                if (isDead)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Utility.PrintScene("당신은 전투에서 패배했습니다... ");
-                    Console.ResetColor();
-                    Utility.PrintScene("");
-                    Utility.PrintScene("모든 HP를 소진하여 전투를 지속할 수 없습니다.");
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Utility.PrintScene("층 클리어!");
-                    Console.ResetColor();
-                    Utility.PrintScene("계속 던전을 진행하시겠습니까?");
-                }
-                Utility.ClearMenu();
-
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintMenuW("0");
                 Console.ResetColor();
                 Utility.PrintMenu(". 나가기");
 
-                if (!isDead) // 생존 시에만 던전으로 돌아가기 버튼 표시
+                if (!isDead && !isEscaped) // 도망친 경우에는 던전으로 돌아가기 버튼 제거
                 {
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     Utility.PrintMenuW("1");
@@ -186,33 +199,28 @@ namespace Dun9eonAndFi9ht.Scenes
                 }
 
                 Utility.PrintMenu(">> ");
-                int userInput = isDead ? Utility.UserInput(0, 0) : Utility.UserInput(0, 1);
+                int userInput = isDead || isEscaped ? Utility.UserInput(0, 0) : Utility.UserInput(0, 1);
 
                 if (userInput == 0)
                 {
                     return ESceneType.StartScene;
                 }
-                if (userInput == 1 && !isDead)
+                if (userInput == 1 && !isDead && !isEscaped)
                 {
                     return ESceneType.Dungeon;
                 }
 
-                // 잘못된 입력 처리
-                int nextInput = -1;
-                while (nextInput != 0)
-                {
-                    Utility.ClearMenu();
-                    Utility.PrintMenu("잘못된 입력입니다.");
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Utility.PrintMenuW("0");
-                    Console.ResetColor();
-                    Utility.PrintMenu(". 확인");
-                    Utility.PrintMenu("");
-                    Utility.PrintMenu(">>");
-                    nextInput = Utility.UserInput(0, 0);
-                }
+                Utility.ClearMenu();
+                Utility.PrintMenu("잘못된 입력입니다.");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("0");
+                Console.ResetColor();
+                Utility.PrintMenu(". 확인");
+                Utility.PrintMenu(">>");
+                Utility.UserInput(0, 0); 
             }
         }
+
 
         /// <summary>
         /// 던전 결과 출력 핵심 기능
