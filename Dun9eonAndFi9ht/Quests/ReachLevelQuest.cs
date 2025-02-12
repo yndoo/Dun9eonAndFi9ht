@@ -28,8 +28,17 @@ namespace Dun9eonAndFi9ht.Quests
             return GameManager.Instance.Player.Level >= TargetLevel; // 플레이어 레벨이 목표 도달했는지 확인
         }
         /// <summary>
+        /// 퀘스트 진행도를 초기화하는 메서드
+        /// </summary>
+        public override void ResetProgress()
+        {
+
+        }
+
+        /// <summary>
         /// 퀘스트 정보를 출력하는 함수
         /// </summary>
+        /// 
         public override void ShowQuestInfo()
         {
             Utility.ClearAll();
