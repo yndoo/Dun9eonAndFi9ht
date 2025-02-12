@@ -92,13 +92,8 @@ namespace Dun9eonAndFi9ht.Scenes
                     while (nextInput != 0)
                     {
                         Utility.ClearMenu();
-                        Utility.PrintMenu("잘못된 입력입니다.");
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        Utility.PrintMenuW("0");
-                        Console.ResetColor();
-                        Utility.PrintMenu(". 확인");
-                        Utility.PrintMenu("");
-                        Utility.PrintMenu(">>");
+                        Utility.PrintMenu("잘못된 입력입니다.\n");
+                        Utility.PrintMenu("아무 키나 입력해주세요.\n>>");
                         nextInput = Utility.UserInput(0, 0);
                     }
                 }
@@ -155,8 +150,8 @@ namespace Dun9eonAndFi9ht.Scenes
                     else
                     {
                         Utility.ClearMenu();
-                        Utility.PrintMenu("잘못된 입력입니다.");
-                        Utility.PrintMenu("아무 키나 입력\n>>");
+                        Utility.PrintMenu("잘못된 입력입니다.\n");
+                        Utility.PrintMenu("아무 키나 입력해주세요.\n>>");
                         Console.ReadLine();
                     }
                 }
@@ -186,8 +181,8 @@ namespace Dun9eonAndFi9ht.Scenes
                 if (jobInput < 0)
                 {
                     Utility.ClearMenu();
-                    Utility.PrintMenu("잘못된 입력입니다.");
-                    Utility.PrintMenu("아무 키나 입력\n>>");
+                    Utility.PrintMenu("잘못된 입력입니다.\n");
+                    Utility.PrintMenu("아무 키나 입력해주세요.\n>>");
                     Console.ReadLine();
                     continue;
                 }
@@ -218,8 +213,8 @@ namespace Dun9eonAndFi9ht.Scenes
                     else
                     {
                         Utility.ClearMenu();
-                        Utility.PrintMenu("잘못된 입력입니다.");
-                        Utility.PrintMenu("아무 키나 입력\n>>");
+                        Utility.PrintMenu("잘못된 입력입니다.\n");
+                        Utility.PrintMenu("아무 키나 입력해주세요.\n>>");
                         Console.ReadLine();
                     }
                 }
