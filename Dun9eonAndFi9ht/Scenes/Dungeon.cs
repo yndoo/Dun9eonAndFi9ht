@@ -250,7 +250,7 @@ namespace Dun9eonAndFi9ht.Scenes
 
             if (resultType == EDungeonResultType.Victory)
             {
-                Utility.PrintSceneW("EXP");
+                Utility.PrintSceneW("EXP ");
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintSceneW($"{prevExp}");
                 Console.ResetColor();
