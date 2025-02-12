@@ -1,4 +1,5 @@
 ﻿using Dun9eonAndFi9ht.Characters;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +21,7 @@ namespace Dun9eonAndFi9ht.Manager
 
         private SaveLoadManager()
         {
-            saveDataPath = @"C:\Users\dhwod\Desktop\BootCamp\C#\Dun9eonAndFi9ht\Dun9eonAndFi9ht\DataBase\SaveData";
+            saveDataPath = @"../../../DataBase/SaveData";
             if (!Directory.Exists(saveDataPath))
             {
                 Directory.CreateDirectory(saveDataPath);
@@ -29,16 +30,12 @@ namespace Dun9eonAndFi9ht.Manager
 
         public void PlayerSave(Player player)
         {
-            string jsonData = JsonSerializer.Serialize(player, new JsonSerializerOptions
-            {
-                WriteIndented = true,  // 보기 좋게 들여쓰기 적용
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping // 한글 깨짐 방지
-            });
+            string json = JsonConvert.SerializeObject(player, Formatting.Indented);
 
             string filePath = Path.Combine(saveDataPath, "PlayerData.json");
             using (StreamWriter sw = new StreamWriter(filePath))
             {
-                sw.WriteLine(jsonData);
+                sw.WriteLine(json);
             }
             Console.WriteLine("저장 완료");
         }
