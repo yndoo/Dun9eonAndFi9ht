@@ -26,10 +26,28 @@ namespace Dun9eonAndFi9ht.Quests
 
         public override void ShowQuestInfo()
         {
-            string itemName = " ";
-            Utility.PrintScene($"{QuestTitle}\n");
-            Utility.PrintScene($"목표: {itemName} 착용\n");
-            Utility.PrintScene($"보상: {RewardItem}, {RewardMoney}G\n");
+            Utility.ClearAll();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Utility.PrintScene("Quest!!");
+            Console.ResetColor();
+            Utility.PrintScene(" ");
+
+            Utility.PrintScene($"{QuestTitle}");
+            Utility.PrintScene(" ");
+            Utility.PrintScene(QuestDescription);
+            Utility.PrintScene(" ");
+
+           
+
+            Utility.PrintScene($"목표: {RequiredItemName} 착용\n");
+            Utility.PrintScene($"보상: {InventoryManager.Instance.GetItemNameById(RewardItem)}, {RewardMoney}G\n");
+
+            ShowSelect();
+        }
+
+        private string HasItem()
+        {
+            return InventoryManager.Instance.Inventory.Any(item => item.Name == RequiredItemName) ? "O" : "X";
         }
     }
 }

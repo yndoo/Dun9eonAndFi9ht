@@ -27,9 +27,21 @@ namespace Dun9eonAndFi9ht.Quests
 
         public override void ShowQuestInfo()
         {
-            Utility.PrintScene($"{QuestTitle}\n");
+            Utility.ClearAll();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Utility.PrintScene("Quest!!");
+            Console.ResetColor();
+            Utility.PrintScene(" ");
+
+            Utility.PrintScene($"{QuestTitle}");
+            Utility.PrintScene(" ");
+            Utility.PrintScene(QuestDescription);
+            Utility.PrintScene(" ");
+
             Utility.PrintScene($"목표: 레벨 {TargetLevel} 도달 (현재: {GameManager.Instance.Player.Level})\n");
-            Utility.PrintScene($"보상: {RewardItem}, {RewardMoney}G\n");
+            Utility.PrintScene($"보상: {InventoryManager.Instance.GetItemNameById(RewardItem)}, {RewardMoney}G\n");
+
+            ShowSelect();
         }
     }
 }

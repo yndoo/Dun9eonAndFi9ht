@@ -54,13 +54,14 @@ namespace Dun9eonAndFi9ht.Manager
                 AllItem.Add(new Item(name, type, maxHp, maxMp, atk, def, critRate, critDmg, missRate));
             }
 
+            GrantItem(0);
             // 인벤토리&아이템 테스트용 코드
             //for(int i = 0; i < itemCount; i++)
             //{
             //    GrantItem(i);
             //}
 
-            //GrantPotion(0);
+            GrantPotion(0);
             //GrantPotion(1);
             //GrantPotion(2);
         }
@@ -101,6 +102,8 @@ namespace Dun9eonAndFi9ht.Manager
             player.Crt += selectedItem.CriticalRate;
             player.CrtDmg += selectedItem.CriticalDamage;
             player.Miss += selectedItem.MissRate;
+
+            QuestManager.Instance.CheckQuests();
         }
         /// <summary>
         /// 아이템을 장착 해제
@@ -227,7 +230,14 @@ namespace Dun9eonAndFi9ht.Manager
                 potionData["description"].ToString()
             );
         }
-
+        public string GetItemNameById(int itemId)
+        {
+            if (itemId >= 0 && itemId < AllItem.Count)
+            {
+                return AllItem[itemId].Name;
+            }
+            return "알 수 없는 아이템";
+        }
     }
 }
     

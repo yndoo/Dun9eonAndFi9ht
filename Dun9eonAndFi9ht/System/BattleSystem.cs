@@ -1,5 +1,7 @@
 ﻿using DataDefinition;
 using Dun9eonAndFi9ht.Characters;
+using Dun9eonAndFi9ht.Manager;
+using Dun9eonAndFi9ht.Quests;
 using Dun9eonAndFi9ht.Scenes;
 using Dun9eonAndFi9ht.Skill;
 using Dun9eonAndFi9ht.StaticClass;
@@ -355,6 +357,12 @@ namespace Dun9eonAndFi9ht.System
             }
             target.Damaged(finalAtk);
             DisplayAttackResultScene(attacker, target, finalAtk, targetHP, isCritical);
+
+            if (target.IsDead && target is Monster monster)
+            {
+                UpdateMonsterKillQuests(monster);
+            }
+
             DisplayNextInputMenu();
         }
 
@@ -580,6 +588,17 @@ namespace Dun9eonAndFi9ht.System
                 input = Utility.UserInput(0, 0);
             }
         }
+        /// <summary>
+        /// 퀘스트 진행 상태 업데이트 (몬스터 처치 퀘스트)
+        /// </summary>
+        private void UpdateMonsterKillQuests(Monster monster)
+        {
+            foreach (var quest in QuestManager.Instance.GetAcceptedQuests().OfType<KillMonsterQuest>())
+            {
+                quest.AddKillCount(monster.Name);
+            }
+        }
+
         #endregion
         #endregion
     }

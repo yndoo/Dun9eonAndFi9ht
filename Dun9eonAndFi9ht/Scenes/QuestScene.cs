@@ -38,15 +38,11 @@ namespace Dun9eonAndFi9ht.Scenes
             Console.ResetColor();
             Utility.PrintScene(". 완료한 퀘스트");
 
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Utility.PrintSceneW("4");
-            Console.ResetColor();
-            Utility.PrintScene(". 모든 퀘스트");
 
             Utility.PrintMenu("원하는 목록을 선택하세요. (0. 나가기)");
             Utility.PrintMenuW(">>> ");
 
-            int selectCase = Utility.UserInput(0, 3);
+            int selectCase = Utility.UserInput(0, 4);
             if (selectCase == 0) return ESceneType.StartScene;
             List<Quest> quests = new List<Quest>();
 
@@ -58,7 +54,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 case 2:
                     quests = QuestManager.Instance.GetAvailableQuests();
                     break;
-                case3:
+                case 3:
                     quests = QuestManager.Instance.GetCompletedQuests();
                     break;
                 case 4:
@@ -76,6 +72,13 @@ namespace Dun9eonAndFi9ht.Scenes
                 return ESceneType.QuestScene;
             }
 
+            Utility.ClearAll();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Utility.PrintScene("Quest!!");
+            Console.ResetColor();
+            Utility.PrintScene(" ");
+            Utility.PrintScene("확인할 퀘스트 목록을 선택하세요");
+            Utility.PrintScene(" ");
             for (int i = 0; i < quests.Count; i++)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
@@ -95,8 +98,6 @@ namespace Dun9eonAndFi9ht.Scenes
             Console.ReadKey();
 
             return ESceneType.QuestScene;
-
-
         }
     }
 }

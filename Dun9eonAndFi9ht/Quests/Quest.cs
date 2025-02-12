@@ -39,7 +39,7 @@ namespace Dun9eonAndFi9ht.Quests
         {
             Utility.ClearMenu();
 
-            if (!HasAccepted) // 퀘스트를 아직 수락하지 않은 경우
+            if (!HasAccepted&&!IsCleared) // 퀘스트를 아직 수락하지 않은 경우
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintMenuW("1");
@@ -53,25 +53,39 @@ namespace Dun9eonAndFi9ht.Quests
             }
             else if (!IsCleared) // 퀘스트 진행 중
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Utility.PrintMenu("클리어 조건이 충족되지 않았습니다.");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Utility.PrintMenuW("아무 키를 눌러 돌아가기");
-                Console.SetCursorPosition(0, 18);
-                Console.ReadKey();
-                return;
+                if (CheckCompletion()) // 완료 가능 상태
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintMenuW("1");
+                    Console.ResetColor();
+                    Utility.PrintMenu(". 퀘스트 완료");
+
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintMenuW("2");
+                    Console.ResetColor();
+                    Utility.PrintMenu(". 돌아가기");
+                }
+                else //완료 불가능 상태
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Utility.PrintMenu("클리어 조건이 충족되지 않았습니다.");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintMenuW("아무 키를 눌러 돌아가기");
+                    Console.SetCursorPosition(0, 18);
+                    Console.ReadKey();
+                    return;
+                }
+
             }
             else // 퀘스트 완료 상태
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Utility.PrintMenuW("1");
+                Utility.PrintMenu("해당 퀘스트는 이미 완료되었습니다.");
                 Console.ResetColor();
-                Utility.PrintMenu(". 보상 받기");
-
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Utility.PrintMenuW("2");
-                Console.ResetColor();
-                Utility.PrintMenu(". 돌아가기");
+                Utility.PrintMenuW("아무 키를 눌러 돌아가기");
+                Console.SetCursorPosition(0, 18);
+                Console.ReadKey();
+                return;
             }
 
             while (true)
@@ -86,19 +100,25 @@ namespace Dun9eonAndFi9ht.Quests
                         case 1:
                             HasAccepted = true;
                             Utility.PrintScene("\n퀘스트를 수락했습니다!");
-                            break;
+                            Utility.PrintFree("아무키나 눌러 돌아가기",22);
+                            Console.SetCursorPosition(0, 23);
+                            return;
                         case 2:
                             Utility.PrintScene("\n퀘스트를 거절했습니다.");
-                            break;
+                            Utility.PrintFree("아무키나 눌러 돌아가기", 22);
+                            Console.SetCursorPosition(0, 23);
+                            return;
+                            
                     }
                 }
-                else if (IsCleared) // 퀘스트 완료 상태
+                else if (CheckCompletion() && !IsCleared) // 퀘스트 완료 가능 상태
                 {
                     switch (choice)
                     {
                         case 1:
+                            IsCleared = true;
                             ReceiveReward();
-                            break;
+                            return;
                         case 2:
                             return;
                     }
@@ -111,16 +131,16 @@ namespace Dun9eonAndFi9ht.Quests
         /// </summary>
         public void ReceiveReward()
         {
-            Utility.PrintScene("\n보상을 받았습니다!");
+
+            Utility.PrintSceneW("보상을 받았습니다!: ");
             InventoryManager.Instance.GrantItem(RewardItem);
             GameManager.Instance.Player.Gold += RewardMoney;
-            Utility.PrintScene($"\t{RewardItem} x 1 획득");
-            Utility.PrintScene($"\t{RewardMoney}G 획득");
+            Utility.PrintSceneW($"{InventoryManager.Instance.GetItemNameById(RewardItem)} x 1,{RewardMoney}G 획득");
+            Console.SetCursorPosition(0, 21);
 
             // 완료된 퀘스트 목록으로 이동
             HasAccepted = false;
             IsCleared = true;
-            Console.ReadKey();
         }
     }
 }

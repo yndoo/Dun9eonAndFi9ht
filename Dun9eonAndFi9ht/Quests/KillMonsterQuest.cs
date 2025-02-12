@@ -25,30 +25,40 @@ namespace Dun9eonAndFi9ht.Quests
 
         public void AddKillCount(string monsterName)
         {
-           if (monsterName == TargetMonster)
+           if (HasAccepted && monsterName == TargetMonster)
             {
                 CurrentKills++;
-                if(CurrentKills >= NeedKills)
+                Utility.PrintScene($"[{QuestTitle}] {TargetMonster} 처치 수: {CurrentKills}/{NeedKills}");
+
+                if (CurrentKills >= NeedKills)
                 {
-                    IsCleared = true;
                     Utility.PrintScene($"'{QuestTitle}' 퀘스트 목표 달성!");
                 }
-                //QuestManager.Instance.
             }
         }
 
         public override bool CheckCompletion()
         {
-            return IsCleared;
+            return CurrentKills >= NeedKills;
         }
 
         public override void ShowQuestInfo()
         {
+            Utility.ClearAll();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Utility.PrintScene("Quest!!");
+            Console.ResetColor();
+            Utility.PrintScene(" ");
+
+            Utility.PrintScene($"{QuestTitle}"+(IsCleared ? "(수행 완료)" : ""));
+            Utility.PrintScene(" ");
+            Utility.PrintScene(QuestDescription);
+            Utility.PrintScene(" ");
             Utility.PrintSceneW($"- {TargetMonster} ");
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintSceneW($"{NeedKills}");
             Console.ResetColor();
-            Utility.PrintScene("마리 처치 (");
+            Utility.PrintSceneW("마리 처치 (");
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintSceneW($"{CurrentKills}");
             Console.ResetColor();
@@ -56,7 +66,11 @@ namespace Dun9eonAndFi9ht.Quests
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintSceneW($"{NeedKills}");
             Console.ResetColor();
-            Utility.PrintScene(")\n");
+            Utility.PrintScene(")");
+            Utility.PrintScene(" ");
+
+
+            Utility.PrintScene($"보상: {InventoryManager.Instance.GetItemNameById(RewardItem)}, {RewardMoney}G\n");
 
             ShowSelect();
         }

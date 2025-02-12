@@ -15,16 +15,60 @@ namespace Dun9eonAndFi9ht.Manager
 
         public List<Quest> AllQuests { get; set; }
 
+        public event Action<Quest>? OnQuestCleared;
+
         public QuestManager()
         {
             AllQuests = new List<Quest>();
+            Initialize();
         }
         
-
-
-        public void AddQuest(Quest quest)
+        public void Initialize()
         {
-            AllQuests.Add(quest);
+            int id = 0;
+            while(true)
+            {
+                Dictionary<string, object> questData = DataTableManager.Instance.GetDBData("questTable", id);
+                if (questData == null) break;
+
+                string questTitle = questData["questtitle"].ToString();
+                string[] message;
+                message = Utility.ConvertObjToStrArr((List<object>)questData["questdescription"]);
+                int rewardItem = Convert.ToInt32(questData["rewardItem"]);
+                int rewardMoney = Convert.ToInt32(questData["rewardMoney"]);
+                string type = questData["type"].ToString();
+
+                Quest quest = null;
+
+                switch(type)
+                {
+                    case "KillMonsterQuest":
+                        quest = new KillMonsterQuest(
+                            questTitle, message, rewardItem, rewardMoney,
+                            questData["targetMonsterName"].ToString(),
+                            Convert.ToInt32(questData["needKills"])
+                        );
+                        break;
+                    case "ReachLevelQuest":
+                        quest = new ReachLevelQuest(
+                            questTitle, message, rewardItem, rewardMoney,
+                            Convert.ToInt32(questData["targetLevel"])
+                        );
+                        break;
+                    case "EquipItemQuest":
+                        quest = new EquipItemQuest(
+                            questTitle, message,
+                            questData["requiredItemName"].ToString(),
+                            rewardItem, rewardMoney
+                        );
+                        break;
+                    default:
+                        Console.WriteLine($"알 수 없는 퀘스트 타입: {type}");
+                        continue;
+                }
+                if (quest != null) AllQuests.Add(quest);
+                id++;
+            }
         }
 
 
@@ -77,6 +121,15 @@ namespace Dun9eonAndFi9ht.Manager
             }
         }
 
-
+        public void CheckQuests()
+        {
+            foreach (var quest in GetAcceptedQuests())
+            {
+                if (!quest.IsCleared && quest.CheckCompletion())
+                {
+                    Utility.PrintScene($"[퀘스트 진행 완료] {quest.QuestTitle}");
+                }
+            }
+        }
     }
 }

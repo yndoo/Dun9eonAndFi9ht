@@ -112,6 +112,7 @@ namespace Dun9eonAndFi9ht.Scenes
             if (resultType == EDungeonResultType.Victory)
             {
                 GainItem(sumReward);
+                QuestManager.Instance.CheckQuests();
             }
             DisplayDungeonResult(hpBeforeDungeon, sumReward);
 
