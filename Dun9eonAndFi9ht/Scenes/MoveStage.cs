@@ -45,7 +45,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 {
                     Utility.ClearMenu();
                     Utility.PrintMenu("잘못된 입력입니다.");
-                    Utility.PrintMenu("아무 키나 입력\n>>");
+                    Utility.PrintMenu("\n아무 키나 눌러주세요.\n>>");
                     Console.ReadLine();
                     nextinput = -1; // 루프를 계속 돌도록 초기화
                 }
@@ -53,7 +53,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 {
                     Utility.ClearMenu();
                     Utility.PrintMenu("클리어하지 못한 층은 갈 수 없습니다.");
-                    Utility.PrintMenu("아무 키나 입력\n>>");
+                    Utility.PrintMenu("\n아무 키나 눌러주세요.\n>>");
                     Console.ReadLine();
                     
                 }
@@ -61,7 +61,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 {
                     Utility.ClearMenu();
                     Utility.PrintMenu("현재 위치한 층입니다!");
-                    Utility.PrintMenu("아무 키나 입력\n>>");
+                    Utility.PrintMenu("\n아무 키나 눌러주세요.\n>>");
                     Console.ReadLine();
                     nextinput = -1; // 루프를 계속 돌도록 초기화
                 }
@@ -73,8 +73,7 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.PrintScene("층으로 이동합니다.");
                     stage = nextinput;
                     Utility.ClearMenu();
-                    Utility.PrintMenu("아무 키나 입력하세요");
-                    Console.Write(">> ");
+                    Utility.PrintMenu("\n아무 키나 눌러주세요.\n>>");
                     Console.ReadLine();
                     Dungeon.stage = stage;
                     return ESceneType.StartScene;

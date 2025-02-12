@@ -78,19 +78,10 @@ namespace Dun9eonAndFi9ht.Scenes
                     case 0:
                         return ESceneType.StartScene;
                     default:
-                        int nextInput = -1;
-                        while (nextInput != 0)
-                        {
-                            Utility.ClearMenu();
-                            Utility.PrintMenu("잘못된 입력입니다.");
-                            Console.ForegroundColor = ConsoleColor.Magenta;
-                            Utility.PrintMenuW("0");
-                            Console.ResetColor();
-                            Utility.PrintMenu(". 확인");
-                            Utility.PrintMenu("");
-                            Utility.PrintMenu(">>");
-                            nextInput = Utility.UserInput(0, 0);
-                        }
+                        Utility.ClearMenu();
+                        Utility.PrintMenu("잘못된 입력입니다.");
+                        Utility.PrintMenu("\n아무 키나 눌러주세요.\n>>");
+                        Console.ReadKey();
                         break;
                 }
             }
@@ -141,19 +132,10 @@ namespace Dun9eonAndFi9ht.Scenes
                 }
                 else if(userInput < 0)
                 {
-                    int nextInput = -1;
-                    while (nextInput != 0)
-                    {
-                        Utility.ClearMenu();
-                        Utility.PrintMenu("잘못된 입력입니다.");
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        Utility.PrintMenuW("0");
-                        Console.ResetColor();
-                        Utility.PrintMenu(". 확인");
-                        Utility.PrintMenu("");
-                        Utility.PrintMenu(">>");
-                        nextInput = Utility.UserInput(0, 0);
-                    }
+                    Utility.ClearMenu();
+                    Utility.PrintMenu("잘못된 입력입니다.");
+                    Utility.PrintMenu("\n아무 키나 눌러주세요.\n>>");
+                    Console.ReadKey();
                 }
                 else
                 {
