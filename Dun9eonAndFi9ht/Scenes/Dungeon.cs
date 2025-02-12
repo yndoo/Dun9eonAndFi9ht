@@ -220,12 +220,10 @@ namespace Dun9eonAndFi9ht.Scenes
 
                 Utility.ClearMenu();
                 Utility.PrintMenu("잘못된 입력입니다.");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Utility.PrintMenuW("0");
-                Console.ResetColor();
-                Utility.PrintMenu(". 확인");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("아무 키나 눌러주세요.");
                 Utility.PrintMenu(">>");
-                Utility.UserInput(0, 0); 
+                Console.ReadKey();
             }
         }
 
@@ -425,7 +423,11 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.ClearAll();
                     Utility.PrintScene(isFirst ? "던전 입장 전, 포션을 사용하시겠습니까?" : "추가로 포션을 사용하시겠습니까?");
                     InventoryManager.Instance.DisplayPotion(2);
-                    Utility.PrintMenu("원하시는 포션을 선택 해주세요 (0. 나가기)");
+                    Utility.PrintMenuW("원하시는 포션을 선택 해주세요. (");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintMenuW("0.");
+                    Console.ResetColor();
+                    Utility.PrintMenu(" 나가기)");
                     Utility.PrintMenuW(">>> ");
                     List<Dictionary<int, int>> map = InventoryManager.Instance.PotionSlot;  
 
@@ -444,10 +446,12 @@ namespace Dun9eonAndFi9ht.Scenes
                     }
                     else
                     {
-                        Utility.ClearAll();
-                        Console.SetCursorPosition(0, 18);
-                        Utility.PrintScene("올바르지 않은 입력입니다.");
-                        Utility.PrintMenu("아무 키나 눌러서 돌아가기");
+
+                        Utility.ClearMenu();
+                        Utility.PrintMenu("잘못된 입력입니다.");
+                        Utility.PrintMenu("");
+                        Utility.PrintMenu("아무 키나 눌러주세요.");
+                        Utility.PrintMenu(">>");
                         Console.ReadKey();
                     }
                 }
