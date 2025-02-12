@@ -209,6 +209,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 }
                 else
                 {
+                    Utility.PrintSceneW("Lv.");
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     Utility.PrintSceneW($"{Player.Level}");
                     Console.ResetColor();
