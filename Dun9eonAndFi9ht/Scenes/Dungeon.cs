@@ -112,29 +112,53 @@ namespace Dun9eonAndFi9ht.Scenes
                 QuestManager.Instance.CheckQuests();
             }
             DisplayDungeonResult(hpBeforeDungeon, sumReward);
-
+            bool isDead = GameManager.Instance.Player.CurrentHp <= 0;
             while (true)
             {
                 Utility.ClearMenu();
+                if (isDead)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Utility.PrintScene("당신은 전투에서 패배했습니다... ");
+                    Console.ResetColor();
+                    Utility.PrintScene("");
+                    Utility.PrintScene("모든 HP를 소진하여 전투를 지속할 수 없습니다.");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Utility.PrintScene("층 클리어!");
+                    Console.ResetColor();
+                    Utility.PrintScene("계속 던전을 진행하시겠습니까?");
+                }
+                Utility.ClearMenu();
+
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Utility.PrintMenuW("0");
                 Console.ResetColor();
                 Utility.PrintMenu(". 나가기");
 
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Utility.PrintMenuW("1");
-                Console.ResetColor();
-                Utility.PrintMenu(". 다시 던전으로...");
+                if (!isDead) // 생존 시에만 던전으로 돌아가기 버튼 표시
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintMenuW("1");
+                    Console.ResetColor();
+                    Utility.PrintMenu(". 다시 던전으로...");
+                }
 
-                int userInput = Utility.UserInput(0, 1);
+                Utility.PrintMenu(">> ");
+                int userInput = isDead ? Utility.UserInput(0, 0) : Utility.UserInput(0, 1);
+
                 if (userInput == 0)
                 {
                     return ESceneType.StartScene;
                 }
-                if(userInput == 1)
+                if (userInput == 1 && !isDead)
                 {
                     return ESceneType.Dungeon;
                 }
+
+                // 잘못된 입력 처리
                 int nextInput = -1;
                 while (nextInput != 0)
                 {
@@ -146,7 +170,7 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.PrintMenu(". 확인");
                     Utility.PrintMenu("");
                     Utility.PrintMenu(">>");
-                    nextInput = Utility.UserInput(0, 1);
+                    nextInput = Utility.UserInput(0, 0);
                 }
             }
         }
