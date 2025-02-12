@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataDefinition;
 using Dun9eonAndFi9ht.Skill;
+using Dun9eonAndFi9ht.StaticClass;
 
 namespace Dun9eonAndFi9ht.Characters
 {
@@ -23,16 +24,16 @@ namespace Dun9eonAndFi9ht.Characters
             foreach (int itemID in dropItemIDs)
             {
                 float chance = (float)random.NextDouble();
-                if (chance <= 1.0) // 50% 확률로 드랍
+                if (chance <= .5) // 50% 확률로 드랍
                 {
                     selectedDropItems.Add(itemID);
                 }
             }
 
-            foreach (int potionID in selectedDropItems)
+            foreach (int potionID in dropPotionIDs)
             {
                 float chance = (float)random.NextDouble();
-                if (chance <= 1.0) // 50% 확률로 드랍
+                if (chance <= .5) // 50% 확률로 드랍
                 {
                     selectedDropPotions.Add(potionID);
                 }

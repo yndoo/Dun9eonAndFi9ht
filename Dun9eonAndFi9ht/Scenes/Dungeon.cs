@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dun9eonAndFi9ht.System;
+using Dun9eonAndFi9ht.Items;
 
 namespace Dun9eonAndFi9ht.Scenes
 {
@@ -310,6 +311,8 @@ namespace Dun9eonAndFi9ht.Scenes
 
                 var groupedItems = sumReward.dropItemIDs.GroupBy(id => id);
                 var groupedPotions = sumReward.dropPotionIDs.GroupBy(id => id);
+
+
                 bool firstItem = true;
                 foreach (var group in groupedItems)
                 {
@@ -325,20 +328,26 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.PrintSceneW($"{itemCount}");
                     Console.ResetColor();
                 }
+
                 foreach (var group in groupedPotions)
-                {
-                    string potionName = InventoryManager.Instance.AllItem[group.Key].Name;
+                 {
+                    var potion = InventoryManager.Instance.GetPotionById(group.Key);
+                    if (potion == null) continue; // 존재하지 않는 포션이면 건너뛰기
+
+                    string potionName = potion.name;
                     int potionCount = group.Count();
+
                     if (!firstItem)
                     {
-                        Utility.PrintSceneW(" / "); // 두 번째 아이템부터 '/' 추가
+                        Utility.PrintSceneW(" / ");
                     }
                     firstItem = false;
+
                     Utility.PrintSceneW($"{potionName} - ");
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     Utility.PrintSceneW($"{potionCount}");
                     Console.ResetColor();
-                }
+                 }
             }
             Utility.PrintScene("");
 
