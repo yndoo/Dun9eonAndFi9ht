@@ -45,7 +45,7 @@ namespace Dun9eonAndFi9ht.Manager
                 string name = itemInfo["Name"].ToString();
                 EItemEquipType type = (EItemEquipType)(Convert.ToInt32(itemInfo["EquipType"]));
                 float maxHp = Convert.ToSingle(itemInfo["MaxHp"]);
-                float maxMp = Convert.ToSingle(itemInfo["MaxMp"]);
+                int maxMp = Convert.ToInt32(itemInfo["MaxMp"]);
                 float atk = Convert.ToSingle(itemInfo["Atk"]);
                 float def = Convert.ToSingle(itemInfo["Def"]);
                 float critRate = Convert.ToSingle(itemInfo["CriticalRate"]);
@@ -218,7 +218,7 @@ namespace Dun9eonAndFi9ht.Manager
                 potionData["name"].ToString(),
                 Convert.ToBoolean(potionData["isPercent"]),
                 Convert.ToSingle(potionData["changeHp"]),
-                Convert.ToSingle(potionData["changeMp"]),
+                Convert.ToInt32(potionData["changeMp"]),
                 Convert.ToSingle(potionData["changeAtk"]),
                 Convert.ToSingle(potionData["changeDef"]),
                 Convert.ToSingle(potionData["changeCrt"]),
