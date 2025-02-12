@@ -43,60 +43,63 @@ namespace Dun9eonAndFi9ht.Quests
         /// </summary>
         public void ShowSelect()
         {
-            Utility.ClearMenu();
-
-            if (!HasAccepted&&!IsCleared) // 퀘스트를 아직 수락하지 않은 경우
+            while (true)
             {
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Utility.PrintMenuW("1");
-                Console.ResetColor();
-                Utility.PrintMenu(". 수락");
-
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Utility.PrintMenuW("2");
-                Console.ResetColor();
-                Utility.PrintMenu(". 거절");
-            }
-            else if (!IsCleared) // 퀘스트 진행 중
-            {
-                if (CheckCompletion()) // 완료 가능 상태
+                Utility.ClearMenu();
+                if (!HasAccepted && !IsCleared) // 퀘스트를 아직 수락하지 않은 경우
                 {
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     Utility.PrintMenuW("1");
                     Console.ResetColor();
-                    Utility.PrintMenu(". 퀘스트 완료");
+                    Utility.PrintMenu(". 수락");
 
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     Utility.PrintMenuW("2");
                     Console.ResetColor();
-                    Utility.PrintMenu(". 돌아가기");
+                    Utility.PrintMenu(". 거절");
                 }
-                else //완료 불가능 상태
+                else if (!IsCleared) // 퀘스트 진행 중
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Utility.PrintMenu("클리어 조건이 충족되지 않았습니다.");
+                    if (CheckCompletion()) // 완료 가능 상태
+                    {
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Utility.PrintMenuW("1");
+                        Console.ResetColor();
+                        Utility.PrintMenu(". 퀘스트 완료");
+
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Utility.PrintMenuW("2");
+                        Console.ResetColor();
+                        Utility.PrintMenu(". 돌아가기");
+                    }
+                    else //완료 불가능 상태
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Utility.PrintMenu("클리어 조건이 충족되지 않았습니다.");
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Utility.PrintMenuW("아무 키를 눌러 돌아가기");
+                        Console.SetCursorPosition(0, 18);
+                        Console.ReadKey();
+                        return;
+                    }
+
+                }
+                else // 퀘스트 완료 상태
+                {
                     Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintMenu("해당 퀘스트는 이미 완료되었습니다.");
+                    Console.ResetColor();
                     Utility.PrintMenuW("아무 키를 눌러 돌아가기");
                     Console.SetCursorPosition(0, 18);
                     Console.ReadKey();
                     return;
                 }
 
-            }
-            else // 퀘스트 완료 상태
-            {
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Utility.PrintMenu("해당 퀘스트는 이미 완료되었습니다.");
-                Console.ResetColor();
-                Utility.PrintMenuW("아무 키를 눌러 돌아가기");
-                Console.SetCursorPosition(0, 18);
-                Console.ReadKey();
-                return;
-            }
+                Utility.PrintMenu("");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("원하시는 행동을 입력해주세요.");
+                Utility.PrintMenu(">>");
 
-            while (true)
-            {
-                Utility.PrintMenuW("\n\n원하시는 행동을 입력해주세요.\n>> ");
                 int choice = Utility.UserInput(1, 2);
 
                 if (!HasAccepted) // 퀘스트 수락/거절
@@ -105,16 +108,24 @@ namespace Dun9eonAndFi9ht.Quests
                     {
                         case 1:
                             HasAccepted = true;
-                            Utility.PrintScene("\n퀘스트를 수락했습니다!");
-                            Utility.PrintFree("아무키나 눌러 돌아가기",22);
+                            Utility.PrintScene("퀘스트를 수락했습니다!");
+                            Utility.PrintFree("아무 키나 눌러 돌아가기",22);
                             Console.SetCursorPosition(0, 23);
                             return;
                         case 2:
-                            Utility.PrintScene("\n퀘스트를 거절했습니다.");
-                            Utility.PrintFree("아무키나 눌러 돌아가기", 22);
+                            Utility.PrintScene("퀘스트를 거절했습니다.");
+                            Utility.PrintFree("아무 키나 눌러 돌아가기", 22);
                             Console.SetCursorPosition(0, 23);
                             return;
-                            
+
+                        default:
+                            Utility.ClearMenu();
+                            Utility.PrintMenu("잘못된 입력입니다.");
+                            Utility.PrintMenu("");
+                            Utility.PrintMenu("아무 키나 눌러주세요.");
+                            Utility.PrintMenu(">>");
+                            Console.ReadKey();
+                            break;
                     }
                 }
                 else if (CheckCompletion() && !IsCleared) // 퀘스트 완료 가능 상태
@@ -127,6 +138,15 @@ namespace Dun9eonAndFi9ht.Quests
                             return;
                         case 2:
                             return;
+
+                        default:
+                            Utility.ClearMenu();
+                            Utility.PrintMenu("잘못된 입력입니다.");
+                            Utility.PrintMenu("");
+                            Utility.PrintMenu("아무 키나 눌러주세요.");
+                            Utility.PrintMenu(">>");
+                            Console.ReadKey();
+                            break;
                     }
                 }
             }
