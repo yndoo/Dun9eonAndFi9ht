@@ -374,7 +374,7 @@ namespace Dun9eonAndFi9ht.System
         /// <param name="monsterIndex">공격하는 몬스터 인덱스</param>
         private void MonsterAttack(int monsterIndex)
         {
-            if (random.NextDouble() < player.Miss)
+            if (random.NextDouble() < player.Miss * 0.01f)
             {
                 // 회피 출력
                 DisplayMissScene(monsterList[monsterIndex], player);
@@ -577,7 +577,11 @@ namespace Dun9eonAndFi9ht.System
             Utility.PrintScene($"Battle!! - {Dungeon.stage}층");
             Console.ResetColor();
             Utility.PrintScene("");
-            Utility.PrintScene($"{attacker.Name}의 {skillName} 공격!");
+            Utility.PrintSceneW($"{attacker.Name}의 ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW($"{skillName}");
+            Console.ResetColor();
+            Utility.PrintScene($" 공격!");
             Utility.PrintSceneW($"{target.Name}을(를) 맞췄습니다. 데미지: ");
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintScene($"{damage:F2}");
