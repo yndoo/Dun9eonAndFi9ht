@@ -25,7 +25,7 @@ namespace Dun9eonAndFi9ht.Manager
         public List<Dictionary<int, int>> PotionSlot { get; set; }     //현재 갖고 있는 포션
 
 
-        private int itemCount; // 아이템 전체 개수
+        private int itemCount; // 아이템 종류 개수
 
         /// <summary>
         /// InventoryManager 생성자 - 전체 아이템 리스트 불러오기 
@@ -51,7 +51,7 @@ namespace Dun9eonAndFi9ht.Manager
                 float critRate = Convert.ToSingle(itemInfo["CriticalRate"]);
                 float critDmg = Convert.ToSingle(itemInfo["CriticalDamage"]);
                 float missRate = Convert.ToSingle(itemInfo["MissRate"]);
-                AllItem.Add(new Item(name, type, maxHp, maxMp, atk, def, critRate, critDmg, missRate));
+                AllItem.Add(new Item(name, 0, type, maxHp, maxMp, atk, def, critRate, critDmg, missRate));
             }
 
             GrantItem(0);
@@ -75,7 +75,11 @@ namespace Dun9eonAndFi9ht.Manager
         {
             try
             {
-                Inventory.Add(AllItem[itemNum]);
+                if(AllItem[itemNum].Count == 0)
+                {
+                    Inventory.Add(AllItem[itemNum]);
+                }
+                AllItem[itemNum].Count++;
             }
             catch (Exception ex)
             {

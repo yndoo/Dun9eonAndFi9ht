@@ -69,7 +69,7 @@ namespace Dun9eonAndFi9ht.Characters
                 {
                     currentHp = 0;
                 }
-                else if (currentHp + value > MaxHp)
+                else if (value > MaxHp)
                 {
                     currentHp = MaxHp;
                 }
@@ -100,7 +100,7 @@ namespace Dun9eonAndFi9ht.Characters
                 {
                     currentMp = 0;
                 }
-                else if (currentMp + value > MaxMp)
+                else if (value > MaxMp)
                 {
                     currentMp = MaxMp;
                 }

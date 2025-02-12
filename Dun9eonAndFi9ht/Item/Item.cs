@@ -20,9 +20,10 @@ namespace Dun9eonAndFi9ht.Items
         public float CriticalRate { get; }
         public float CriticalDamage {  get; }
         public float MissRate { get; }
+        public int Count { get; set; }
         public bool IsEquipped { get; set; }
 
-        public Item(string name, EItemEquipType equipslot, float maxHp, float maxMp, float atk, float def, float criticalRate, float criticalDamage, float missRate/*, bool isEquipped*/)
+        public Item(string name, int count, EItemEquipType equipslot, float maxHp, float maxMp, float atk, float def, float criticalRate, float criticalDamage, float missRate/*, bool isEquipped*/)
         {
             Name = name;
             EquipType = equipslot;
@@ -33,6 +34,7 @@ namespace Dun9eonAndFi9ht.Items
             CriticalRate = criticalRate;
             CriticalDamage = criticalDamage;
             MissRate = missRate;
+            Count = count;
             IsEquipped = false;
         }
         
@@ -40,6 +42,7 @@ namespace Dun9eonAndFi9ht.Items
         {
             string desc1 = IsEquipped ? "[E] " : "";
             desc1 += $"{Name}";
+            desc1 += Count >= 2 ? $"({Count})" : "";
             desc1 = desc1.PadRight(20);
             desc1 += "\t";
             string desc2 = "";
