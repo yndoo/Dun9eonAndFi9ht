@@ -39,9 +39,9 @@ namespace Dun9eonAndFi9ht.Manager
             itemCount = 11;
             // 아이템 정보 불러오기
             
-            for (int i = 0; i < itemCount; i++)
+            for (int id = 0; id < itemCount; id++)
             {
-                Dictionary<string, object> itemInfo = DataTableManager.Instance.GetDBData("item", i);
+                Dictionary<string, object> itemInfo = DataTableManager.Instance.GetDBData("item", id);
                 string name = itemInfo["Name"].ToString();
                 EItemEquipType type = (EItemEquipType)(Convert.ToInt32(itemInfo["EquipType"]));
                 float maxHp = Convert.ToSingle(itemInfo["MaxHp"]);
@@ -51,18 +51,18 @@ namespace Dun9eonAndFi9ht.Manager
                 float critRate = Convert.ToSingle(itemInfo["CriticalRate"]);
                 float critDmg = Convert.ToSingle(itemInfo["CriticalDamage"]);
                 float missRate = Convert.ToSingle(itemInfo["MissRate"]);
-                AllItem.Add(new Item(name, type, maxHp, maxMp, atk, def, critRate, critDmg, missRate));
+                AllItem.Add(new Item(id, name, type, maxHp, maxMp, atk, def, critRate, critDmg, missRate));
             }
 
             // 인벤토리&아이템 테스트용 코드
-            //for(int i = 0; i < itemCount; i++)
-            //{
-            //    GrantItem(i);
-            //}
+            for (int i = 0; i < itemCount; i++)
+            {
+                GrantItem(i);
+            }
 
-            //GrantPotion(0);
-            //GrantPotion(1);
-            //GrantPotion(2);
+            GrantPotion(0);
+            GrantPotion(1);
+            GrantPotion(2);
         }
 
 

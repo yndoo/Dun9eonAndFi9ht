@@ -21,8 +21,9 @@ namespace Dun9eonAndFi9ht.Items
         public float CriticalDamage {  get; }
         public float MissRate { get; }
         public bool IsEquipped { get; set; }
+        public int Id { get; set; }
 
-        public Item(string name, EItemEquipType equipslot, float maxHp, float maxMp, float atk, float def, float criticalRate, float criticalDamage, float missRate/*, bool isEquipped*/)
+        public Item(int id, string name, EItemEquipType equipslot, float maxHp, float maxMp, float atk, float def, float criticalRate, float criticalDamage, float missRate/*, bool isEquipped*/)
         {
             Name = name;
             EquipType = equipslot;
@@ -34,6 +35,7 @@ namespace Dun9eonAndFi9ht.Items
             CriticalDamage = criticalDamage;
             MissRate = missRate;
             IsEquipped = false;
+            Id = id;
         }
         
         public string ItemDisplay()
