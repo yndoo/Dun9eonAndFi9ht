@@ -12,12 +12,14 @@ namespace DataDefinition
         public int exp;
         public int gold;
         public List<int> dropItemIDs;
+        public List<int> dropPotionIDs;
 
-        public Reward(int exp, int gold, List<int> dropItemIDs)
+        public Reward(int exp, int gold, List<int> dropItemIDs, List<int> dropPotionIDs)
         {
             this.exp = exp;
             this.gold = gold;
             this.dropItemIDs = dropItemIDs;
+            this.dropPotionIDs = dropPotionIDs;
         }
     }
     #endregion

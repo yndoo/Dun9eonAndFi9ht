@@ -41,14 +41,21 @@ namespace Dun9eonAndFi9ht.Scenes
         {
             Player = GameManager.Instance.Player;
             CheckPotionUse();
-            //Monster 데이터 가져오기
-            DataTableManager dtManager = DataTableManager.Instance;
             if (MonsterList!=null&&MonsterList.Count != 0) MonsterList.Clear();
+            AddMonster();
+        }
 
+        /// <summary>
+        /// 몬스터를 생성하여 MonsterList에 넣기
+        /// </summary>
+        private void AddMonster()
+        {
             for (int i = 0; i < MonsterTypeCount; i++)
             {
                 try
                 {
+                    //Monster 데이터 가져오기
+                    DataTableManager dtManager = DataTableManager.Instance;
                     Dictionary<string, object> lst = dtManager.GetDBData($"enemy_stage{stage}", i);
                     string monsterTypeStr = lst["type"].ToString();
                     EMonsterType monsterType = (EMonsterType)Enum.Parse(typeof(EMonsterType), monsterTypeStr);
@@ -62,10 +69,28 @@ namespace Dun9eonAndFi9ht.Scenes
                             dropItemIDs.Add(itemID);
                         }
                     }
-                    MonsterList.Add(new Monster(lst["name"].ToString(), Convert.ToInt32(lst["maxHp"]), Convert.ToInt32(lst["maxMp"]), Convert.ToInt32(lst["atk"]), Convert.ToInt32(lst["def"]), Convert.ToInt32(lst["level"]), Convert.ToInt32(lst["gold"]), monsterType, dropItemIDs));
-                    
-                
-                }   
+
+                    List<int> dropPotionIDs = new List<int>();
+                    string[] dropPotionIDArray = lst["dropPotionIDs"].ToString().Split(',');
+                    foreach (string id in dropPotionIDArray)
+                    {
+                        if (int.TryParse(id, out int potionID))
+                        {
+                            dropPotionIDs.Add(potionID);
+                        }
+                    }
+
+                    MonsterList.Add(new Monster(lst["name"].ToString(),
+                        Convert.ToInt32(lst["maxHp"]),
+                        Convert.ToInt32(lst["maxMp"]),
+                        Convert.ToInt32(lst["atk"]),
+                        Convert.ToInt32(lst["def"]),
+                        Convert.ToInt32(lst["level"]),
+                        Convert.ToInt32(lst["gold"]),
+                        monsterType,
+                        dropItemIDs,
+                        dropPotionIDs));
+                }
                 catch (Exception ex)
                 {
                     Utility.PrintMenu($"\n{i} 인덱스 Monster 데이터 로드 오류 : {ex.Message}");
@@ -115,7 +140,8 @@ namespace Dun9eonAndFi9ht.Scenes
             {
                 exp = MonsterList.Sum(m => m.Reward.exp),
                 gold = MonsterList.Sum(m => m.Reward.gold),
-                dropItemIDs = MonsterList.SelectMany(m => m.Reward.dropItemIDs).ToList()
+                dropItemIDs = MonsterList.SelectMany(m => m.Reward.dropItemIDs).ToList(),
+                dropPotionIDs = MonsterList.SelectMany(m => m.Reward.dropPotionIDs).ToList()
             };
 
             if (resultType == EDungeonResultType.Victory)
@@ -283,6 +309,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintScene(" Gold");
 
                 var groupedItems = sumReward.dropItemIDs.GroupBy(id => id);
+                var groupedPotions = sumReward.dropPotionIDs.GroupBy(id => id);
                 bool firstItem = true;
                 foreach (var group in groupedItems)
                 {
@@ -298,6 +325,20 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.PrintSceneW($"{itemCount}");
                     Console.ResetColor();
                 }
+                foreach (var group in groupedPotions)
+                {
+                    string potionName = InventoryManager.Instance.AllItem[group.Key].Name;
+                    int potionCount = group.Count();
+                    if (!firstItem)
+                    {
+                        Utility.PrintSceneW(" / "); // 두 번째 아이템부터 '/' 추가
+                    }
+                    firstItem = false;
+                    Utility.PrintSceneW($"{potionName} - ");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintSceneW($"{potionCount}");
+                    Console.ResetColor();
+                }
             }
             Utility.PrintScene("");
 
@@ -310,9 +351,13 @@ namespace Dun9eonAndFi9ht.Scenes
         private void GainItem(Reward sumReward)
         {
             Player.GainGold(sumReward.gold);
-            foreach(int id in sumReward.dropItemIDs)
+            foreach (int id in sumReward.dropItemIDs)
             {
                 InventoryManager.Instance.GrantItem(id);
+            }
+            foreach (int id in sumReward.dropPotionIDs)
+            {
+                InventoryManager.Instance.GrantPotion(id);
             }
         }
         /// <summary>

@@ -10,7 +10,8 @@
       "currentHp": 34,
       "gold": 45,
       "type": "MediumJungle",
-      "dropItemIDs": 10
+      "dropItemIDs": 10,
+      "dropPotionIDs": "0,1"
     },
     "1": {
       "name": "Greater Murk Wolf",
@@ -22,7 +23,8 @@
       "currentHp": 32,
       "gold": 40,
       "type": "MediumJungle",
-      "dropItemIDs": 6
+      "dropItemIDs": 6,
+      "dropPotionIDs": "0,1,2"
     },
     "2": {
       "name": "Krug",
@@ -34,7 +36,8 @@
       "currentHp": 37,
       "gold": 50,
       "type": "SmallJungle",
-      "dropItemIDs": 7
+      "dropItemIDs": 7,
+      "dropPotionIDs": "0,1,2"
     }
   }
 }

@@ -11,7 +11,7 @@
       "gold": 15,
       "type": "Minion",
       "dropItemIDs": 5,
-      "dropItemIDs": 5
+      "dropPotionIDs": "0,1"
     },
     "1": {
       "name": "Caster Minion",
@@ -23,7 +23,8 @@
       "currentHp": 12,
       "gold": 13,
       "type": "Minion",
-      "dropItemIDs": 5
+      "dropItemIDs": 5,
+      "dropPotionIDs": "0,1"
     },
     "2": {
       "name": "Raptors",
@@ -35,7 +36,8 @@
       "currentHp": 18,
       "gold": 18,
       "type": "SmallJungle",
-      "dropItemIDs": 6
+      "dropItemIDs": 6,
+      "dropPotionIDs": "0,1"
     }
   }
 }

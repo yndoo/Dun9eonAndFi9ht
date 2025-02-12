@@ -10,7 +10,8 @@
       "currentHp": 48,
       "gold": 75,
       "type": "LargeJungle",
-      "dropItemIDs": 8
+      "dropItemIDs": 8,
+      "dropPotionIDs": "1,2"
     },
     "1": {
       "name": "Red Brambleback",
@@ -22,7 +23,8 @@
       "currentHp": 40,
       "gold": 68,
       "type": "LargeJungle",
-      "dropItemIDs": 9
+      "dropItemIDs": 9,
+      "dropPotionIDs": "1,2"
     },
     "2": {
       "name": "Gromp",
@@ -34,7 +36,8 @@
       "currentHp": 45,
       "gold": 65,
       "type": "LargeJungle",
-      "dropItemIDs": 10
+      "dropItemIDs": 10,
+      "dropPotionIDs": "1,2"
     }
   }
 }

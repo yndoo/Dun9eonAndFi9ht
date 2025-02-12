@@ -13,22 +13,32 @@ namespace Dun9eonAndFi9ht.Characters
         public Reward Reward { get; private set; }
         public EMonsterType MonsterType { get; private set; }
 
-        public Monster(string name, float maxHp, int maxMp, float atk, float def, int level, int gold, EMonsterType monsterType, List<int> dropItemIDs) : base(name, maxHp, maxMp, atk, def, level)
+        public Monster(string name, float maxHp, int maxMp, float atk, float def, int level, int gold, EMonsterType monsterType, List<int> dropItemIDs, List<int> dropPotionIDs) : base(name, maxHp, maxMp, atk, def, level)
         {
             // 확률 기반 아이템 드랍 리스트 생성
             List<int> selectedDropItems = new List<int>();
+            List<int> selectedDropPotions = new List<int>();
             Random random = new Random();
 
             foreach (int itemID in dropItemIDs)
             {
                 float chance = (float)random.NextDouble();
-                if (chance <= .5) // 50% 확률로 드랍
+                if (chance <= 1.0) // 50% 확률로 드랍
                 {
                     selectedDropItems.Add(itemID);
                 }
             }
 
-            Reward = new Reward(level, gold, selectedDropItems);
+            foreach (int potionID in selectedDropItems)
+            {
+                float chance = (float)random.NextDouble();
+                if (chance <= 1.0) // 50% 확률로 드랍
+                {
+                    selectedDropPotions.Add(potionID);
+                }
+            }
+
+            Reward = new Reward(level, gold, selectedDropItems, selectedDropPotions);
 
             // 몬스터 유형별 스킬 자동 세팅
             Skills = SkillManager.Instance.GetMonsterSkills(monsterType);
