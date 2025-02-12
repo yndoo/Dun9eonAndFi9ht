@@ -22,7 +22,7 @@ namespace Dun9eonAndFi9ht.Manager
         public List<Item> Inventory { get; } // 현재 갖고 있는 아이템
         public Dictionary<EItemEquipType, Item> EquipSlot { get; } // 현재 장착 아이템   
 
-        public Dictionary<int, int> PotionSlot { get; }     //현재 갖고 있는 포션
+        public List<Dictionary<int, int>> PotionSlot { get; set; }     //현재 갖고 있는 포션
 
 
         private int itemCount; // 아이템 전체 개수
@@ -35,7 +35,7 @@ namespace Dun9eonAndFi9ht.Manager
             AllItem = new List<Item>();
             Inventory = new List<Item>();
             EquipSlot = new Dictionary<EItemEquipType, Item>();
-            PotionSlot = new Dictionary<int, int>();
+            PotionSlot = new List <Dictionary<int, int>>();
             itemCount = 11;
             // 아이템 정보 불러오기
             
@@ -56,14 +56,14 @@ namespace Dun9eonAndFi9ht.Manager
 
             GrantItem(0);
             // 인벤토리&아이템 테스트용 코드
-            //for(int i = 0; i < itemCount; i++)
-            //{
-            //    GrantItem(i);
-            //}
+            for(int i = 0; i < itemCount; i++)
+            {
+                GrantItem(i);
+            }
 
             GrantPotion(0);
-            //GrantPotion(1);
-            //GrantPotion(2);
+            GrantPotion(1);
+            GrantPotion(2);
         }
 
 
@@ -129,40 +129,34 @@ namespace Dun9eonAndFi9ht.Manager
         /// </summary>
         public void GrantPotion(int potionID, int amount = 1)
         {
-            if (PotionSlot.ContainsKey(potionID))
+            foreach(var slot in PotionSlot)
             {
-                PotionSlot[potionID] += amount;
+                if(slot.ContainsKey(potionID))
+                {
+                    slot[potionID] += amount;
+                    return;
+                }
             }
-            else
-            {
-                PotionSlot[potionID] = amount;
-            }
+            PotionSlot.Add(new Dictionary<int, int> { { potionID, amount } });
         }
 
         /// <summary>
         /// 특정 ID의 포션을 사용
         /// </summary>
-        public bool UsePotion(int potionID, Character character)
+        public bool UsePotion(int slotIndex, Character character)
         {
-            if (PotionSlot.ContainsKey(potionID) && PotionSlot[potionID] > 0)
-            {
-                Potion potion = GetPotionById(potionID); // ✅ 포션 객체 생성
-                potion.UsePotion(character);
+            if (slotIndex < 0 || slotIndex >= PotionSlot.Count) return false;
 
-                // 포션 개수 감소
-                PotionSlot[potionID]--;
-                if (PotionSlot[potionID] <= 0)
-                {
-                    PotionSlot.Remove(potionID); // 개수가 0이면 제거
-                }
+            var potionEntry = PotionSlot[slotIndex];
+            int potionID = potionEntry.Keys.First();
+            Potion potion = GetPotionById(potionID);
 
-                return true;
-            }
-            else
-            {
-                Console.WriteLine("해당 포션이 없습니다.");
-                return false;
-            }
+            potion.UsePotion(character);
+            potionEntry[potionID]--;
+
+            if (potionEntry[potionID] <= 0) PotionSlot.RemoveAt(slotIndex);
+
+            return true;
         }
 
         /// <summary>
@@ -170,12 +164,17 @@ namespace Dun9eonAndFi9ht.Manager
         /// </summary>
         public void DropPotion(int potionID, int amount)
         {
-            if (PotionSlot.ContainsKey(potionID))
+            for (int i = 0; i < PotionSlot.Count; i++)
             {
-                PotionSlot[potionID] -= amount;
-                if (PotionSlot[potionID] <= 0)
+                if (PotionSlot[i].ContainsKey(potionID))
                 {
-                    PotionSlot.Remove(potionID); // 개수가 0이면 삭제
+                    PotionSlot[i][potionID] -= amount;
+
+                    if (PotionSlot[i][potionID] <= 0)
+                    {
+                        PotionSlot.RemoveAt(i); // 개수가 0이면 슬롯에서 삭제
+                    }
+                    return;
                 }
             }
         }
@@ -185,28 +184,16 @@ namespace Dun9eonAndFi9ht.Manager
         /// </summary>
         public int GetPotionCount(int potionID)
         {
-            return PotionSlot.ContainsKey(potionID) ? PotionSlot[potionID] : 0;
-        }
+            int totalCount = 0;
 
-        public void DisplayPotions()
-        {
-            if (PotionSlot.Count == 0)
+            foreach (var slot in PotionSlot)
             {
-                Utility.PrintScene("보유 포션 없음");
-                return;
+                if (slot.ContainsKey(potionID))
+                {
+                    totalCount += slot[potionID];
+                }
             }
-            Utility.PrintScene("보유 포션 목록:");
-            int potionNum = 0;
-            foreach (var dict in PotionSlot)
-            {
-                potionNum++;
-                int potionID = dict.Key;  // 포션 ID
-                int quantity = dict.Value; // 보유 개수
-                Potion potion = InventoryManager.Instance.GetPotionById(potionID); // 포션 객체 가져오기
-                Utility.PrintSceneW($"{potionNum}: ");
-                potion.DisplayPotion();
-                Utility.PrintScene($" x{quantity}");
-            }
+            return totalCount;
         }
 
         /// <summary>
@@ -238,6 +225,26 @@ namespace Dun9eonAndFi9ht.Manager
             }
             return "알 수 없는 아이템";
         }
+
+        public void DisplayPotion(int line)
+        {
+            if (PotionSlot.Count == 0)
+            {
+                Utility.PrintFree("보유 포션 없음", line);
+                return;
+            }
+
+            Utility.PrintFree("보유 포션 목록", line);
+            for (int i = 0; i < PotionSlot.Count; i++)
+            {
+                int potionID = PotionSlot[i].Keys.First();
+                int quantity = PotionSlot[i][potionID];
+                Potion potion = GetPotionById(potionID);
+
+                Utility.PrintFree($"{i + 1}. {potion.DisplayPotion()} x{quantity}", line+1+i);
+            }
+        }
+
     }
 }
     

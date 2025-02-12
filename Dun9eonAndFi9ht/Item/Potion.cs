@@ -43,49 +43,38 @@ namespace Dun9eonAndFi9ht.Items
         /// <param name="character">포션 사용하는 캐릭터</param>
         public void UsePotion(Character character)
         {
-            if (!isPercent)
+            float prevHp = character.CurrentHp;
+            float prevMp = character.CurrentMp;
+            float prevAtk = character.Atk;
+            float prevDef = character.Def;
+            float prevCrt = character.Crt;
+            float prevCrtDmg = character.CrtDmg;
+            float prevMiss = character.Miss;
+
+            float hp = isPercent ? character.MaxHp * changeHp : changeHp;
+            float mp = isPercent ? character.MaxMp * changeMp : changeMp;
+            float atk = isPercent ? character.Atk * changeAtk : changeAtk;
+            float def = isPercent ? character.Def * changeDef : changeDef;
+            float crt = isPercent ? character.Crt * changeCrt : changeCrt;
+            float crtDmg = isPercent ? character.CrtDmg * changeCrtDmg : changeCrtDmg;
+            float miss = isPercent ? character.Miss * changeMiss : changeMiss;
+
+            if (duration == 0)
             {
-                if(duration == 0)
-                {
-                    character.CurrentHp += changeHp;
-                    character.CurrentMp += changeMp;
-                    character.Atk += changeAtk;
-                    character.Def += changeDef;
-                    character.Crt += changeCrt;
-                    character.CrtDmg += changeCrtDmg;
-                    character.Miss += changeMiss;
-                }
-                else
-                {
-                    character.ApplyBuff(changeHp, changeMp, changeAtk, changeDef, changeCrt, changeCrtDmg, changeMiss, duration);
-                }
-                PrintResult(changeHp, changeMp, changeAtk, changeDef, changeCrt, changeCrtDmg, changeMiss, duration);
+                character.CurrentHp += hp;
+                character.CurrentMp += mp;
+                character.Atk += atk;
+                character.Def += def;
+                character.Crt += crt;
+                character.CrtDmg += crtDmg;
+                character.Miss += miss;
             }
-            else 
+            else
             {
-                float hp = CalResult(character.MaxHp, changeHp);
-                float mp = CalResult(character.MaxMp, changeMp);
-                float atk = CalResult(character.Atk, changeAtk);
-                float def = CalResult(character.Def, changeDef);
-                float crt = CalResult(character.Crt, changeCrt);
-                float crtDmg = CalResult(character.CrtDmg, changeCrtDmg);
-                float miss = CalResult(character.Miss, changeMiss);
-                if (duration == 0)
-                {
-                    character.CurrentHp += hp;
-                    character.CurrentMp += mp;
-                    character.Atk += atk;
-                    character.Def += def;
-                    character.Crt += crt;
-                    character.CrtDmg += crtDmg;
-                    character.Miss += miss;
-                }
-                else
-                {
-                    character.ApplyBuff(hp, mp, atk, def, crt,crtDmg, miss, duration);
-                }
-                PrintResult(hp, mp, atk, def, crt,crtDmg, miss, duration);
+                character.ApplyBuff(hp, mp, atk, def, crt, crtDmg, miss, duration);
             }
+
+            PrintResult(character, this, prevHp, prevMp, prevAtk, prevDef, prevCrt, prevCrtDmg, prevMiss);
         }
         /// <summary>
         /// 간단히 얼마를 추가, 제거해야하는지를 표시하는 함수
@@ -117,22 +106,65 @@ namespace Dun9eonAndFi9ht.Items
             return message;
         }
 
-        public void PrintResult(float hp, float mp, float atk, float def, float crt, float crtDmg, float miss, int duration)
+        public void PrintResult(Character character, Potion potion, float prevHp, float prevMp, float prevAtk, float prevDef, float prevCrt, float prevCrtDmg, float prevMiss)
         {
             List<string> changes = new List<string>();
-            if (duration != 0) changes.Add($"지속 시간: {duration}턴");
-            if (hp != 0) changes.Add($"HP: {(hp > 0 ? "+" : "")} {hp}");
-            if (mp != 0) changes.Add($"MP: {(mp > 0 ? "+" : "")}{mp}");
-            if (atk != 0) changes.Add($"ATK: {(atk > 0 ? "+" : "")}{atk}");
-            if (def != 0) changes.Add($"DEF: {(def > 0 ? "+" : "")}{def}");
-            if (crt != 0) changes.Add($"CRT: {(crt > 0 ? "+" : "")}{crt}");
-            if (crtDmg != 0) changes.Add($"CRTDmg: {(crtDmg > 0 ? "+" : "")}{crtDmg}");
-            if (miss != 0) changes.Add($"MISS: {(miss > 0 ? "+" : "")}{miss}");
+            List<string> statChanges = new List<string>();
+
+            Utility.ClearAll();
+            Utility.PrintScene($"{potion.name}을(를) 사용하였습니다!\n");
+
+            if (potion.duration != 0)
+                changes.Add($"지속 시간: {potion.duration}턴");
+
+            if (potion.changeHp!=0)
+            {
+                changes.Add($"HP: +{potion.changeHp}");
+                statChanges.Add($"HP: {prevHp:F2} → {character.CurrentHp:F2}");
+            }
+            if (potion.changeMp !=0)
+            {
+                changes.Add($"MP: +{potion.changeMp}");
+                statChanges.Add($"MP: {prevMp:F2} → {character.CurrentMp:F2}");
+            }
+            if (potion.changeAtk!=0)
+            {
+                changes.Add($"ATK: +{potion.changeAtk}");
+                statChanges.Add($"ATK: {prevAtk:F2} → {character.Atk:F2}");
+            }
+            if (potion.changeDef!=0)
+            {
+                changes.Add($"DEF: +{potion.changeDef}");
+                statChanges.Add($"DEF: {prevDef:F2} → {character.Def:F2}");
+            }
+            if (potion.changeCrt!=0)
+            {
+                changes.Add($"CRT: +{potion.changeCrt}");
+                statChanges.Add($"CRT: {prevCrt:F2} → {character.Crt:F2}");
+            }
+            if (potion.changeCrtDmg!=0)
+            {
+                changes.Add($"CRTDmg: +{potion.changeCrtDmg}");
+                statChanges.Add($"CRTDmg: {prevCrtDmg:F2} → {character.CrtDmg:F2}");
+            }
+            if (potion.changeMiss!=0)
+            {
+                changes.Add($"MISS: +{potion.changeMiss}");
+                statChanges.Add($"MISS: {prevMiss:F2} → {character.Miss:F2}");
+            }
 
             if (changes.Count > 0)
+                Utility.PrintScene(string.Join("\n", changes));
+
+            if (statChanges.Count > 0)
             {
-                Utility.PrintScene($"{name} 사용!\n" + string.Join("\n", changes));
+                Utility.PrintScene("스탯 변화:");
+                Utility.PrintScene(string.Join("\n", statChanges));
             }
+
+            Utility.PrintMenu("아무 키나 입력해주세요");
+            Console.ReadKey();
         }
+
     }
 }
