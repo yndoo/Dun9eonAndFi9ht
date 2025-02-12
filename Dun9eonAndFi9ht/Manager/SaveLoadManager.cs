@@ -16,12 +16,12 @@ namespace Dun9eonAndFi9ht.Manager
     {
         public List<int> Inventory { get; set; }
         public List<int> EquipItems { get; set; }
-        public Dictionary<int, int> PotionSlot { get; set; }
+        public List<Dictionary<int, int>> PotionSlot { get; set; }
         public InventoryData()
         {
             Inventory = new List<int>();
             EquipItems = new List<int>();
-            PotionSlot = new Dictionary<int, int>();
+            PotionSlot = new List<Dictionary<int, int>>();
         }
     }
 
