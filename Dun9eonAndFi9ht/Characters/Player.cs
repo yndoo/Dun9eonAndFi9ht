@@ -1,5 +1,6 @@
 ﻿using DataDefinition;
 using Dun9eonAndFi9ht.Manager;
+using Dun9eonAndFi9ht.Scenes;
 using Dun9eonAndFi9ht.Skill;
 using Dun9eonAndFi9ht.StaticClass;
 
@@ -148,6 +149,9 @@ namespace Dun9eonAndFi9ht.Characters
 
         public override void Dead()
         {
+            InventoryManager.Instance.ClearInventory();
+            QuestManager.Instance.InitializeQuest();
+            Dungeon.InitializeStage();
             base.Dead();
         }
     }

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataDefinition;
+using Dun9eonAndFi9ht.Manager;
+using Dun9eonAndFi9ht.Scenes;
 using Dun9eonAndFi9ht.Skill;
 
 namespace Dun9eonAndFi9ht.Characters
