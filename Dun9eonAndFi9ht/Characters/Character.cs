@@ -128,7 +128,7 @@ namespace Dun9eonAndFi9ht.Characters
 
         public virtual void Damaged(float damage)
         {
-            currentHp -= damage;
+            currentHp -= damage + Def;
             if (currentHp <= 0)
             {
                 Dead();
