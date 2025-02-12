@@ -96,7 +96,7 @@ namespace Dun9eonAndFi9ht.Quests
 
             while (true)
             {
-                Utility.PrintMenuW("\n원하시는 행동을 입력해주세요.\n>> ");
+                Utility.PrintMenuW("\n\n원하시는 행동을 입력해주세요.\n>> ");
                 int choice = Utility.UserInput(1, 2);
 
                 if (!HasAccepted) // 퀘스트 수락/거절

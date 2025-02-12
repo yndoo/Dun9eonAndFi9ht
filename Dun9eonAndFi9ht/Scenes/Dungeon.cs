@@ -203,6 +203,9 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.PrintMenu(". 다시 던전으로...");
                 }
 
+                Utility.PrintMenu("");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("원하시는 행동을 입력해주세요.");
                 Utility.PrintMenu(">> ");
                 int userInput = isDead || isEscaped ? Utility.UserInput(0, 0) : Utility.UserInput(0, 1);
 
@@ -420,11 +423,13 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.ClearAll();
                     Utility.PrintScene(isFirst ? "던전 입장 전, 포션을 사용하시겠습니까?" : "추가로 포션을 사용하시겠습니까?");
                     InventoryManager.Instance.DisplayPotion(2);
-                    Utility.PrintMenuW("원하시는 포션을 선택 해주세요. (");
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     Utility.PrintMenuW("0.");
                     Console.ResetColor();
-                    Utility.PrintMenu(" 나가기)");
+                    Utility.PrintMenu(" 나가기");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu("원하시는 행동을 입력해주세요.");
                     Utility.PrintMenuW(">>> ");
                     List<Dictionary<int, int>> map = InventoryManager.Instance.PotionSlot;  
 

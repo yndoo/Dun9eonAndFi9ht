@@ -39,12 +39,14 @@ namespace Dun9eonAndFi9ht.Scenes
             Utility.PrintScene(". 완료한 퀘스트");
 
 
-            Utility.PrintMenuW("원하는 목록을 선택하세요. (");
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintMenuW("0.");
             Console.ResetColor();
-            Utility.PrintMenu(" 나가기)");
-            Utility.PrintMenuW(">>> ");
+            Utility.PrintMenu(" 나가기");
+            Utility.PrintMenu("");
+            Utility.PrintMenu("");
+            Utility.PrintMenu("원하시는 행동을 입력해주세요.");
+            Utility.PrintMenu(">>> ");
 
             int selectCase = Utility.UserInput(0, 4);
             if (selectCase == 0) return ESceneType.StartScene;
@@ -91,8 +93,14 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintScene($". {quests[i].QuestTitle}");
             }
 
-            Utility.PrintMenu("확인할 퀘스트를 선택하세요. (0. 나가기)");
-            Utility.PrintMenuW(">>> ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintMenuW("0.");
+            Console.ResetColor();
+            Utility.PrintMenu(" 나가기");
+            Utility.PrintMenu("");
+            Utility.PrintMenu("");
+            Utility.PrintMenu("원하시는 행동을 입력해주세요.");
+            Utility.PrintMenu(">>> ");
 
             int questSelect = Utility.UserInput(0, quests.Count);
             if (questSelect == 0) return ESceneType.QuestScene;

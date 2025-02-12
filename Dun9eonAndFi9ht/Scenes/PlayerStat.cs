@@ -32,6 +32,10 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintMenuW("0");
                 Console.ResetColor();
                 Utility.PrintMenu(". 나가기");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("원하시는 행동을 입력해주세요.");
+                Utility.PrintMenu(">>");
 
                 int userInput = Utility.UserInput(0, 0);
                 if (userInput == 0)

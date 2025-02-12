@@ -97,6 +97,7 @@ namespace Dun9eonAndFi9ht.System
             DisplayCharaterInfoScene(false);
             DisplayPlayerActionMenu();
 
+            Utility.PrintMenu("");
             int input = DisplaySelectMenu(1, 4, false);
             switch (input)
             {
@@ -126,9 +127,11 @@ namespace Dun9eonAndFi9ht.System
             DisplayCharaterInfoScene(true);
             Utility.PrintScene("");
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Utility.PrintSceneW("0");
+            Utility.PrintMenuW("0");
             Console.ResetColor();
-            Utility.PrintScene(". 취소");
+            Utility.PrintMenu(". 취소");
+            Utility.PrintMenu("");
+            Utility.PrintMenu("");
             int input = DisplaySelectMenu(0, monsterList.Count, true);
             switch (input)
             {
@@ -289,12 +292,14 @@ namespace Dun9eonAndFi9ht.System
             InventoryManager.Instance.DisplayPotion(1);
 
             Utility.PrintScene("");
-            Utility.PrintScene("사용할 포션을 선택하세요.");
-            Utility.PrintScene("");
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Utility.PrintSceneW("0");
+            Utility.PrintMenuW("0");
             Console.ResetColor();
-            Utility.PrintScene(". 취소");
+            Utility.PrintMenu(". 취소");
+            Utility.PrintMenu("");
+            Utility.PrintMenu("");
+            Utility.PrintMenu("원하시는 행동을 입력해주세요.");
+            Utility.PrintMenu(">> ");
 
             List<Dictionary<int, int>> map = InventoryManager.Instance.PotionSlot;
 
@@ -628,18 +633,20 @@ namespace Dun9eonAndFi9ht.System
             for (int i = 0; i < player.Skills.Count; i++)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Utility.PrintSceneW($"{i + 1}");
+                Utility.PrintMenuW($"{i + 1}");
                 Console.ResetColor();
-                Utility.PrintSceneW($". {player.Skills[i].Name} - MP ");
+                Utility.PrintMenuW($". {player.Skills[i].Name} - MP ");
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Utility.PrintScene($"{player.Skills[i].MpCost}");
+                Utility.PrintMenu($"{player.Skills[i].MpCost}");
                 Console.ResetColor();
-                Utility.PrintScene($"   {player.Skills[i].Desc}");
+                Utility.PrintMenu($"   {player.Skills[i].Desc}");
             }
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Utility.PrintSceneW("0");
+            Utility.PrintMenuW("0");
             Console.ResetColor();
-            Utility.PrintScene(". 취소");
+            Utility.PrintMenu(". 취소");
+            Utility.PrintMenu("");
+            Utility.PrintMenu("");
         }
 
         /// <summary>
@@ -664,7 +671,7 @@ namespace Dun9eonAndFi9ht.System
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintMenuW("1");
             Console.ResetColor();
-            Utility.PrintMenuW(". 공격          ");
+            Utility.PrintMenu(". 공격          ");
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintMenuW("2");
             Console.ResetColor();
@@ -672,7 +679,7 @@ namespace Dun9eonAndFi9ht.System
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintMenuW("3");
             Console.ResetColor();
-            Utility.PrintMenuW(". 포션 사용     ");
+            Utility.PrintMenu(". 포션 사용     ");
             Console.ForegroundColor = ConsoleColor.Magenta;
             Utility.PrintMenuW("4");
             Console.ResetColor();
