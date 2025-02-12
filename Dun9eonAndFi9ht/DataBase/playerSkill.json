@@ -1,0 +1,52 @@
+{
+  "playerSkill": {
+    "0": {
+      "Name": "알파 스트라이크",
+      "MpCost": "10",
+      "Value": "2",
+      "Description": "공격력의 200%로 하나의 적을 공격합니다.",
+      "TargetType": "Single",
+      "Job": "Warrior"
+    },
+    "1": {
+      "Name": "더블 스트라이크",
+      "MpCost": "15",
+      "Value": "1.5",
+      "Description": "공격력의 150%로 2명의 적을 랜덤으로 공격합니다.",
+      "TargetType": "Multi",
+      "Job": "Warrior"
+    },
+    "2": {
+      "Name": "파이어볼",
+      "MpCost": "10",
+      "Value": "1.2",
+      "Description": "적 하나에게 불덩이를 날려 공격력의 120% 피해를 줍니다.",
+      "TargetType": "Single",
+      "Job": "Mage"
+    },
+    "3": {
+      "Name": "아이스 스피어",
+      "MpCost": "12",
+      "Value": ".8",
+      "Description": "여러개의 얼음 창을 소환해 적 모두에게 공격력의 80% 피해를 줍니다.",
+      "TargetType": "Multi",
+      "Job": "Mage"
+    },
+    "4": {
+      "Name": "급소 찌르기",
+      "MpCost": "10",
+      "Value": "1.5",
+      "Description": "적의 급소를 찔러 공격력의 150% 피해를 줍니다.",
+      "TargetType": "Single",
+      "Job": "Rogue"
+    },
+    "5": {
+      "Name": "난도질",
+      "MpCost": "15",
+      "Value": "1.7",
+      "Description": "빠른 연속 공격으로 공격력의 170% 피해를 줍니다.",
+      "TargetType": "Single",
+      "Job": "Rogue"
+    }
+  }
+}

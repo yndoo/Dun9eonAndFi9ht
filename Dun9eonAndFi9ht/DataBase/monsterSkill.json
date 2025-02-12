@@ -2,37 +2,37 @@
   "monsterSkill": {
     "0": {
       "Name": "강타",
-      "DamageMultiplier": "1.2",
+      "Value": "1.2",
       "MpCost": "5",
       "MonsterType": "Minion"
     },
     "1": {
       "Name": "할퀴기",
-      "DamageMultiplier": "1.3",
+      "Value": "1.3",
       "MpCost": "8",
       "MonsterType": "SmallJungle"
     },
     "2": {
       "Name": "물어뜯기",
-      "DamageMultiplier": "1.5",
+      "Value": "1.5",
       "MpCost": "10",
       "MonsterType": "MediumJungle"
     },
     "3": {
       "Name": "내려찍기",
-      "DamageMultiplier": "1.7",
+      "Value": "1.7",
       "MpCost": "10",
       "MonsterType": "LargeJungle"
     },
     "4": {
       "Name": "박치기",
-      "DamageMultiplier": "1.8",
+      "Value": "1.8",
       "MpCost": "15",
       "MonsterType": "NeutralObjective"
     },
     "5": {
       "Name": "화염 숨결",
-      "DamageMultiplier": "2.5",
+      "Value": "2.5",
       "MpCost": "25",
       "MonsterType": "BossMonster"
     }

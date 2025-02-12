@@ -122,7 +122,10 @@ namespace Dun9eonAndFi9ht.System
         {
             DisplayCharaterInfoScene(true);
             Utility.PrintScene("");
-            Utility.PrintScene("0. 취소");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW("0");
+            Console.ResetColor();
+            Utility.PrintScene(". 취소");
             int input = DisplaySelectMenu(0, monsterList.Count, true);
             switch (input)
             {
@@ -219,7 +222,10 @@ namespace Dun9eonAndFi9ht.System
         {
             DisplayCharaterInfoScene(true);
             Utility.PrintScene("");
-            Utility.PrintScene("0. 취소");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW("0");
+            Console.ResetColor();
+            Utility.PrintScene(". 취소");
             int input = DisplaySelectMenu(0, monsterList.Count, true);
             switch (input)
             {
@@ -416,14 +422,43 @@ namespace Dun9eonAndFi9ht.System
             Utility.PrintScene("");
             for (int i = 0; i < monsterList.Count; i++)
             {
-                string monsterState = monsterList[i].IsDead ? "Dead" : $"HP {monsterList[i].CurrentHp:F2}";
+                string monsterState = monsterList[i].IsDead ? "Dead" : $"{monsterList[i].CurrentHp:F2}";
                 string index = isTargeting ? $"{i + 1}번 " : "";
-                Utility.PrintScene($"{index}Lv.{monsterList[i].Level} {monsterList[i].Name} {monsterState}");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Utility.PrintSceneW($"{index}");
+                Console.ResetColor();
+                Utility.PrintSceneW(" Lv. ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintSceneW($"{monsterList[i].Level} ");
+                Console.ResetColor();
+                Utility.PrintSceneW($"{monsterList[i].Name} HP ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintScene($"{monsterState}");
+                Console.ResetColor();
             }
             Utility.PrintScene("");
             Utility.PrintScene("[내 정보]");
-            Utility.PrintScene($"Lv.{player.Level} {player.Name} ({player.Job})");
-            Utility.PrintScene($"HP {player.CurrentHp:F2}/{player.MaxHp:F2}    MP {player.CurrentMp:F2}/{player.MaxMp:F2}");
+            Utility.PrintSceneW("Lv. ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW($"{player.Level}");
+            Console.ResetColor();
+            Utility.PrintScene($" {player.Name} ({player.Job})");
+            Utility.PrintSceneW("HP ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW($"{player.CurrentHp:F2}");
+            Console.ResetColor();
+            Utility.PrintSceneW(" / ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW($"{player.MaxHp:F2}");
+            Console.ResetColor();
+            Utility.PrintSceneW("    MP ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW($"{player.CurrentMp:F2}");
+            Console.ResetColor();
+            Utility.PrintSceneW(" / ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintScene($"{player.MaxMp:F2}");
+            Console.ResetColor();
         }
 
         /// <summary>
@@ -443,11 +478,25 @@ namespace Dun9eonAndFi9ht.System
             Utility.PrintScene("");
             Utility.PrintScene($"{attacker.Name}의 공격!");
             string criticalTxt = isCritical ? " - 치명타 공격!!" : "";
-            Utility.PrintScene($"{target.Name}을(를) 맞췄습니다. [데미지: {damage:F2}]{criticalTxt}");
+            Utility.PrintSceneW($"{target.Name}을(를) 맞췄습니다. 데미지: ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintScene($"{damage:F2} {criticalTxt}");
+            Console.ResetColor();
             Utility.PrintScene("");
-            Utility.PrintScene($"Lv.{target.Level} {target.Name}");
+            Utility.PrintSceneW("Lv.");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW($"{target.Level}");
+            Console.ResetColor();
+            Utility.PrintScene($" {target.Name}");
             string resultHP = target.IsDead ? "Dead" : target.CurrentHp.ToString("F2");
-            Utility.PrintScene($"HP {targetPrevHP.ToString("F2")} -> {resultHP}");
+            Utility.PrintSceneW("HP ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW($"{targetPrevHP.ToString("F2")}");
+            Console.ResetColor();
+            Utility.PrintSceneW(" -> ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintScene($"{resultHP}");
+            Console.ResetColor();
         }
 
         /// <summary>
@@ -466,11 +515,25 @@ namespace Dun9eonAndFi9ht.System
             Console.ResetColor();
             Utility.PrintScene("");
             Utility.PrintScene($"{attacker.Name}의 {skillName} 공격!");
-            Utility.PrintScene($"{target.Name}을(를) 맞췄습니다. [데미지: {damage:F2}]");
+            Utility.PrintSceneW($"{target.Name}을(를) 맞췄습니다. 데미지: ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintScene($"{damage:F2}");
+            Console.ResetColor();
             Utility.PrintScene("");
-            Utility.PrintScene($"Lv.{target.Level} {target.Name}");
+            Utility.PrintSceneW("Lv. ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW($"{target.Level}");
+            Console.ResetColor();
+            Utility.PrintScene($" {target.Name}");
             string resultHP = target.IsDead ? "Dead" : target.CurrentHp.ToString("F2");
-            Utility.PrintScene($"HP {targetPrevHP.ToString("F2")} -> {resultHP}");
+            Utility.PrintSceneW("HP ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW($"{targetPrevHP.ToString("F2")}");
+            Console.ResetColor();
+            Utility.PrintSceneW(" -> ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintScene($"{resultHP}");
+            Console.ResetColor();
         }
 
         /// <summary>
@@ -497,10 +560,19 @@ namespace Dun9eonAndFi9ht.System
             Utility.PrintScene("");
             for (int i = 0; i < player.Skills.Count; i++)
             {
-                Utility.PrintScene($"{i + 1}. {player.Skills[i].Name} - MP {player.Skills[i].MpCost}");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintSceneW($"{i + 1}");
+                Console.ResetColor();
+                Utility.PrintSceneW($". {player.Skills[i].Name} - MP ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintScene($"{player.Skills[i].MpCost}");
+                Console.ResetColor();
                 Utility.PrintScene($"   {player.Skills[i].Desc}");
             }
-            Utility.PrintScene("0. 취소");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintSceneW("0");
+            Console.ResetColor();
+            Utility.PrintScene(". 취소");
         }
 
         /// <summary>
@@ -520,8 +592,18 @@ namespace Dun9eonAndFi9ht.System
         private void DisplayPlayerActionMenu()
         {
             Utility.ClearMenu();
-            Utility.PrintMenu("1. 공격     2. 스킬");
-            Utility.PrintMenu("3. 도망가기");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintMenuW("1");
+            Console.ResetColor();
+            Utility.PrintMenuW(". 공격     ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintMenuW("2");
+            Console.ResetColor();
+            Utility.PrintMenu(". 스킬");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Utility.PrintMenuW("3");
+            Console.ResetColor();
+            Utility.PrintMenu(". 도망가기");
         }
 
         /// <summary>
@@ -549,7 +631,10 @@ namespace Dun9eonAndFi9ht.System
             {
                 Utility.ClearMenu();
                 Utility.PrintMenu("잘못된 입력입니다.");
-                Utility.PrintMenu("0. 확인");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("0");
+                Console.ResetColor();
+                Utility.PrintMenu(". 확인");
                 Utility.PrintMenu("");
                 Utility.PrintMenu(">>");
                 input = Utility.UserInput(0, 0);
@@ -565,7 +650,10 @@ namespace Dun9eonAndFi9ht.System
             while (input != 0)
             {
                 Utility.ClearMenu();
-                Utility.PrintMenu("0. 다음");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("0");
+                Console.ResetColor();
+                Utility.PrintMenu(". 다음");
                 Utility.PrintMenu("");
                 Utility.PrintMenu(">>");
                 input = Utility.UserInput(0, 0);
@@ -582,7 +670,10 @@ namespace Dun9eonAndFi9ht.System
             {
                 Utility.ClearMenu();
                 Utility.PrintMenu("마나가 부족합니다.");
-                Utility.PrintMenu("0. 확인");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("0");
+                Console.ResetColor();
+                Utility.PrintMenu(". 확인");
                 Utility.PrintMenu("");
                 Utility.PrintMenu(">>");
                 input = Utility.UserInput(0, 0);
