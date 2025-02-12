@@ -110,6 +110,11 @@ namespace Dun9eonAndFi9ht.Scenes
         private void NewGame()
         {
             Utility.ClearScene();
+
+            InventoryManager.Instance.ClearInventory();
+            QuestManager.Instance.InitializeQuest();
+            Dungeon.InitializeStage();
+
             string nameInput;
             EJobType jobType;
             // 이름 설정
