@@ -9,7 +9,9 @@
       "level": 20,
       "currentHp": 55,
       "gold": 80,
-      "type": "NeutralObjective"
+      "type": "NeutralObjective",
+      "dropItemIDs": 4,
+      "dropPotionIDs": "1,2"
     },
     "1": {
       "name": "Rift Herald",
@@ -20,7 +22,9 @@
       "level": 22,
       "currentHp": 62,
       "gold": 85,
-      "type": "NeutralObjective"
+      "type": "NeutralObjective",
+      "dropItemIDs": 6,
+      "dropPotionIDs": "1,2"
     },
     "2": {
       "name": "Elder Dragon",
@@ -31,7 +35,9 @@
       "level": 24,
       "currentHp": 70,
       "gold": 100,
-      "type": "BossMonster"
+      "type": "BossMonster",
+      "dropItemIDs": 7,
+      "dropPotionIDs": "1,2"
     }
   }
 }

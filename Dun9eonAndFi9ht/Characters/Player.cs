@@ -21,7 +21,7 @@ namespace Dun9eonAndFi9ht.Characters
             this.CurExp = 0;
 
             MaxExpArray = maxExpArray;
-            this.MaxExp = MaxExpArray[0];
+            this.MaxExp = MaxExpArray[level - 1];
 
             // 직업별 스킬 자동 세팅
             Skills = SkillManager.Instance.GetPlayerSkills(Job); 

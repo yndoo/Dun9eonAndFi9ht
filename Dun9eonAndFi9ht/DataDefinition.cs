@@ -11,11 +11,15 @@ namespace DataDefinition
     {
         public int exp;
         public int gold;
+        public List<int> dropItemIDs;
+        public List<int> dropPotionIDs;
 
-        public Reward(int exp, int gold)
+        public Reward(int exp, int gold, List<int> dropItemIDs, List<int> dropPotionIDs)
         {
             this.exp = exp;
             this.gold = gold;
+            this.dropItemIDs = dropItemIDs;
+            this.dropPotionIDs = dropPotionIDs;
         }
     }
     #endregion
@@ -35,6 +39,7 @@ namespace DataDefinition
         PlayerStat,
         MoveStage,
         InventoryScene,
+        QuestScene,
     }
     public enum EItemEquipType
     {
@@ -60,6 +65,13 @@ namespace DataDefinition
         LargeJungle,     
         NeutralObjective,
         BossMonster      
+    }
+
+    public enum EQuestType
+    {
+        KillMonster,
+        ReachLevel,
+        EquipItem
     }
     #endregion
 

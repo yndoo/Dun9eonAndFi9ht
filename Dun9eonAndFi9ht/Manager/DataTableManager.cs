@@ -62,7 +62,6 @@ namespace Dun9eonAndFi9ht.Manager
                         Console.WriteLine($"JSON 파싱 오류 (파일: {Path.GetFileName(file)}): {ex.Message}");
                     }
                 }
-                Console.WriteLine("DB 로딩 완료");
             }
             catch (Exception ex)
             {

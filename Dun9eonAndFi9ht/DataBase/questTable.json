@@ -1,0 +1,64 @@
+{
+  "questTable": {
+    "0": {
+      "type": "KillMonsterQuest",
+      "questtitle": "마을을 위협하는 미니언 처치",
+      "questdescription": [
+        "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나??",
+        "마을 주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!",
+        "자네가 좀 처치해주게!"
+      ],
+      "targetMonsterName": "Melee Minion",
+      "needKills": 1,
+      "currentKills": 0,
+      "rewardItem": 0,
+      "rewardMoney": 5
+    },
+    "1": {
+      "type": "KillMonsterQuest",
+      "questtitle": "숲의 늑대 퇴치",
+      "questdescription": [
+        "마을 주변 숲에서 늑대가 자꾸 나타나서 주민들이 위험해!",
+        "늑대들을 처치해서 마을을 안전하게 만들어줘!"
+      ],
+      "targetMonsterName": "Murk Wolves",
+      "needKills": 8,
+      "currentKills": 0,
+      "rewardItem": 1,
+      "rewardMoney": 10
+    },
+    "2": {
+      "type": "EquipItemQuest",
+      "questtitle": "장비를 장착해보자",
+      "questdescription": [
+        "좋은 장비가 있어야 제대로 싸울 수 있는 법!",
+        "아래의 아이템을 장착하고 전투력을 올려보자!"
+      ],
+      "requiredItemName": "찢어진 면 셔츠",
+      "rewardItem": 4,
+      "rewardMoney": 8
+    },
+    "3": {
+      "type": "ReachLevelQuest",
+      "questtitle": "더욱 강해지기!",
+      "questdescription": [
+        "모험을 떠나기 위해선 강한 실력이 필요하지!",
+        "레벨을 3까지 올려서 더 강해지도록 하게!"
+      ],
+      "targetLevel": 1,
+      "rewardItem": 2,
+      "rewardMoney": 15
+    },
+    "4": {
+      "type": "ReachLevelQuest",
+      "questtitle": "전문가의 길",
+      "questdescription": [
+        "이제 막 모험가의 길을 걷기 시작했군.",
+        "레벨 6을 달성하면, 진정한 모험가가 될 수 있을 거야!"
+      ],
+      "targetLevel": 6,
+      "rewardItem": 3,
+      "rewardMoney": 20
+    }
+  }
+}

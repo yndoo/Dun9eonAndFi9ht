@@ -73,7 +73,6 @@ namespace Dun9eonAndFi9ht.App
             // EJobType 변환 예외 처리
             if (!Info.TryGetValue("job", out var jobValue) || jobValue == null || !Enum.TryParse<EJobType>(jobValue.ToString(), out var jobType))
             {
-                Console.WriteLine($"잘못된 직업 값: {jobValue} → 기본 직업(Warrior)으로 설정");
                 jobType = EJobType.Warrior;
             }
             try

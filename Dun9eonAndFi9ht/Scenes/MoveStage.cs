@@ -25,6 +25,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintScene("층)");
                 Utility.PrintSceneW("최고층 : ");
                 Console.ForegroundColor = ConsoleColor.Magenta;
+
                 Utility.PrintSceneW($"{maxStageCleared + 1}");
                 Console.ResetColor();
                 Utility.PrintScene("층");
@@ -67,7 +68,7 @@ namespace Dun9eonAndFi9ht.Scenes
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Magenta;
-                    Utility.PrintScene($"{nextinput}");
+                    Utility.PrintSceneW($"{nextinput}");
                     Console.ResetColor();
                     Utility.PrintScene("층으로 이동합니다.");
                     stage = nextinput;

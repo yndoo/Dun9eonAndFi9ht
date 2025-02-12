@@ -31,6 +31,17 @@ namespace Dun9eonAndFi9ht.StaticClass
         }
 
         /// <summary>
+        /// string[]을 json 변환 시 적용. object를 string[]로 변환
+        /// </summary>
+        /// <param name="list">변환할 object</param>
+        /// <returns>변환된 string[]</returns>
+        public static string[] ConvertObjToStrArr(List<object> list)
+        {
+            return list.Select(item => item.ToString()).ToArray();
+        }
+
+
+        /// <summary>
         /// string 출력 시 (0,15) 위치에서 계속해서 출력
         /// </summary>
         /// <param name="message">출력 할 메시지</param>
