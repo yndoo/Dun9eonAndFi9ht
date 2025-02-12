@@ -166,8 +166,7 @@ namespace Dun9eonAndFi9ht.Characters
 
         public virtual void Damaged(float damage)
         {
-            float finalDMG = Math.Max(damage - (Def * 0.5f), 1);
-            currentHp -= finalDMG;
+            currentHp -= damage;
             if (currentHp <= 0)
             {
                 Dead();

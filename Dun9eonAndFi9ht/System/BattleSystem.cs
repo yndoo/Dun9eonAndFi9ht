@@ -415,14 +415,14 @@ namespace Dun9eonAndFi9ht.System
             float finalAtk = attacker.FinalAtk;
             bool isCritical = false;
             // 15% 확률로 크리티컬
-            if (random.NextDouble() < attacker.Crt)
+            if (random.NextDouble() < attacker.Crt * 0.01f)
             {
-                finalAtk *= attacker.CrtDmg;
+                finalAtk = finalAtk * (1 + attacker.CrtDmg * 0.01f);
                 isCritical = true;
             }
-            target.Damaged(finalAtk);
-            float realDamage = targetHP - target.CurrentHp;
-            DisplayAttackResultScene(attacker, target, realDamage, targetHP, isCritical);
+            float finalDMG = Math.Max(finalAtk - (target.Def * 0.5f), 1);
+            target.Damaged(finalDMG);
+            DisplayAttackResultScene(attacker, target, finalDMG, targetHP, isCritical);
 
             if (target.IsDead && target is Monster monster)
             {
@@ -446,9 +446,9 @@ namespace Dun9eonAndFi9ht.System
             {
                 float targetHP = fianlTarget[i].CurrentHp;
                 float finalAtk = caster.FinalAtk;
-                fianlTarget[i].Damaged(finalAtk);
-                float realDamage = targetHP - fianlTarget[i].CurrentHp;
-                DisplaySkillResultScene(caster, fianlTarget[i], realDamage, targetHP, caster.Skills[skillIndex].Name);
+                float finalDMG = Math.Max(finalAtk - (fianlTarget[i].Def * 0.5f), 1);
+                fianlTarget[i].Damaged(finalDMG);
+                DisplaySkillResultScene(caster, fianlTarget[i], finalDMG, targetHP, caster.Skills[skillIndex].Name);
                 DisplayNextInputMenu();
             }
         }
