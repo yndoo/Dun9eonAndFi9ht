@@ -10,7 +10,7 @@
       "currentHp": 25,
       "gold": 25,
       "type": "Minion",
-      "dropItemID": 0
+      "dropItemIDs": 7
     },
     "1": {
       "name": "Murk Wolves",
@@ -22,7 +22,7 @@
       "currentHp": 20,
       "gold": 23,
       "type": "SmallJungle",
-      "dropItemID": 0
+      "dropItemIDs": 8
     },
     "2": {
       "name": "Rift Scuttler",
@@ -34,7 +34,7 @@
       "currentHp": 32,
       "gold": 30,
       "type": "NeutralObjective",
-      "dropItemID": 0
+      "dropItemIDs": 9
     }
   }
 }

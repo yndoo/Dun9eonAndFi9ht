@@ -52,7 +52,19 @@ namespace Dun9eonAndFi9ht.Scenes
                     Dictionary<string, object> lst = dtManager.GetDBData($"enemy_stage{stage}", i);
                     string monsterTypeStr = lst["type"].ToString();
                     EMonsterType monsterType = (EMonsterType)Enum.Parse(typeof(EMonsterType), monsterTypeStr);
-                    MonsterList.Add(new Monster(lst["name"].ToString(), Convert.ToInt32(lst["maxHp"]), Convert.ToInt32(lst["maxMp"]), Convert.ToInt32(lst["atk"]), Convert.ToInt32(lst["def"]), Convert.ToInt32(lst["level"]), Convert.ToInt32(lst["gold"]), monsterType, Convert.ToInt32(lst["dropItemID"])));
+
+                    List<int> dropItemIDs = new List<int>();
+                    string[] dropItemIDArray = lst["dropItemIDs"].ToString().Split(',');
+                    foreach (string id in dropItemIDArray)
+                    {
+                        if (int.TryParse(id, out int itemID))
+                        {
+                            dropItemIDs.Add(itemID);
+                        }
+                    }
+                    MonsterList.Add(new Monster(lst["name"].ToString(), Convert.ToInt32(lst["maxHp"]), Convert.ToInt32(lst["maxMp"]), Convert.ToInt32(lst["atk"]), Convert.ToInt32(lst["def"]), Convert.ToInt32(lst["level"]), Convert.ToInt32(lst["gold"]), monsterType, dropItemIDs));
+                    
+                
                 }   
                 catch (Exception ex)
                 {
@@ -101,12 +113,12 @@ namespace Dun9eonAndFi9ht.Scenes
             Utility.PrintScene("Battle!! - Result");
             Console.ResetColor();
 
-
             // 몬스터 보상 합산
             Reward sumReward = new Reward
             {
                 exp = MonsterList.Sum(m => m.Reward.exp),
-                gold = MonsterList.Sum(m => m.Reward.gold)
+                gold = MonsterList.Sum(m => m.Reward.gold),
+                dropItemIDs = MonsterList.SelectMany(m => m.Reward.dropItemIDs).ToList()
             };
 
             if (resultType == EDungeonResultType.Victory)
@@ -247,6 +259,23 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintSceneW($"{sumReward.gold}");
                 Console.ResetColor();
                 Utility.PrintScene(" Gold");
+
+                var groupedItems = sumReward.dropItemIDs.GroupBy(id => id);
+                bool firstItem = true;
+                foreach (var group in groupedItems)
+                {
+                    string itemName = InventoryManager.Instance.AllItem[group.Key].Name;
+                    int itemCount = group.Count();
+                    if (!firstItem)
+                    {
+                        Utility.PrintSceneW(" / "); // 두 번째 아이템부터 '/' 추가
+                    }
+                    firstItem = false;
+                    Utility.PrintSceneW($"{itemName} - ");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Utility.PrintSceneW($"{itemCount}");
+                    Console.ResetColor();
+                }
             }
             Utility.PrintScene("");
 
@@ -259,6 +288,10 @@ namespace Dun9eonAndFi9ht.Scenes
         private void GainItem(Reward sumReward)
         {
             Player.GainGold(sumReward.gold);
+            foreach(int id in sumReward.dropItemIDs)
+            {
+                InventoryManager.Instance.GrantItem(id);
+            }
         }
         /// <summary>
         /// 스테이지 클리어 처리 메시지 출력

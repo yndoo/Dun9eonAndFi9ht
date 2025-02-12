@@ -10,7 +10,7 @@
       "currentHp": 55,
       "gold": 80,
       "type": "NeutralObjective",
-      "dropItemID": 4
+      "dropItemIDs": 4
     },
     "1": {
       "name": "Rift Herald",
@@ -22,7 +22,7 @@
       "currentHp": 62,
       "gold": 85,
       "type": "NeutralObjective",
-      "dropItemID": 6
+      "dropItemIDs": 6
     },
     "2": {
       "name": "Elder Dragon",
@@ -34,7 +34,7 @@
       "currentHp": 70,
       "gold": 100,
       "type": "BossMonster",
-      "dropItemID": 7
+      "dropItemIDs": 7
     }
   }
 }

@@ -11,13 +11,13 @@ namespace DataDefinition
     {
         public int exp;
         public int gold;
-        public int dropItemID;
+        public List<int> dropItemIDs;
 
-        public Reward(int exp, int gold, int dropItemID)
+        public Reward(int exp, int gold, List<int> dropItemIDs)
         {
             this.exp = exp;
             this.gold = gold;
-            this.dropItemID = dropItemID;
+            this.dropItemIDs = dropItemIDs;
         }
     }
     #endregion
