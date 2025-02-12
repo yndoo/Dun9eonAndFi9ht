@@ -60,12 +60,16 @@ namespace Dun9eonAndFi9ht.Scenes
                 Console.ResetColor();
                 Utility.PrintMenu(". 퀘스트 수주");
 
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("6");
+                Console.ResetColor();
+                Utility.PrintMenu(". 게임 종료");
 
                 Utility.PrintMenu("\n\n원하시는 행동을 입력해주세요.\n>>");
 
                 
 
-            int userInput = Utility.UserInput(1, 5);
+            int userInput = Utility.UserInput(1, 6);
                 if (userInput == 1)
                 {
                     return ESceneType.PlayerStat;
@@ -86,19 +90,18 @@ namespace Dun9eonAndFi9ht.Scenes
                 {
                     return ESceneType.QuestScene;
                 }
+                else if(userInput == 6)
+                {
+                    return ESceneType.Exit;
+                }
                 else
                 {
                     int nextInput = -1;
                     while (nextInput != 0)
                     {
                         Utility.ClearMenu();
-                        Utility.PrintMenu("잘못된 입력입니다.");
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        Utility.PrintMenuW("0");
-                        Console.ResetColor();
-                        Utility.PrintMenu(". 확인");
-                        Utility.PrintMenu("");
-                        Utility.PrintMenu(">>");
+                        Utility.PrintMenu("잘못된 입력입니다.\n");
+                        Utility.PrintMenu("아무 키나 입력해주세요.\n>>");
                         nextInput = Utility.UserInput(0, 0);
                     }
                 }
@@ -155,8 +158,8 @@ namespace Dun9eonAndFi9ht.Scenes
                     else
                     {
                         Utility.ClearMenu();
-                        Utility.PrintMenu("잘못된 입력입니다.");
-                        Utility.PrintMenu("아무 키나 입력\n>>");
+                        Utility.PrintMenu("잘못된 입력입니다.\n");
+                        Utility.PrintMenu("아무 키나 입력해주세요.\n>>");
                         Console.ReadLine();
                     }
                 }
@@ -186,8 +189,8 @@ namespace Dun9eonAndFi9ht.Scenes
                 if (jobInput < 0)
                 {
                     Utility.ClearMenu();
-                    Utility.PrintMenu("잘못된 입력입니다.");
-                    Utility.PrintMenu("아무 키나 입력\n>>");
+                    Utility.PrintMenu("잘못된 입력입니다.\n");
+                    Utility.PrintMenu("아무 키나 입력해주세요.\n>>");
                     Console.ReadLine();
                     continue;
                 }
@@ -218,8 +221,8 @@ namespace Dun9eonAndFi9ht.Scenes
                     else
                     {
                         Utility.ClearMenu();
-                        Utility.PrintMenu("잘못된 입력입니다.");
-                        Utility.PrintMenu("아무 키나 입력\n>>");
+                        Utility.PrintMenu("잘못된 입력입니다.\n");
+                        Utility.PrintMenu("아무 키나 입력해주세요.\n>>");
                         Console.ReadLine();
                     }
                 }

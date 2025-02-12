@@ -30,10 +30,15 @@ namespace Dun9eonAndFi9ht.App
         static void RunGame()
         {
             ESceneType nextScene = GameManager.Instance.LoadScene(ESceneType.StartScene);
-            while(true)
+            while(nextScene != ESceneType.Exit)
             {
                 nextScene = GameManager.Instance.LoadScene(nextScene);
             }
+            Utility.ClearAll();
+            Utility.PrintScene("게임을 종료합니다.");
+            Utility.PrintMenu("아무 키나 입력해주세요");
+            Console.ReadKey();
+            
         }
         /// <summary>
         /// 플레이어 정보 찾기, 찾지 못하면 에러

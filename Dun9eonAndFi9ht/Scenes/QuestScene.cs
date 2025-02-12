@@ -66,7 +66,7 @@ namespace Dun9eonAndFi9ht.Scenes
             {
                 Utility.ClearAll();
                 Utility.PrintScene("해당 목록에 퀘스트가 없습니다.");
-                Utility.PrintMenu("돌아가려면 아무 키나 누르세요");
+                Utility.PrintMenu("아무 키나 입력해주세요.\n>>");
                 Console.SetCursorPosition(0, 17);
                 Console.ReadKey();
                 return ESceneType.QuestScene;

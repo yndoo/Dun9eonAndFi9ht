@@ -40,6 +40,7 @@ namespace DataDefinition
         MoveStage,
         InventoryScene,
         QuestScene,
+        Exit
     }
     public enum EItemEquipType
     {
