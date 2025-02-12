@@ -120,6 +120,10 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintScene("원하시는 이름을 설정해주세요.");
                 Utility.PrintMenu("이름을 입력하세요.\n>>");
                 nameInput = Console.ReadLine();
+                if(nameInput.Count() == 0)
+                {
+                    nameInput = "None";
+                }
                 Utility.PrintScene($"입력하신 이름은 '{nameInput}'입니다. 저장하시겠습니까?");
 
 

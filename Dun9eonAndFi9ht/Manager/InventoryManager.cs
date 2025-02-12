@@ -45,7 +45,7 @@ namespace Dun9eonAndFi9ht.Manager
                 string name = itemInfo["Name"].ToString();
                 EItemEquipType type = (EItemEquipType)(Convert.ToInt32(itemInfo["EquipType"]));
                 float maxHp = Convert.ToSingle(itemInfo["MaxHp"]);
-                float maxMp = Convert.ToSingle(itemInfo["MaxMp"]);
+                int maxMp = Convert.ToInt32(itemInfo["MaxMp"]);
                 float atk = Convert.ToSingle(itemInfo["Atk"]);
                 float def = Convert.ToSingle(itemInfo["Def"]);
                 float critRate = Convert.ToSingle(itemInfo["CriticalRate"]);
@@ -65,7 +65,15 @@ namespace Dun9eonAndFi9ht.Manager
             GrantPotion(1);
             GrantPotion(2);
         }
-
+        /// <summary>
+        /// 인벤토리, 장착 아이템, 포션 슬롯 클리어
+        /// </summary>
+        public void ClearInventory()
+        {
+            Inventory.Clear();
+            EquipSlot.Clear();
+            PotionSlot.Clear();
+        }
 
         /// <summary>
         /// 플레이어에게 아이템 보상을 지급
@@ -218,7 +226,7 @@ namespace Dun9eonAndFi9ht.Manager
                 potionData["name"].ToString(),
                 Convert.ToBoolean(potionData["isPercent"]),
                 Convert.ToSingle(potionData["changeHp"]),
-                Convert.ToSingle(potionData["changeMp"]),
+                Convert.ToInt32(potionData["changeMp"]),
                 Convert.ToSingle(potionData["changeAtk"]),
                 Convert.ToSingle(potionData["changeDef"]),
                 Convert.ToSingle(potionData["changeCrt"]),

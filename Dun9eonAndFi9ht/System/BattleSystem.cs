@@ -514,11 +514,11 @@ namespace Dun9eonAndFi9ht.System
             Console.ResetColor();
             Utility.PrintSceneW("    MP ");
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Utility.PrintSceneW($"{player.CurrentMp:F2}");
+            Utility.PrintSceneW($"{player.CurrentMp}");
             Console.ResetColor();
             Utility.PrintSceneW(" / ");
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Utility.PrintScene($"{player.MaxMp:F2}");
+            Utility.PrintScene($"{player.MaxMp}");
             Console.ResetColor();
         }
 

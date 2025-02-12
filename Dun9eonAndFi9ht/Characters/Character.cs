@@ -19,7 +19,7 @@ namespace Dun9eonAndFi9ht.Characters
         {
             get; set;
         }
-        public float MaxMp
+        public int MaxMp
         {
             get; set;
         }
@@ -79,8 +79,8 @@ namespace Dun9eonAndFi9ht.Characters
                 }
             }
         }
-        private float currentMp;
-        public float CurrentMp
+        private int currentMp;
+        public int CurrentMp
         {
             get
             {
@@ -124,9 +124,10 @@ namespace Dun9eonAndFi9ht.Characters
         }
 
         private int buffDuration = 0;
-        private float buffHp = 0, buffMp = 0, buffAtk = 0, buffDef = 0, buffCrt = 0, buffCrtDmg = 0, buffMiss = 0;
+        private float buffHp = 0, buffAtk = 0, buffDef = 0, buffCrt = 0, buffCrtDmg = 0, buffMiss = 0;
+        private int buffMp = 0;
 
-        public Character(string name, float maxHp, float maxMp, float atk, float def, int level)
+        public Character(string name, float maxHp, int maxMp, float atk, float def, int level)
         {
             this.Name = name;
             this.MaxHp = maxHp;
@@ -151,7 +152,7 @@ namespace Dun9eonAndFi9ht.Characters
             FinalAtk = value;
         }
 
-        public void UseMp(float amount)
+        public void UseMp(int amount)
         {
             if (CurrentMp >= amount)
             {
@@ -180,7 +181,7 @@ namespace Dun9eonAndFi9ht.Characters
 
 
         // 버프 적용
-        public void ApplyBuff(float hp, float mp, float atk, float def, float crt, float crtDmg, float miss, int duration)
+        public void ApplyBuff(float hp, int mp, float atk, float def, float crt, float crtDmg, float miss, int duration)
         {
             buffHp = hp;
             buffMp = mp;
@@ -232,7 +233,9 @@ namespace Dun9eonAndFi9ht.Characters
             Miss -= buffMiss;
 
             // 초기화
-            buffHp = buffMp = buffAtk = buffDef = buffCrt = buffMiss = 0;
+            buffHp = buffAtk = buffDef = buffCrt = buffMiss = 0f;
+            buffMp = 0;
+
         }
 
 
