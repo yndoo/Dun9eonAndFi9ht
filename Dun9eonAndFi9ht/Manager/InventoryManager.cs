@@ -217,6 +217,12 @@ namespace Dun9eonAndFi9ht.Manager
                 potionData["description"].ToString()
             );
         }
+
+        /// <summary>
+        /// 아이템을 ID로 검색해 이름을 돌려 받는 함수
+        /// </summary>
+        /// <param name="itemId">아이템 ID</param>
+        /// <returns>아이템 이름</returns>
         public string GetItemNameById(int itemId)
         {
             if (itemId >= 0 && itemId < AllItem.Count)
@@ -225,7 +231,10 @@ namespace Dun9eonAndFi9ht.Manager
             }
             return "알 수 없는 아이템";
         }
-
+        /// <summary>
+        /// 포션 목록을 출력하는 함수
+        /// </summary>
+        /// <param name="line">포션 목록을 출력할 줄</param>
         public void DisplayPotion(int line)
         {
             if (PotionSlot.Count == 0)

@@ -18,12 +18,17 @@ namespace Dun9eonAndFi9ht.Quests
         {
             RequiredItemName = requiredItemName;
         }
-
+        /// <summary>
+        /// 퀘스트 완료 확인 메소드
+        /// </summary>
+        /// <returns></returns>
         public override bool CheckCompletion()
         {
             return InventoryManager.Instance.EquipSlot.Values.Any(item => item.Name == RequiredItemName);
         }
-
+        /// <summary>
+        /// 퀘스트 정보 확인 메소드
+        /// </summary>
         public override void ShowQuestInfo()
         {
             Utility.ClearAll();
@@ -44,7 +49,10 @@ namespace Dun9eonAndFi9ht.Quests
 
             ShowSelect();
         }
-
+        /// <summary>
+        /// 아이템을 가지고 있는지 확인하는 함수
+        /// </summary>
+        /// <returns></returns>
         private string HasItem()
         {
             return InventoryManager.Instance.Inventory.Any(item => item.Name == RequiredItemName) ? "O" : "X";

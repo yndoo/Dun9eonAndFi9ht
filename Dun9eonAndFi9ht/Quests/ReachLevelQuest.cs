@@ -19,12 +19,17 @@ namespace Dun9eonAndFi9ht.Quests
         {
             TargetLevel = targetLevel;
         }
-
+        /// <summary>
+        /// 퀘스트 클리어 확인 함수
+        /// </summary>
+        /// <returns></returns>
         public override bool CheckCompletion()
         {
             return GameManager.Instance.Player.Level >= TargetLevel; // 플레이어 레벨이 목표 도달했는지 확인
         }
-
+        /// <summary>
+        /// 퀘스트 정보를 출력하는 함수
+        /// </summary>
         public override void ShowQuestInfo()
         {
             Utility.ClearAll();

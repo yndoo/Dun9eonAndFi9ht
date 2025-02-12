@@ -22,7 +22,10 @@ namespace Dun9eonAndFi9ht.Quests
             this.NeedKills = needKills;
             this.CurrentKills = 0;
         }
-
+        /// <summary>
+        /// 퀘스트 킬 카운트를 세는 함수
+        /// </summary>
+        /// <param name="monsterName"></param>
         public void AddKillCount(string monsterName)
         {
            if (HasAccepted && monsterName == TargetMonster)
@@ -36,12 +39,17 @@ namespace Dun9eonAndFi9ht.Quests
                 }
             }
         }
-
+        /// <summary>
+        /// 퀘스트 완료 확인 함수
+        /// </summary>
+        /// <returns></returns>
         public override bool CheckCompletion()
         {
             return CurrentKills >= NeedKills;
         }
-
+        /// <summary>
+        /// 퀘스트 정보 출력 함수
+        /// </summary>
         public override void ShowQuestInfo()
         {
             Utility.ClearAll();

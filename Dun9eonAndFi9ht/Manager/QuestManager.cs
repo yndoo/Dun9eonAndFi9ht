@@ -22,7 +22,9 @@ namespace Dun9eonAndFi9ht.Manager
             AllQuests = new List<Quest>();
             Initialize();
         }
-        
+        /// <summary>
+        /// 퀘스트 DB를 가져와 저장하는 함수
+        /// </summary>
         public void Initialize()
         {
             int id = 0;
@@ -95,12 +97,19 @@ namespace Dun9eonAndFi9ht.Manager
         {
             return new List<Quest>(AllQuests);
         }
-
+        /// <summary>
+        /// 클리어한 퀘스트 목록 가져오기
+        /// </summary>
+        /// <returns></returns>
         public List<Quest> GetCompletedQuests()
         {
             return AllQuests.FindAll(q => q.IsCleared);
         }
 
+        /// <summary>
+        /// 어떤 퀘스트 클래스든 퀘스트 클리어 확인 메소드
+        /// </summary>
+        /// <returns></returns>
         public void CheckQuestCompletion()
         {
             foreach (var quest in AllQuests)
@@ -112,7 +121,10 @@ namespace Dun9eonAndFi9ht.Manager
                 }
             }
         }
-
+        /// <summary>
+        /// 클리어한 퀘스트 목록 가져오기
+        /// </summary>
+        /// <returns></returns>
         public void ShowAllQuests()
         {
             foreach (var quest in AllQuests)
@@ -121,6 +133,10 @@ namespace Dun9eonAndFi9ht.Manager
             }
         }
 
+        /// <summary>
+        /// 퀘스트 진행도 확인 메소드
+        /// </summary>
+        /// <returns></returns>
         public void CheckQuests()
         {
             foreach (var quest in GetAcceptedQuests())

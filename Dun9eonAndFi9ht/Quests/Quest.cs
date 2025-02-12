@@ -34,7 +34,9 @@ namespace Dun9eonAndFi9ht.Quests
         }
         public abstract bool CheckCompletion(); // 퀘스트 조건 만족 여부 확인
         public abstract void ShowQuestInfo();  // 퀘스트 정보 출력
-
+        /// <summary>
+        /// 퀘스트를 수락하거나, 이미 수락했거나, 완료하였을 때 시행할 수 있는 행동 출력
+        /// </summary>
         public void ShowSelect()
         {
             Utility.ClearMenu();

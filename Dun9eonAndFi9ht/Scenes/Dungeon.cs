@@ -275,7 +275,9 @@ namespace Dun9eonAndFi9ht.Scenes
                 stage++;
             }
         }
-
+        /// <summary>
+        /// 스테이지 시작 전 포션 사용 질문 메소드
+        /// </summary>
         private void CheckPotionUse()
         {
             try

@@ -105,7 +105,18 @@ namespace Dun9eonAndFi9ht.Items
             string message = $"{name} | {description} |" + string.Join(" | ", changes);
             return message;
         }
-
+        /// <summary>
+        /// 포션 사용 시 스탯 변동을 확인하고 결과 출력하는 함수
+        /// </summary>
+        /// <param name="character">사용자</param>
+        /// <param name="potion">사용 포션</param>
+        /// <param name="prevHp">변하기 전 Hp</param>
+        /// <param name="prevMp">변하기 전 MP</param>
+        /// <param name="prevAtk">변하기 전 ATK</param>
+        /// <param name="prevDef">변하기 전 DEf</param>
+        /// <param name="prevCrt">변하기 전 Crt</param>
+        /// <param name="prevCrtDmg">변하기 전 CrtDmg</param>
+        /// <param name="prevMiss">변하기 전 Miss</param>
         public void PrintResult(Character character, Potion potion, float prevHp, float prevMp, float prevAtk, float prevDef, float prevCrt, float prevCrtDmg, float prevMiss)
         {
             List<string> changes = new List<string>();
