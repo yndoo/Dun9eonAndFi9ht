@@ -65,7 +65,15 @@ namespace Dun9eonAndFi9ht.Manager
             GrantPotion(1);
             GrantPotion(2);
         }
-
+        /// <summary>
+        /// 인벤토리, 장착 아이템, 포션 슬롯 클리어
+        /// </summary>
+        public void ClearInventory()
+        {
+            Inventory.Clear();
+            EquipSlot.Clear();
+            PotionSlot.Clear();
+        }
 
         /// <summary>
         /// 플레이어에게 아이템 보상을 지급
