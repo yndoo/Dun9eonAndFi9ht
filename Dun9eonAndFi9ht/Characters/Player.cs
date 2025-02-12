@@ -15,6 +15,8 @@ namespace Dun9eonAndFi9ht.Characters
 
         private int[] MaxExpArray;
 
+        public int MaxStageCleared { get; set; }
+
         public Player(string name, EJobType job, float maxHp, int maxMp, float atk, float def, int level, int gold, int[] maxExpArray) : base(name, maxHp, maxMp, atk, def, level)
         {
             this.Job = job;
@@ -23,6 +25,8 @@ namespace Dun9eonAndFi9ht.Characters
 
             MaxExpArray = maxExpArray;
             this.MaxExp = MaxExpArray[level - 1];
+
+            MaxStageCleared = 0;
 
             // 직업별 스킬 자동 세팅
             Skills = SkillManager.Instance.GetPlayerSkills(Job); 
@@ -149,6 +153,7 @@ namespace Dun9eonAndFi9ht.Characters
 
         public override void Dead()
         {
+            MaxStageCleared = 0;
             InventoryManager.Instance.ClearInventory();
             QuestManager.Instance.InitializeQuest();
             Dungeon.InitializeStage();

@@ -22,8 +22,6 @@ namespace Dun9eonAndFi9ht.Scenes
         
         public static int stage { get; set; }
 
-        public static int maxStageCleared { get; set; }
-
         /// <summary>
         /// 죽었을 때 스테이지 초기화
         /// </summary>
@@ -38,7 +36,6 @@ namespace Dun9eonAndFi9ht.Scenes
             DataTableManager.Instance.Initialize("../../../DataBase");
             MonsterTypeCount = 3;
             stage = 1;
-            maxStageCleared = 0;
 
             MonsterList = new List<Monster>(MonsterTypeCount);
         }
@@ -402,9 +399,9 @@ namespace Dun9eonAndFi9ht.Scenes
             Utility.PrintScene("층 클리어!");
             if (stage<5)
             {
-                if (maxStageCleared <= stage)
+                if (Player.MaxStageCleared <= stage)
                 {
-                    maxStageCleared = stage;
+                    Player.MaxStageCleared = stage;
                 }
                 stage++;
             }

@@ -1,4 +1,5 @@
 ﻿using DataDefinition;
+using Dun9eonAndFi9ht.Manager;
 using Dun9eonAndFi9ht.StaticClass;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Dun9eonAndFi9ht.Scenes
         public override ESceneType Start()
         {
             int stage = Dungeon.stage;
-            int maxStageCleared = Dungeon.maxStageCleared;
+            int maxStageCleared = GameManager.Instance.Player.MaxStageCleared;
             int nextinput = -1;
             while (true)
             {
