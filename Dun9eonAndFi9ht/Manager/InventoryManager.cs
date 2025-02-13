@@ -54,16 +54,16 @@ namespace Dun9eonAndFi9ht.Manager
                 AllItem.Add(new Item(name, 0, type, maxHp, maxMp, atk, def, critRate, critDmg, missRate));
             }
 
-            GrantItem(0);
-            // 인벤토리&아이템 테스트용 코드
-            for(int i = 0; i < itemCount; i++)
-            {
-                GrantItem(i);
-            }
+            //// 인벤토리&아이템 테스트용 코드
+            //GrantItem(0);
+            //for(int i = 0; i < itemCount; i++)
+            //{
+            //    GrantItem(i);
+            //}
 
-            GrantPotion(0);
-            GrantPotion(1);
-            GrantPotion(2);
+            //GrantPotion(0);
+            //GrantPotion(1);
+            //GrantPotion(2);
         }
         /// <summary>
         /// 인벤토리, 장착 아이템, 포션 슬롯 클리어
