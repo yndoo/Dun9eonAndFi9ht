@@ -69,8 +69,9 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintMenuW("0");
                 Console.ResetColor();
                 Utility.PrintMenu(". 치트");
-
-                Utility.PrintMenu("\n\n원하시는 행동을 입력해주세요.\n>>");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("원하시는 행동을 입력해주세요.\n>>");
 
                 
 
@@ -151,7 +152,9 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.PrintMenuW("2");
                     Console.ResetColor();
                     Utility.PrintMenu(". 다시 입력");
-                    Utility.PrintMenu("\n\n원하시는 행동을 입력해주세요.\n>>");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu("원하시는 행동을 입력해주세요.\n>>");
                     int command = Utility.UserInput(1, 2);
                     if (command == 1)
                     {
@@ -213,7 +216,9 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.PrintMenuW("2");
                     Console.ResetColor();
                     Utility.PrintMenu(". 다시 입력");
-                    Utility.PrintMenu("\n\n원하시는 행동을 입력해주세요.\n>>");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu("원하시는 행동을 입력해주세요.\n>>");
                     int command = Utility.UserInput(1, 2);
                     if (command == 1)
                     {
