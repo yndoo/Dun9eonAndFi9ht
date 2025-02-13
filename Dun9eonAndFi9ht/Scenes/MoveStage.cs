@@ -35,7 +35,9 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintMenuW("0");
                 Console.ResetColor();
                 Utility.PrintMenu(". 나가기");
-                Utility.PrintMenu("\n\n원하시는 행동을 입력해주세요.\n>>");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("원하시는 행동을 입력해주세요.\n>>");
                 nextinput = Utility.UserInput(0, 5);
                 if (nextinput == 0) // 유저가 취소를 선택한 경우
                 {
@@ -46,7 +48,8 @@ namespace Dun9eonAndFi9ht.Scenes
                 {
                     Utility.ClearMenu();
                     Utility.PrintMenu("잘못된 입력입니다.");
-                    Utility.PrintMenu("\n아무 키나 눌러주세요.\n>>");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu("아무 키나 눌러주세요.\n>>");
                     Console.ReadKey();
                     nextinput = -1; // 루프를 계속 돌도록 초기화
                 }
@@ -54,14 +57,16 @@ namespace Dun9eonAndFi9ht.Scenes
                 {
                     Utility.ClearMenu();
                     Utility.PrintMenu("클리어하지 못한 층은 갈 수 없습니다.");
-                    Utility.PrintMenu("\n아무 키나 눌러주세요.\n>>");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu("아무 키나 눌러주세요.\n>>");
                     Console.ReadKey();
                 }
                 else if(nextinput == stage)
                 {
                     Utility.ClearMenu();
                     Utility.PrintMenu("현재 위치한 층입니다!");
-                    Utility.PrintMenu("\n아무 키나 눌러주세요.\n>>");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu("아무 키나 눌러주세요.\n>>");
                     Console.ReadKey();
                     nextinput = -1; // 루프를 계속 돌도록 초기화
                 }
@@ -73,7 +78,8 @@ namespace Dun9eonAndFi9ht.Scenes
                     Utility.PrintScene("층으로 이동합니다.");
                     stage = nextinput;
                     Utility.ClearMenu();
-                    Utility.PrintMenu("\n아무 키나 눌러주세요.\n>>");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu("아무 키나 눌러주세요.\n>>");
                     Console.ReadKey();
                     Dungeon.stage = stage;
                     return ESceneType.StartScene;

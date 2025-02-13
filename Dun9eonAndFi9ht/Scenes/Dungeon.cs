@@ -99,7 +99,8 @@ namespace Dun9eonAndFi9ht.Scenes
                 }
                 catch (Exception ex)
                 {
-                    Utility.PrintMenu($"\n{i} 인덱스 Monster 데이터 로드 오류 : {ex.Message}");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu($"{i} 인덱스 Monster 데이터 로드 오류 : {ex.Message}");
                 }
             }
         }
@@ -168,7 +169,8 @@ namespace Dun9eonAndFi9ht.Scenes
                 Console.ForegroundColor = ConsoleColor.Red;
                 Utility.PrintScene("You Died");
                 Console.ResetColor();
-                Utility.PrintScene("\n당신은 전투에서 패배했습니다...");
+                Utility.PrintScene("");
+                Utility.PrintScene("당신은 전투에서 패배했습니다...");
                 Utility.PrintScene("모든 HP를 소진하여 전투를 지속할 수 없습니다.");
             }
             else if (isEscaped)

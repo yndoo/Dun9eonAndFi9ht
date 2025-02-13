@@ -40,7 +40,8 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintScene($"<    {CurPage}페이지    >");
 
                 // 포션 출력
-                Utility.PrintScene("\n");
+                Utility.PrintScene("");
+                Utility.PrintScene("");
                 InventoryManager.Instance.DisplayPotion(11);
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
@@ -61,7 +62,9 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintMenuW("0");
                 Console.ResetColor();
                 Utility.PrintMenu(". 나가기 ");
-                Utility.PrintMenu("\n\n원하시는 행동을 입력해주세요.\n>>");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("원하시는 행동을 입력해주세요.\n>>");
 
                 int userInput = Utility.UserInput(0, 3);
                 switch(userInput)
@@ -80,7 +83,8 @@ namespace Dun9eonAndFi9ht.Scenes
                     default:
                         Utility.ClearMenu();
                         Utility.PrintMenu("잘못된 입력입니다.");
-                        Utility.PrintMenu("\n아무 키나 눌러주세요.\n>>");
+                        Utility.PrintMenu("");
+                        Utility.PrintMenu("아무 키나 눌러주세요.\n>>");
                         Console.ReadKey();
                         break;
                 }
@@ -123,7 +127,9 @@ namespace Dun9eonAndFi9ht.Scenes
                 Utility.PrintMenuW("0");
                 Console.ResetColor();
                 Utility.PrintMenu(". 나가기");
-                Utility.PrintMenu("\n\n원하시는 행동을 입력해주세요.\n>>");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("");
+                Utility.PrintMenu("원하시는 행동을 입력해주세요.\n>>");
 
                 int userInput = Utility.UserInput(0, Inventory.Count);
                 if (userInput == 0)
@@ -134,7 +140,8 @@ namespace Dun9eonAndFi9ht.Scenes
                 {
                     Utility.ClearMenu();
                     Utility.PrintMenu("잘못된 입력입니다.");
-                    Utility.PrintMenu("\n아무 키나 눌러주세요.\n>>");
+                    Utility.PrintMenu("");
+                    Utility.PrintMenu("아무 키나 눌러주세요.\n>>");
                     Console.ReadKey();
                 }
                 else
