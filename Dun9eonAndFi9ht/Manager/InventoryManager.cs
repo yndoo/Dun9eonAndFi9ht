@@ -36,7 +36,7 @@ namespace Dun9eonAndFi9ht.Manager
             Inventory = new List<Item>();
             EquipSlot = new Dictionary<EItemEquipType, Item>();
             PotionSlot = new List <Dictionary<int, int>>();
-            itemCount = 11;
+            itemCount = 12;
             // 아이템 정보 불러오기
             
             for (int i = 0; i < itemCount; i++)

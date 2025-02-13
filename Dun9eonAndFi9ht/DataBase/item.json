@@ -120,6 +120,17 @@
       "CriticalRate": 5,
       "CriticalDamage": 60,
       "MissRate": 0
+    },
+    "11": {
+      "Name": "궁극의 검",
+      "EquipType": 1,
+      "MaxHp": 0,
+      "MaxMp": 0,
+      "Atk": 46,
+      "Def": 0,
+      "CriticalRate": 100,
+      "CriticalDamage": 80,
+      "MissRate": 100
     }
   }
 }

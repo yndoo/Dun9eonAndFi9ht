@@ -65,11 +65,16 @@ namespace Dun9eonAndFi9ht.Scenes
                 Console.ResetColor();
                 Utility.PrintMenu(". 게임 종료");
 
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Utility.PrintMenuW("0");
+                Console.ResetColor();
+                Utility.PrintMenu(". 치트");
+
                 Utility.PrintMenu("\n\n원하시는 행동을 입력해주세요.\n>>");
 
                 
 
-            int userInput = Utility.UserInput(1, 6);
+            int userInput = Utility.UserInput(0, 6);
                 if (userInput == 1)
                 {
                     return ESceneType.PlayerStat;
@@ -93,6 +98,10 @@ namespace Dun9eonAndFi9ht.Scenes
                 else if(userInput == 6)
                 {
                     return ESceneType.Exit;
+                }
+                else if(userInput == 0)
+                {
+                    InventoryManager.Instance.GrantItem(11);
                 }
                 else
                 {
