@@ -102,6 +102,9 @@ namespace Dun9eonAndFi9ht.Scenes
                 else if(userInput == 0)
                 {
                     InventoryManager.Instance.GrantItem(11);
+                    InventoryManager.Instance.GrantPotion(0);
+                    InventoryManager.Instance.GrantPotion(1);
+                    InventoryManager.Instance.GrantPotion(2);
                 }
                 else
                 {
