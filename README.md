@@ -42,6 +42,72 @@ C#을 사용하여 제작한 텍스트 기반 RPG 콘솔 게임입니다.
 
 ---
 
+## 📂 프로젝트 폴더 구조
+```
+📦Dun9eonAndFi9ht
+ ┣ 📂Dun9eonAndFi9ht
+ ┃ ┣ 📂App
+ ┃ ┃ ┗ 📜Program.cs
+ ┃ ┣ 📂Characters
+ ┃ ┃ ┣ 📜Character.cs
+ ┃ ┃ ┣ 📜Monster.cs
+ ┃ ┃ ┗ 📜Player.cs
+ ┃ ┣ 📂DataBase
+ ┃ ┃ ┣ 📜enemy_stage1.json
+ ┃ ┃ ┣ 📜enemy_stage2.json
+ ┃ ┃ ┣ 📜enemy_stage3.json
+ ┃ ┃ ┣ 📜enemy_stage4.json
+ ┃ ┃ ┣ 📜enemy_stage5.json
+ ┃ ┃ ┣ 📜item.json
+ ┃ ┃ ┣ 📜job.json
+ ┃ ┃ ┣ 📜monsterSkill.json
+ ┃ ┃ ┣ 📜player.json
+ ┃ ┃ ┣ 📜playerExpTable.json
+ ┃ ┃ ┣ 📜playerSkill.json
+ ┃ ┃ ┣ 📜potion.json
+ ┃ ┃ ┗ 📜questTable.json
+ ┃ ┣ 📂Item
+ ┃ ┃ ┣ 📜Item.cs
+ ┃ ┃ ┗ 📜Potion.cs
+ ┃ ┣ 📂Manager
+ ┃ ┃ ┣ 📜DataTableManager.cs
+ ┃ ┃ ┣ 📜GameManager.cs
+ ┃ ┃ ┣ 📜InventoryManager.cs
+ ┃ ┃ ┣ 📜QuestManager.cs
+ ┃ ┃ ┗ 📜SkillManager.cs
+ ┃ ┣ 📂Quests
+ ┃ ┃ ┣ 📜EquipItemQuest.cs
+ ┃ ┃ ┣ 📜KillMonsterQuest.cs
+ ┃ ┃ ┣ 📜Quest.cs
+ ┃ ┃ ┗ 📜ReachLevelQuest.cs
+ ┃ ┣ 📂Scenes
+ ┃ ┃ ┣ 📜Dungeon.cs
+ ┃ ┃ ┣ 📜InventoryScene.cs
+ ┃ ┃ ┣ 📜MoveStage.cs
+ ┃ ┃ ┣ 📜PlayerStat.cs
+ ┃ ┃ ┣ 📜QuestScene.cs
+ ┃ ┃ ┣ 📜Scene.cs
+ ┃ ┃ ┗ 📜StartScene.cs
+ ┃ ┣ 📂Skill
+ ┃ ┃ ┣ 📜AlphaStrike.cs
+ ┃ ┃ ┣ 📜DoubleStrike.cs
+ ┃ ┃ ┣ 📜Fireball.cs
+ ┃ ┃ ┣ 📜IceSpear.cs
+ ┃ ┃ ┣ 📜MonsterSkill.cs
+ ┃ ┃ ┣ 📜SkillBase.cs
+ ┃ ┃ ┣ 📜SlashFrenzy.cs
+ ┃ ┃ ┗ 📜VitalStrike.cs
+ ┃ ┣ 📂StaticClass
+ ┃ ┃ ┗ 📜Utility.cs
+ ┃ ┣ 📂System
+ ┃ ┃ ┗ 📜BattleSystem.cs
+ ┃ ┣ 📜DataDefinition.cs
+ ┃ ┗ 📜Dun9eonAndFi9ht.csproj
+```
+
+---
+
+
 ## 🛠 프로젝트 계획 단계
 
 ### **📌 아이디어 구상**  
